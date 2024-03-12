@@ -1,4 +1,4 @@
-package com.example.flavoury.ui.dashboard;
+package com.example.flavoury.ui.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,23 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.flavoury.databinding.FragmentSearchBinding;
 
-import com.example.flavoury.databinding.FragmentDashboardBinding;
+public class SearchFragment extends Fragment {
 
-public class DashboardFragment extends Fragment {
-
-    private FragmentDashboardBinding binding;
+    private FragmentSearchBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        SearchViewModel searchViewModel =
+                new ViewModelProvider(this).get(SearchViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSearch;
+        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
