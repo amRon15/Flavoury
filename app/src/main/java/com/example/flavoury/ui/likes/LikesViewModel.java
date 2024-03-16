@@ -1,16 +1,16 @@
-package com.example.flavoury.ui.setting;
+package com.example.flavoury.ui.likes;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SettingViewModel extends ViewModel {
+public class LikesViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SettingViewModel() {
+    public LikesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is setting fragment");
+        mText.setValue("This is likes fragment");
     }
 
     public LiveData<String> getText() {

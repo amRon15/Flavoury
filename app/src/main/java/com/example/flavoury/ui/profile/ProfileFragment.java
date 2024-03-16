@@ -1,4 +1,4 @@
-package com.example.flavoury.ui.setting;
+package com.example.flavoury.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.flavoury.databinding.FragmentSettingBinding;
+import com.example.flavoury.databinding.FragmentProfileBinding;
 
-public class SettingFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    private FragmentSettingBinding binding;
+    private FragmentProfileBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SettingViewModel settingViewModel =
-                new ViewModelProvider(this).get(SettingViewModel.class);
+        ProfileViewModel profileViewModel =
+                new ViewModelProvider(this).get(ProfileViewModel.class);
 
-        binding = FragmentSettingBinding.inflate(inflater, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSearch;
-        settingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textProfile;
+        profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

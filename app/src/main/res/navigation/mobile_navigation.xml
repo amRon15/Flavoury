@@ -18,19 +18,13 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        android:id="@+id/navigation_createRecipe"
-        android:name="com.example.flavoury.ui.addRecipe.addRecipeFragment"
-        android:label="@string/title_add"
-        tools:layout="@layout/fragment_add_recipe" />
-
+        android:id="@+id/navigation_likes"
+        android:name="com.example.flavoury.ui.likes.LikesFragment"
+        android:label="@string/title_likes"
+        tools:layout="@layout/fragment_likes" />
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.flavoury.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
-        android:id="@+id/navigation_setting"
-        android:name="com.example.flavoury.ui.setting.SettingFragment"
-        android:label="@string/title_setting"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/navigation_profile"
+        android:name="com.example.flavoury.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
