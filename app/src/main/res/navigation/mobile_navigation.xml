@@ -23,8 +23,8 @@
         android:label="@string/title_likes"
         tools:layout="@layout/fragment_likes" />
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.example.flavoury.ui.profile.ProfileFragment"
+        android:id="@+id/navigation_myProfile"
+        android:name="com.example.flavoury.ui.myProfile.MyProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_my_profile" />
 </navigation>

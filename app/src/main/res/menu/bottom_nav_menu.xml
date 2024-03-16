@@ -16,7 +16,7 @@
         android:icon="@drawable/baseline_favorite_24"
         android:title="@string/title_likes" />
 
-    <item android:id="@+id/navigation_profile"
+    <item android:id="@+id/navigation_myProfile"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/title_profile" />
 
