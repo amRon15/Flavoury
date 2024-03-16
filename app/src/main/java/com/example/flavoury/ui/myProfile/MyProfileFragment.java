@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.flavoury.databinding.FragmentLikesBinding;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 
 public class MyProfileFragment extends Fragment {
@@ -24,8 +26,7 @@ public class MyProfileFragment extends Fragment {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textMyProfile;
-        myProfileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+      
         return root;
     }
 

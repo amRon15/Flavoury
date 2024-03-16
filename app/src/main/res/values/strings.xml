@@ -7,4 +7,13 @@
     <string name="title_setting">Setting</string>
     <string name="title_likes">Likes</string>
     <string name="title_profile">Profile</string>
+    <string name="description">descr</string>
+    <string name="speed">speed</string>
+    <string name="icon_speed">Speed</string>
+    <string name="recipes_23">Recipes</string>
+    <string name="recipe_following">Following</string>
+    <string name="recipe_followers">Followers</string>
+    <string name="recipe_number">23</string>
+    <string name="following_number">362</string>
+    <string name="followers_number">1356</string>
 </resources>
