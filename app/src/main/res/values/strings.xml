@@ -16,4 +16,10 @@
     <string name="recipe_number">23</string>
     <string name="following_number">362</string>
     <string name="followers_number">1356</string>
+    <string name="cat_all">All</string>
+    <string name="cat_fitness">Fitness</string>
+    <string name="cat_western">Western</string>
+    <string name="cat_japanese">Japanese</string>
+    <string name="cat_chinese">Chinese</string>
+    <string name="cat_italian">Italian</string>
 </resources>
