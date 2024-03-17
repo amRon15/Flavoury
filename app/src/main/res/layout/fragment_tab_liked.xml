@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.myProfile.tab_liked">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="20dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/description"
+                android:src="@drawable/pancake" />
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item2"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="160dp"
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="20dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/description"
+                android:src="@drawable/pancake" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item3"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="20dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/description"
+                android:src="@drawable/pancake" />
+        </androidx.cardview.widget.CardView>
+
+
+
+    </FrameLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</ScrollView>
+
