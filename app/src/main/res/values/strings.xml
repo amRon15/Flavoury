@@ -22,4 +22,6 @@
     <string name="cat_japanese">Japanese</string>
     <string name="cat_chinese">Chinese</string>
     <string name="cat_italian">Italian</string>
+    <string name="cat_more">More</string>
+    <string name="view_more">View More ></string>
 </resources>

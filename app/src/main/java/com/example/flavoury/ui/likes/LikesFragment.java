@@ -23,8 +23,8 @@ public class LikesFragment extends Fragment {
         binding = FragmentLikesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textLikes;
-        likesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textLikes;
+//        likesViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
