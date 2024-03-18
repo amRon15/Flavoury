@@ -24,4 +24,13 @@
     <string name="cat_italian">Italian</string>
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
+    <string-array name="category">
+        <item>All</item>
+        <item>Fitness</item>
+        <item>Japanese</item>
+        <item>Italian</item>
+        <item>Chinese</item>
+        <item>Dessert</item>
+        <item>More</item>
+    </string-array>
 </resources>
