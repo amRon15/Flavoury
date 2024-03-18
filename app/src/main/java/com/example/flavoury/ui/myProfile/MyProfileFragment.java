@@ -5,16 +5,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
+import com.example.flavoury.databinding.FragmentProfileBinding;
+import com.example.flavoury.databinding.FragmentSettingBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class MyProfileFragment extends Fragment {
@@ -23,6 +27,9 @@ public class MyProfileFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ViewPagerAdapter viewPagerAdapter;
+    /*private ImageButton sharingButton;*/
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,8 +38,23 @@ public class MyProfileFragment extends Fragment {
 
         tabLayout = binding.tabLayout;
         viewPager2 = binding.viewPager;
+
         viewPagerAdapter = new ViewPagerAdapter(requireActivity());
         viewPager2.setAdapter(viewPagerAdapter);
+
+
+      /*  sharingButton = binding.sharingButton;
+
+        sharingButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+            @Override
+            public void onClick(View v) {
+            Intent intent=new Intent(requireActivity(), FragmentProfileBinding.class);
+            startActivity(intent);
+            }
+        });*/
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

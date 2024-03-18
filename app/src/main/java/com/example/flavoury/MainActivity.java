@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
-import com.example.flavoury.ui.myProfile.myProfileActivity;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
