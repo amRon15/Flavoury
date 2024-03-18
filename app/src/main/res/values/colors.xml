@@ -13,4 +13,5 @@
     <color name="secondaryText_color">#9FA5C0</color>
     <color name="outline_color">#D0DBEA</color>
     <color name="searchview_color">#FAFAFA</color>
+    <color name="DetailRecipeBack_color">#9C979797</color>
 </resources>
