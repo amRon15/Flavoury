@@ -16,6 +16,7 @@
     <string name="recipe_number" />
     <string name="following_number" />
     <string name="followers_number" />
-    <string name="recipes" />
+    <string name="Recipes">recipes</string>
     <string name="liked" />
+    <string name="ivy_so">ivy so</string>
 </resources>
