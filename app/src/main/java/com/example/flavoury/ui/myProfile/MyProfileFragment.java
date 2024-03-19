@@ -7,14 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentLikesBinding;
@@ -23,7 +22,6 @@ import com.example.flavoury.databinding.FragmentProfileBinding;
 import com.example.flavoury.databinding.FragmentSettingBinding;
 import com.example.flavoury.ui.likes.LikesFragment;
 import com.google.android.material.tabs.TabLayout;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +48,10 @@ public class MyProfileFragment extends Fragment {
 
         RecyclerView recyclerView_list = root.findViewById(R.id.recyclerView_list);
         MyProfile_recipes_Adapter adapter = new MyProfile_recipes_Adapter(generateMyProfile_RecyclerView_list());
-        recyclerView_list.setLayoutManager(new LinearLayoutManager(requireContext()));
+        int spanCount=1;
+        recyclerView_list.setLayoutManager(new GridLayoutManager(requireContext(),spanCount));
         recyclerView_list.setAdapter(adapter);
+
 
 
         return root;
@@ -63,8 +63,8 @@ public class MyProfileFragment extends Fragment {
 
     private List<MyProfile_RecyclerView_list> generateMyProfile_RecyclerView_list() {
         List<MyProfile_RecyclerView_list> myProfileRecyclerViewLists = new ArrayList<>();
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.pancake, "Pancake"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.ivysoo, "IvySoo"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon, "burger"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"burger"));
 
 
         return myProfileRecyclerViewLists;

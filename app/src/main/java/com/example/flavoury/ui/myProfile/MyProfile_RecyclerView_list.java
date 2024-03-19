@@ -1,19 +1,19 @@
 package com.example.flavoury.ui.myProfile;
 
 public class MyProfile_RecyclerView_list {
-    private Integer image_pancake;
-    private String pancake;
+    private Integer image;
+    private String recipes_name;
 
     public Integer getImage_pancake() {
-        return image_pancake;
+        return image;
     }
 
     public String getPancake() {
-        return pancake;
+        return recipes_name;
     }
 
     public MyProfile_RecyclerView_list(Integer image_pancake, String pancake) {
-        this.image_pancake = image_pancake;
-        this.pancake = pancake;
+        this.image = image_pancake;
+        this.recipes_name = pancake;
     }
 }
