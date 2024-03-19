@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 
-public  class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
 
     String[] categoryType;
 
@@ -31,13 +31,6 @@ public  class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.button.setText(categoryType[position]);
-        holder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setSelected(true);
-                holder.button.setTextColor(Color.WHITE);
-            }
-        });
     }
 
     @Override
@@ -49,9 +42,6 @@ public  class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             button = itemView.findViewById(R.id.home_category_btn);
-
-
         }
-
     }
 }

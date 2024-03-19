@@ -12,4 +12,6 @@
     <color name="mainText_color">#2E3E5C</color>
     <color name="secondaryText_color">#9FA5C0</color>
     <color name="outline_color">#D0DBEA</color>
+    <color name="red">#FF0000</color>
+    <color name="cal_color">#FF7B7B</color>
 </resources>

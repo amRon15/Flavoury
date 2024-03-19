@@ -18,14 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,popRecyclerView;
     String[] categoryType;
+    ArrayList<ExploreRecipe> popRecipes = new ArrayList<ExploreRecipe>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        for(int i =0;i<4;i++){
+            popRecipes.add(new ExploreRecipe("user"+i,"salad",140,103));
+        }
+
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
@@ -33,6 +43,13 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         recyclerView = root.findViewById(R.id.home_catList);
         categoryType = getResources().getStringArray(R.array.category);
+
+        popRecyclerView = root.findViewById(R.id.home_popList);
+
+        PopListAdapter popListAdapter = new PopListAdapter(popRecipes);
+        popRecyclerView.setAdapter(popListAdapter);
+        popRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
 
         HomeAdapter homeAdapter = new HomeAdapter(categoryType);
         recyclerView.setAdapter(homeAdapter);
