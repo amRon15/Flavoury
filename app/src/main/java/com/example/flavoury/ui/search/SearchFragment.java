@@ -1,23 +1,29 @@
 package com.example.flavoury.ui.search;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentSearchBinding;
-import com.example.flavoury.ui.home.HomeFragment;
+
+import java.lang.reflect.Array;
 
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
-    private ImageButton imageButton3;
+    RecyclerView historyRecyclerView;
+
+    String[] myArray = {"Egg","Fish","Apple"};
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,8 +33,11 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSearch;
-        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        historyRecyclerView = root.findViewById(R.id.search_historyList);
+        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(myArray);
+        historyRecyclerView.setAdapter(searchHistoryAdapter);
+        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+
         return root;
     }
 
