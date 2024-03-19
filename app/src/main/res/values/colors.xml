@@ -14,4 +14,5 @@
     <color name="outline_color">#D0DBEA</color>
     <color name="searchview_color">#FAFAFA</color>
     <color name="DetailRecipeBack_color">#9C979797</color>
+    <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
 </resources>
