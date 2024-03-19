@@ -1,6 +1,5 @@
 package com.example.flavoury.ui.myProfile;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,79 +7,67 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
+import com.example.flavoury.databinding.FragmentLikesBinding;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.databinding.FragmentProfileBinding;
 import com.example.flavoury.databinding.FragmentSettingBinding;
-import com.example.flavoury.ui.home.HomeFragment;
-import com.example.flavoury.ui.profile.ProfileFragment;
+import com.example.flavoury.ui.likes.LikesFragment;
 import com.google.android.material.tabs.TabLayout;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyProfileFragment extends Fragment {
 
     private FragmentMyProfileBinding binding;
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
-    private ViewPagerAdapter viewPagerAdapter;
-    private ImageButton sharingButton;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView_list;
+    private RecyclerView MyProfileFragment;
+    ImageButton sharingButton;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+
+        MyProfileViewModel myProfileViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
+        /*View rootView = inflater.inflate(R.layout.fragment_my_profile,container,false);*/
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        tabLayout = binding.tabLayout;
-     /*   viewPager = binding.viewPager;*/
 
-        viewPagerAdapter = new ViewPagerAdapter(requireActivity());
-        viewPager2.setAdapter(viewPagerAdapter);
+        RecyclerView recyclerView_list = root.findViewById(R.id.recyclerView_list);
+        MyProfile_recipes_Adapter adapter = new MyProfile_recipes_Adapter(generateMyProfile_RecyclerView_list());
+        recyclerView_list.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView_list.setAdapter(adapter);
 
-        sharingButton = binding.sharingButton;
-
-        sharingButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, new ProfileFragment()).commit();
-                Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.getTabAt(position).select();
-            }
-        });
 
         return root;
+
+
+    }
+
+
+
+    private List<MyProfile_RecyclerView_list> generateMyProfile_RecyclerView_list() {
+        List<MyProfile_RecyclerView_list> myProfileRecyclerViewLists = new ArrayList<>();
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.pancake, "Pancake"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.ivysoo, "IvySoo"));
+
+
+        return myProfileRecyclerViewLists;
     }
 
     @Override

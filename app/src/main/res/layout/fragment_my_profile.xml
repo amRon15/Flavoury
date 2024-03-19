@@ -158,30 +158,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recipes" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Liked"
-            tools:layout_editor_absoluteX="204dp"
-            tools:layout_editor_absoluteY="341dp" />
+        />
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="406dp"
-        android:layout_height="340dp"
-        app:layout_constraintEnd_toEndOf="@+id/tabLayout"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="@+id/tabLayout"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/RecyclerView"/>
-    </androidx.viewpager.widget.ViewPager>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_list"
+        android:layout_width="398dp"
+        android:layout_height="369dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="lsit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tabLayout"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="@+id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.64" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
