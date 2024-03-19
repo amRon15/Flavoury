@@ -1,24 +1,23 @@
 package com.example.flavoury.ui.home;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
+public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.MyViewHolder>{
 
     String[] categoryType;
+    int selectIndex = 0;
 
-    public HomeAdapter(String[] categoryType) {
+    public CategoryListAdapter(String[] categoryType) {
         this.categoryType = categoryType;
     }
     @NonNull
@@ -28,9 +27,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
         return new MyViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.button.setText(categoryType[position]);
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectIndex = holder.getAdapterPosition();
+                notifyDataSetChanged();
+            }
+        });
+        if(selectIndex==position){
+            holder.button.setBackgroundResource(R.drawable.home_category_select);
+        }else{
+            holder.button.setBackgroundResource(R.drawable.home_category_unselect);
+        }
     }
 
     @Override
@@ -38,10 +50,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
         return categoryType.length;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public Button button;
+        private Button button;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             button = itemView.findViewById(R.id.home_category_btn);
         }
+
     }
 }

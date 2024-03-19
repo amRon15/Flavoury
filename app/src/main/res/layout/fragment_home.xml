@@ -65,8 +65,9 @@
         android:id="@+id/home_catList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_title" />
 
@@ -75,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Popular Dishes"
         android:textColor="@color/mainText_color"
@@ -101,7 +103,9 @@
         android:id="@+id/home_popList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_title" />
 
@@ -110,6 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Explore Dishes"
         android:textColor="@color/mainText_color"
@@ -127,8 +132,18 @@
         android:textColor="@color/Secondary_color"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.735"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toEndOf="@+id/home_explore_title"
         app:layout_constraintTop_toBottomOf="@+id/home_popList" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_exploreList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_explore_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
