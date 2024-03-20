@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/foodimage"
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:background="@color/white"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/baked_pork_chop_rice" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/recipedetail_backbutton"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
@@ -27,11 +27,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.445"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/foodimage"
         app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/dishname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -44,10 +44,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/foodimage" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/flashimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -59,13 +59,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/dishname"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/baseline_flash_on_24"
         app:tint="@color/Secondary_color" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/cals_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="290dp"
@@ -73,10 +73,10 @@
         android:textColor="@color/secondaryText_color"
         android:textSize="15sp"
         android:text="1100 cals"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/flashimage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintStart_toEndOf="@+id/flashimage"
+        app:layout_constraintTop_toTopOf="@+id/flashimage" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10">
+        app:layout_constraintTop_toBottomOf="@+id/cals_number">
 
 
         <ImageView
@@ -100,7 +100,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="265dp"
@@ -114,19 +114,19 @@
         app:layout_constraintTop_toTopOf="@+id/cardView2" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/favorite_button"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/user_name"
         app:layout_constraintTop_toTopOf="@+id/cardView2"
         app:srcCompat="@drawable/baseline_favorite_border_24" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/recipe_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -134,10 +134,10 @@
         android:textColor="@color/mainText_color"
         android:textSize="18sp"
         android:text="273 Likes"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
+        app:layout_constraintBottom_toBottomOf="@+id/favorite_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3" />
+        app:layout_constraintStart_toEndOf="@+id/favorite_button"
+        app:layout_constraintTop_toTopOf="@+id/favorite_button" />
 
     <View
         android:id="@+id/view1"
@@ -151,8 +151,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.555" />
+        app:layout_constraintTop_toBottomOf="@+id/dishname"
+        app:layout_constraintVertical_bias="0.258" />
 
     <View
         android:id="@+id/view2"
@@ -166,29 +166,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.268" />
+        app:layout_constraintTop_toBottomOf="@+id/dishname"
+        app:layout_constraintVertical_bias="0.52" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_medium"
-        android:text="Description"
+        android:text="Desciption"
         android:textColor="@color/mainText_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView14"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view1" />
+        app:layout_constraintTop_toBottomOf="@+id/view1"
+        app:layout_constraintVertical_bias="0.526" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="363dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:fontFamily="@font/inter_light"
         android:text="Your recipe has bewen uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your profile."
@@ -203,13 +204,13 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
-        android:text="Ingraedients"
+        android:text="Ingredients"
         android:textColor="@color/mainText_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -226,7 +227,7 @@
         app:srcCompat="@drawable/baseline_done_24" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/foodname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -240,6 +241,21 @@
         app:layout_constraintStart_toEndOf="@+id/imageButton6"
         app:layout_constraintTop_toTopOf="@+id/imageButton6"
         app:layout_constraintVertical_bias="1.0" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/secondaryText_color"
+        android:outlineAmbientShadowColor="@color/secondaryText_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dishname"
+        app:layout_constraintVertical_bias="0.707" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
