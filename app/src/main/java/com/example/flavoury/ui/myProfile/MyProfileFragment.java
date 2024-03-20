@@ -20,12 +20,15 @@ import com.example.flavoury.databinding.FragmentLikesBinding;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.databinding.FragmentProfileBinding;
 import com.example.flavoury.databinding.FragmentSettingBinding;
+import com.example.flavoury.ui.Setting.SettingFragment;
 import com.example.flavoury.ui.likes.LikesFragment;
 import com.google.android.material.tabs.TabLayout;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.fragment.app.FragmentManager;
 public class MyProfileFragment extends Fragment {
 
     private FragmentMyProfileBinding binding;
@@ -37,7 +40,6 @@ public class MyProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
 
 
         MyProfileViewModel myProfileViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
@@ -53,11 +55,19 @@ public class MyProfileFragment extends Fragment {
         recyclerView_list.setAdapter(adapter);
 
 
+        ImageButton icon_setting = root.findViewById(R.id.icon_setting);
+        icon_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingFragment settingFragment = new SettingFragment();
 
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, settingFragment).commit();
+            }
+        });
         return root;
-
-
     }
+
 
 
 
