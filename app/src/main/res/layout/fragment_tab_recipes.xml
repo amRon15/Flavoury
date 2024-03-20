@@ -3,8 +3,9 @@
     android:layout_height="190dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
-    android:layout_margin="16dp"
-    android:id="@+id/cardView">
+    android:layout_margin="45dp"
+    android:id="@+id/cardView"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,9 +34,6 @@
             android:textSize="15dp"
             android:id="@+id/drcText"
             />
-
-
-
 
     </LinearLayout>
 

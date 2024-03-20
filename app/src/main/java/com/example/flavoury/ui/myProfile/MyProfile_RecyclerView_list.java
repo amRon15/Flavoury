@@ -1,11 +1,13 @@
 package com.example.flavoury.ui.myProfile;
-
 public class MyProfile_RecyclerView_list {
     private String FoodId;
     private String drcText;
     private int recipes_icon;
 
-    public MyProfile_RecyclerView_list(int burgericon, String food , String drcText) {
+    public MyProfile_RecyclerView_list(int recipes_icon, String foodId, String drcText) {
+        this.recipes_icon = recipes_icon;
+        this.FoodId = foodId;
+        this.drcText = drcText;
     }
 
     public String getFoodId() {
@@ -18,11 +20,5 @@ public class MyProfile_RecyclerView_list {
 
     public int getRecipes_icon() {
         return recipes_icon;
-    }
-
-    public MyProfile_RecyclerView_list(String foodId, String drcText, int recipes_icon) {
-        FoodId = foodId;
-        this.drcText = drcText;
-        this.recipes_icon = recipes_icon;
     }
 }

@@ -158,17 +158,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recipes" />
-        />
+
 
     </com.google.android.material.tabs.TabLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_list"
-        android:layout_width="398dp"
-        android:layout_height="369dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="410dp"
+        android:layout_height="376dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:contentDescription="lsit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tabLayout"

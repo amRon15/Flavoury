@@ -48,7 +48,7 @@ public class MyProfileFragment extends Fragment {
 
         RecyclerView recyclerView_list = root.findViewById(R.id.recyclerView_list);
         MyProfile_recipes_Adapter adapter = new MyProfile_recipes_Adapter(generateMyProfile_RecyclerView_list());
-        int spanCount=1;
+        int spanCount = 2;
         recyclerView_list.setLayoutManager(new GridLayoutManager(requireContext(),spanCount));
         recyclerView_list.setAdapter(adapter);
 
@@ -63,8 +63,12 @@ public class MyProfileFragment extends Fragment {
 
     private List<MyProfile_RecyclerView_list> generateMyProfile_RecyclerView_list() {
         List<MyProfile_RecyclerView_list> myProfileRecyclerViewLists = new ArrayList<>();
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"food","yummy"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.ivysoo,"food","yummy"));
         myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.icecream,"burger","too sweet"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.juice ,"burger","good"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.juice ,"burger","good"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.juice ,"burger","good"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.juice ,"burger","good"));
         myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.juice ,"burger","good"));
 
 
