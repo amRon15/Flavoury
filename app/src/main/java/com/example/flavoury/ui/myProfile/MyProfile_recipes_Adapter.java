@@ -33,8 +33,9 @@ public class MyProfile_recipes_Adapter extends RecyclerView.Adapter<MyProfile_re
     @Override
     public void onBindViewHolder(@NonNull MyProfile_recipes_Adapter.MyViewHolder holder, int position) {
         MyProfile_RecyclerView_list myProfileRecyclerViewList = myProfileRecyclerViewLists.get(position);
-        holder.recipes_icon1.setImageResource(myProfileRecyclerViewList.getImage_pancake());
-        holder.FoodId.setText(myProfileRecyclerViewList.getPancake());
+        holder.recipes_icon.setImageResource(myProfileRecyclerViewList.getRecipes_icon());
+        holder.FoodId.setText(myProfileRecyclerViewList.getFoodId());
+        holder.drcText.setText(myProfileRecyclerViewList.getDrcText());
     }
 
     @Override
@@ -46,12 +47,13 @@ public class MyProfile_recipes_Adapter extends RecyclerView.Adapter<MyProfile_re
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView FoodId;
-        public ImageView recipes_icon1;
+        public TextView FoodId,drcText;
+        public ImageView recipes_icon;
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
             FoodId=itemView.findViewById(R.id.FoodId);
-            recipes_icon1=itemView.findViewById(R.id.recipes_icon1);
+            drcText=itemView.findViewById(R.id.drcText);
+            recipes_icon=itemView.findViewById(R.id.recipes_icon);
         }
     }
 }

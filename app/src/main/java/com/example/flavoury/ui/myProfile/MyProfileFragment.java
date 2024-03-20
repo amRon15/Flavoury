@@ -63,8 +63,9 @@ public class MyProfileFragment extends Fragment {
 
     private List<MyProfile_RecyclerView_list> generateMyProfile_RecyclerView_list() {
         List<MyProfile_RecyclerView_list> myProfileRecyclerViewLists = new ArrayList<>();
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon, "burger"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"burger"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"food","yummy"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.icecream,"burger","too sweet"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.juice ,"burger","good"));
 
 
         return myProfileRecyclerViewLists;
