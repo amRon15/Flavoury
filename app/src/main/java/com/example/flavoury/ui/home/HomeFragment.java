@@ -1,9 +1,12 @@
 package com.example.flavoury.ui.home;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,8 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentHomeBinding;
+import com.example.flavoury.ui.login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -24,6 +31,9 @@ public class HomeFragment extends Fragment {
     ArrayList<RecipeInList> popRecipes = new ArrayList<RecipeInList>();
     ArrayList<RecipeInList> exploreRecipes = new ArrayList<RecipeInList>();
 
+    FirebaseAuth firebaseAuth;
+    ImageButton button;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -31,6 +41,7 @@ public class HomeFragment extends Fragment {
             popRecipes.add(new RecipeInList("user"+i,"salad",140,103));
             exploreRecipes.add(new RecipeInList("user"+i,"Protein Pancake",201,52));
         }
+
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
@@ -56,6 +67,9 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(categoryListAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+
+
 
         return root;
     }
