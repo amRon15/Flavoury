@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,6 +39,7 @@ public class MyProfileFragment extends Fragment {
     RecyclerView recyclerView_list;
     private RecyclerView MyProfileFragment;
     ImageButton sharingButton;
+    ToggleButton toggleButton;
 
 
 
@@ -52,11 +56,13 @@ public class MyProfileFragment extends Fragment {
         RecyclerView recyclerView_list = root.findViewById(R.id.recyclerView_list);
         MyProfile_recipes_Adapter adapter = new MyProfile_recipes_Adapter(generateMyProfile_RecyclerView_list());
         int spanCount = 2;
-        recyclerView_list.setLayoutManager(new GridLayoutManager(requireContext(),spanCount));
+        recyclerView_list.setLayoutManager(new GridLayoutManager(getActivity(),spanCount));
         recyclerView_list.setAdapter(adapter);
 
 
         ImageButton icon_setting = root.findViewById(R.id.icon_setting);
+
+
         icon_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +71,10 @@ public class MyProfileFragment extends Fragment {
             }
         });
         return root;
+
+
+
+
     }
 
 
@@ -84,9 +94,18 @@ public class MyProfileFragment extends Fragment {
         return myProfileRecyclerViewLists;
     }
 
+
+
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
+
+
+
+
 }
