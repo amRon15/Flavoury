@@ -146,20 +146,11 @@
         app:layout_constraintTop_toTopOf="@+id/sharingButton"
         app:tint="@color/mainText_color"  />
 
-    <TextView
-        android:id="@+id/Recipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/following354" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_list"
         android:layout_width="405dp"
         android:layout_height="373dp"
-        android:layout_marginTop="56dp"
         android:contentDescription="list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
