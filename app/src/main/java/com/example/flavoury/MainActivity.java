@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth auth;
+    private FirebaseUser user;
     private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
@@ -30,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+//        FirebaseUser user = auth.getCurrentUser();
+
+        user = auth.getCurrentUser();
+
         if(user==null){
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);

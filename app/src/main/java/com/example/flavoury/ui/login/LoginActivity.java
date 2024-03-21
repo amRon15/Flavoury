@@ -39,6 +39,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,12 +52,12 @@ public class LoginActivity extends AppCompatActivity {
     int data;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private BeginSignInRequest signInRequest;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
+        getSupportActionBar().hide();
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com")
                 .requestEmail()
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         SignInButton signInButton = findViewById(R.id.login_google_signIn);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(view -> {
             Intent signInIntent = googleSignInClient.getSignInIntent();
             someActivityResultLauncher.launch(signInIntent);
@@ -103,7 +104,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent signUpIntent = new Intent(LoginActivity.this,RegistrationActivity.class);
                                 signUpIntent.putExtra("userEmail",account.getEmail());
-                                someActivityResultLauncher.launch(signUpIntent);
+                                signUpIntent.putExtra("userId",account.getId());
+                                startActivity(signUpIntent);
 
 
                             }else{

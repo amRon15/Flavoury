@@ -18,6 +18,7 @@ import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 import com.example.flavoury.ui.login.LoginActivity;
+import com.example.flavoury.ui.login.RegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -68,7 +69,13 @@ public class HomeFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
-
+        button = root.findViewById(R.id.homeNotificationBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), RegistrationActivity.class));
+            }
+        });
 
 
         return root;

@@ -1,30 +1,33 @@
 package com.example.flavoury.ui.login;
 
 import android.media.Image;
+import android.net.Uri;
 import android.widget.ImageButton;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import javax.annotation.Nullable;
+
 public class RegistrationUserModel {
-    private String userName,userId,email;
+    private String userName,email;
     private Timestamp createDate;
-    private ImageButton userIcon;
+    private Uri userIcon;
 
 
-    public RegistrationUserModel(String userId, String userName, String email, Timestamp createDate,ImageButton userIcon){
-        this.userId = userId;
+    public RegistrationUserModel(String userName, String email, Timestamp createDate,@Nullable Uri userIcon){
+//        this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.createDate = createDate;
         this.userIcon = userIcon;
     }
 
-    public ImageButton getUserIcon() {
+    public Uri getUserIcon() {
         return userIcon;
     }
 
-    public void setUserIcon(ImageButton userIcon) {
+    public void setUserIcon(Uri userIcon) {
         this.userIcon = userIcon;
     }
 
@@ -44,13 +47,13 @@ public class RegistrationUserModel {
         this.createDate = createDate;
     }
 
-    public String getUserId() {
-        return userId;
-    }
+//    public String getUserId() {
+//        return userId;
+//    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+//    public void setUserId(String userId) {
+//        this.userId = userId;
+//    }
 
     public String getUserName() {
         return userName;
