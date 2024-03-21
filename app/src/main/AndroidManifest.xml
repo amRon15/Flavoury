@@ -24,8 +24,8 @@
         </activity>
 
 
-        <activity android:name=".ProfileFragment"
-            android:exported="false">
+        <activity android:name=".ui.Setting.SettingActivity"
+                android:exported="true">
 
         </activity>
 

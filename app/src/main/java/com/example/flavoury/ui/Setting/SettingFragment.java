@@ -23,12 +23,13 @@ public class SettingFragment extends Fragment {
                 new ViewModelProvider(this).get(SettingViewModel.class);
 
         binding = FragmentSettingBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        /*
-        final TextView textView = binding.viewtSetting;
-        SettingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        */
-        return root;
+      /*  final TextView textView = binding.viewtSetting;
+        SettingViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+
+
+        return binding.getRoot();
+
+
     }
 
     @Override
@@ -36,4 +37,8 @@ public class SettingFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
+
+
 }

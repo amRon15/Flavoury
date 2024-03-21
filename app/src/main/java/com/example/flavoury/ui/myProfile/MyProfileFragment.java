@@ -20,7 +20,8 @@ import com.example.flavoury.databinding.FragmentLikesBinding;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.databinding.FragmentProfileBinding;
 import com.example.flavoury.databinding.FragmentSettingBinding;
-import com.example.flavoury.ui.Setting.SettingFragment;
+import com.example.flavoury.ui.Setting.SettingActivity;
+
 import com.example.flavoury.ui.likes.LikesFragment;
 import com.google.android.material.tabs.TabLayout;
 import java.lang.reflect.Array;
@@ -59,10 +60,8 @@ public class MyProfileFragment extends Fragment {
         icon_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SettingFragment settingFragment = new SettingFragment();
-
-                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, settingFragment).commit();
+                Intent intent = new Intent(requireActivity(), SettingActivity.class);
+                startActivity(intent);
             }
         });
         return root;
