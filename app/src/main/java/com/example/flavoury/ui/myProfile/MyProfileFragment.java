@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +25,7 @@ import com.example.flavoury.databinding.FragmentSettingBinding;
 import com.example.flavoury.ui.Setting.SettingActivity;
 
 import com.example.flavoury.ui.likes.LikesFragment;
+import com.example.flavoury.ui.profile.ProfileActivity;
 import com.google.android.material.tabs.TabLayout;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,7 +38,6 @@ public class MyProfileFragment extends Fragment {
     private FragmentMyProfileBinding binding;
     RecyclerView recyclerView_list;
     private RecyclerView MyProfileFragment;
-    ImageButton sharingButton;
     ToggleButton toggleButton;
 
 
@@ -61,6 +60,7 @@ public class MyProfileFragment extends Fragment {
 
 
         ImageButton icon_setting = root.findViewById(R.id.icon_setting);
+        ImageButton sharingButton = root.findViewById(R.id.sharingButton);
 
 
         icon_setting.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +70,15 @@ public class MyProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        sharingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
 
 
@@ -83,12 +92,12 @@ public class MyProfileFragment extends Fragment {
     private List<MyProfile_RecyclerView_list> generateMyProfile_RecyclerView_list() {
         List<MyProfile_RecyclerView_list> myProfileRecyclerViewLists = new ArrayList<>();
         myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"food","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"burger","too sweet"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","good"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","good"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","good"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","good"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","good"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"burger","food • >60mins"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
+        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
 
 
         return myProfileRecyclerViewLists;

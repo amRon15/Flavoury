@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Flavoury"
         tools:targetApi="31">
         <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
@@ -22,14 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".ui.Setting.SettingActivity"
-                android:exported="true">
+        <activity
+            android:name=".ui.Setting.SettingActivity"
+            >
 
         </activity>
-
-
 
         <meta-data
             android:name="preloaded_fonts"

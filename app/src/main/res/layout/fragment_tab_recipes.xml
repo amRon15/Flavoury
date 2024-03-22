@@ -32,24 +32,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/FoodId"
+        android:id="@+id/drcText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Burger"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drcText" />
+        app:layout_constraintTop_toBottomOf="@+id/FoodId" />
 
     <TextView
-        android:id="@+id/drcText"
+        android:id="@+id/FoodId"
         android:layout_width="120dp"
-        android:layout_height="18dp"
+        android:layout_height="30dp"
         android:gravity="center"
         android:text="food"
-        android:textSize="15dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipes_icon" />

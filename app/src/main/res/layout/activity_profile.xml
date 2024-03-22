@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ivyso"
+        android:layout_width="152dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/description"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_background"
+            android:src="@drawable/ivysoo" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/icon_ivyso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/ivy_so"
+        android:textColor="#202321"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivyso" />
+
+    <TextView
+        android:id="@+id/recipes23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/Recipes"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/following354"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_ivyso" />
+
+    <TextView
+        android:id="@+id/following354"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Following"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/follower1422"
+        app:layout_constraintStart_toEndOf="@+id/recipes23"
+        app:layout_constraintTop_toBottomOf="@+id/icon_ivyso" />
+
+    <TextView
+        android:id="@+id/follower1422"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="followers"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/following354"
+        app:layout_constraintTop_toBottomOf="@+id/icon_ivyso" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="23"
+        android:textColor="#202321"
+        app:layout_constraintBottom_toTopOf="@+id/recipes23"
+        app:layout_constraintEnd_toEndOf="@+id/recipes23"
+        app:layout_constraintStart_toStartOf="@+id/recipes23" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="354"
+        android:textColor="#202321"
+        android:fontFamily="@font/inter_semibold"
+
+        app:layout_constraintBottom_toTopOf="@+id/following354"
+        app:layout_constraintEnd_toEndOf="@+id/following354"
+        app:layout_constraintStart_toStartOf="@+id/following354" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1422"
+        android:textColor="#202321"
+        android:fontFamily="@font/inter_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/follower1422"
+        app:layout_constraintEnd_toEndOf="@+id/follower1422"
+        app:layout_constraintStart_toStartOf="@+id/follower1422" />
+
+
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="247dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/profile_follow_btn"
+        android:text="follow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_myRecyclerView"
+        android:layout_width="410dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:layout_height="351dp"
+        app:layout_constraintEnd_toEndOf="@+id/follow_button"
+        app:layout_constraintStart_toStartOf="@+id/follow_button"
+        app:layout_constraintTop_toBottomOf="@+id/follow_button" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
