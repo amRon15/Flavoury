@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/foodname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/inter"
+        android:text="4 Eggs"
+        android:textColor="@color/mainText_color"
+        android:textSize="15sp"
+        android:drawableStart="@drawable/circle_done_image"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/foodimage"
@@ -30,232 +35,252 @@
         app:layout_constraintTop_toTopOf="@+id/foodimage"
         app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
 
-    <TextView
-        android:id="@+id/dishname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="400dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="Baked Pork Chop Rice"
-        android:textColor="@color/mainText_color"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodimage" />
 
-    <ImageView
-        android:id="@+id/flashimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="370dp"
-        android:layout_marginBottom="380dp"
-        android:background="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dishname"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/baseline_flash_on_24"
-        app:tint="@color/Secondary_color" />
 
-    <TextView
-        android:id="@+id/cals_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="290dp"
-        android:fontFamily="@font/inter_light"
-        android:textColor="@color/secondaryText_color"
-        android:textSize="15sp"
-        android:text="1100 cals"
-        app:layout_constraintBottom_toBottomOf="@+id/flashimage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/flashimage"
-        app:layout_constraintTop_toTopOf="@+id/flashimage" />
+                <TextView
+                    android:id="@+id/dishname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="400dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Baked Pork Chop Rice"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/foodimage" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="12dp"
-        app:cardCornerRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cals_number">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/flashimage"
+            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dishname"
+            app:srcCompat="@drawable/baseline_access_time_24" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainText_color"
+            android:fontFamily="@font/inter_light"
+            android:text="150 mins"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/flashimage"
+            app:layout_constraintHorizontal_bias="0.062"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.6" />
 
 
         <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:contentDescription="@string/description"
-            android:src="@drawable/speed"
-            tools:layout_editor_absoluteX="95dp"
-            tools:layout_editor_absoluteY="478dp" />
-    </androidx.cardview.widget.CardView>
+            android:id="@+id/flashimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="380dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.709"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/baseline_flash_on_24"
+            app:tint="@color/Secondary_color" />
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="265dp"
-        android:fontFamily="@font/inter_medium"
-        android:textColor="@color/mainText_color"
-        android:textSize="18sp"
-        android:text="Speed"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView2"
-        app:layout_constraintTop_toTopOf="@+id/cardView2" />
+        <TextView
+            android:id="@+id/cals_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/inter_light"
+            android:text="1100 cals"
+            android:textColor="@color/secondaryText_color"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/flashimage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/flashimage"
+            app:layout_constraintTop_toTopOf="@+id/flashimage"
+            app:layout_constraintVertical_bias="1.0" />
 
-    <ImageButton
-        android:id="@+id/favorite_button"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="20dp"
-        android:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_name"
-        app:layout_constraintTop_toTopOf="@+id/cardView2"
-        app:srcCompat="@drawable/baseline_favorite_border_24" />
-
-    <TextView
-        android:id="@+id/recipe_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="@font/inter_medium"
-        android:textColor="@color/mainText_color"
-        android:textSize="18sp"
-        android:text="273 Likes"
-        app:layout_constraintBottom_toBottomOf="@+id/favorite_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/favorite_button"
-        app:layout_constraintTop_toTopOf="@+id/favorite_button" />
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:background="@color/secondaryText_color"
-        android:outlineAmbientShadowColor="@color/secondaryText_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dishname"
-        app:layout_constraintVertical_bias="0.258" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:background="@color/secondaryText_color"
-        android:outlineAmbientShadowColor="@color/secondaryText_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dishname"
-        app:layout_constraintVertical_bias="0.52" />
-
-    <TextView
-        android:id="@+id/Description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_medium"
-        android:text="Desciption"
-        android:textColor="@color/mainText_color"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView14"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.081"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view1"
-        app:layout_constraintVertical_bias="0.526" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="363dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="25dp"
-        android:fontFamily="@font/inter_light"
-        android:text="Your recipe has bewen uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your profile."
-        android:textColor="@color/secondaryText_color"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view1" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="Ingredients"
-        android:textColor="@color/mainText_color"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-    <ImageButton
-        android:id="@+id/imageButton6"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/circle_done_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
-        app:srcCompat="@drawable/baseline_done_24" />
-
-    <TextView
-        android:id="@+id/foodname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:fontFamily="@font/inter"
-        android:text="4 Eggs"
-        android:textColor="@color/mainText_color"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toEndOf="@+id/imageButton6"
-        app:layout_constraintTop_toTopOf="@+id/imageButton6"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:background="@color/secondaryText_color"
-        android:outlineAmbientShadowColor="@color/secondaryText_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dishname"
-        app:layout_constraintVertical_bias="0.707" />
+        <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="12dp"
+                    app:cardCornerRadius="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.068"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cals_number">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/description"
+                        android:src="@drawable/speed"
+                        tools:layout_editor_absoluteX="95dp"
+                        tools:layout_editor_absoluteY="478dp" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="265dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Speed"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardView2"
+                    app:layout_constraintTop_toTopOf="@+id/cardView2" />
+
+                <ImageButton
+                    android:id="@+id/favorite_button"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:backgroundTint="#00FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/user_name"
+                    app:layout_constraintTop_toTopOf="@+id/cardView2"
+                    app:srcCompat="@drawable/baseline_favorite_border_24" />
+
+                <TextView
+                    android:id="@+id/recipe_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="273 Likes"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/favorite_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/favorite_button"
+                    app:layout_constraintTop_toTopOf="@+id/favorite_button" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@color/secondaryText_color"
+                    android:outlineAmbientShadowColor="@color/secondaryText_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dishname"
+                    app:layout_constraintVertical_bias="0.258" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@color/secondaryText_color"
+                    android:outlineAmbientShadowColor="@color/secondaryText_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dishname"
+                    app:layout_constraintVertical_bias="0.52" />
+
+                <TextView
+                    android:id="@+id/Description_tilte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Desciption"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/Description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.081"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1"
+                    app:layout_constraintVertical_bias="0.526" />
+
+                <TextView
+                    android:id="@+id/Description"
+                    android:layout_width="363dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="25dp"
+                    android:fontFamily="@font/inter_light"
+                    android:text="Your recipe has bewen uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your profile."
+                    android:textColor="@color/secondaryText_color"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+                <TextView
+                    android:id="@+id/Ingredients"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Ingredients"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.082"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Ingredients_lits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="75dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Ingredients" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/secondaryText_color"
+            android:outlineAmbientShadowColor="@color/secondaryText_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dishname"
+            app:layout_constraintVertical_bias="0.92" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
+
+
+
+
