@@ -1,7 +1,5 @@
 package com.example.flavoury.ui.login;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -25,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
+import com.example.flavoury.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -116,7 +114,7 @@ public class RegistrationActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegistrationUserModel newUser = new RegistrationUserModel(userName,userEmail,currentTime,userIcon );
+                UserModel newUser = new UserModel(userName,userEmail,currentTime,userIcon );
                 Log.d("RegistrationActivity", "User " + newUser);
 
                     db.collection("User").add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

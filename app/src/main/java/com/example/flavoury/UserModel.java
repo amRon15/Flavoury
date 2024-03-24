@@ -1,21 +1,18 @@
-package com.example.flavoury.ui.login;
+package com.example.flavoury;
 
-import android.media.Image;
 import android.net.Uri;
-import android.widget.ImageButton;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import javax.annotation.Nullable;
 
-public class RegistrationUserModel {
+public class UserModel {
     private String userName,email;
     private Timestamp createDate;
     private Uri userIcon;
 
-
-    public RegistrationUserModel(String userName, String email, Timestamp createDate,@Nullable Uri userIcon){
+    public UserModel(){}
+    public UserModel(String userName, String email, Timestamp createDate, @Nullable Uri userIcon){
 //        this.userId = userId;
         this.userName = userName;
         this.email = email;

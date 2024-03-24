@@ -62,11 +62,11 @@
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeImg" />
 
     <TextView
-        android:id="@+id/home_pop_list_cal"
+        android:id="@+id/home_pop_list_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/baseline_flash_on_24"
+        android:drawableStart="@drawable/baseline_access_time_24"
         android:drawableTint="@color/cal_color"
         android:fontFamily="@font/inter"
         android:gravity="center"
@@ -92,7 +92,7 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.341"
-        app:layout_constraintStart_toEndOf="@+id/home_pop_list_cal"
+        app:layout_constraintStart_toEndOf="@+id/home_pop_list_time"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
