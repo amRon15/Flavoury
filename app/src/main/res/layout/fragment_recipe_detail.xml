@@ -37,7 +37,7 @@
 
 
         <TextView
-            android:id="@+id/dishname"
+            android:id="@+id/detail_dishname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -62,7 +62,7 @@
             app:layout_constraintEnd_toStartOf="@+id/flashimage"
             app:layout_constraintHorizontal_bias="0.096"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dishname"
+            app:layout_constraintTop_toBottomOf="@+id/detail_dishname"
             app:srcCompat="@drawable/baseline_access_time_24" />
 
         <TextView
@@ -173,8 +173,9 @@
                     app:layout_constraintStart_toEndOf="@+id/favorite_button"
                     app:layout_constraintTop_toTopOf="@+id/favorite_button" />
 
+
         <View
-            android:id="@+id/view1"
+            android:id="@+id/detail_div1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="25dp"
@@ -185,13 +186,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dishname"
-            app:layout_constraintVertical_bias="0.109" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/user_name"
+            app:layout_constraintVertical_bias="0.039" />
 
         <TextView
-                    android:id="@+id/Description_tilte"
+                    android:id="@+id/detail_description_tilte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_medium"
@@ -202,7 +201,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.081"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view1"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_div1"
                     app:layout_constraintVertical_bias="0.526" />
 
                 <TextView
@@ -219,7 +218,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view1" />
+                    app:layout_constraintTop_toBottomOf="@+id/detail_div1" />
 
         <View
             android:id="@+id/view2"
@@ -283,13 +282,15 @@
             android:id="@+id/step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/inter_medium"
             android:text="Step"
             android:textColor="@color/mainText_color"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/view3"
-            tools:layout_editor_absoluteX="25dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
