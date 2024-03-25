@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "495304470035",
+    "firebase_url": "https://flavoury-27429-default-rtdb.firebaseio.com",
+    "project_id": "flavoury-27429",
+    "storage_bucket": "flavoury-27429.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495304470035:android:fe0dbd298b63e3015759e6",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495304470035-nnqr60d2uberbk9n3kp39a47ajke2m52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.application",
+            "certificate_hash": "a43a711ecd9fa5a1a2fa09711b83f8df7d7bc448"
+          }
+        },
+        {
+          "client_id": "495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMACgcIpbg5wUZofkAr14lO6D1NqXFa-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495304470035:android:400964dcdd3842e55759e6",
+        "android_client_info": {
+          "package_name": "com.example.flavoury"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495304470035-fvmjhhrshb7ujflguauct0uaodilchg2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavoury",
+            "certificate_hash": "a43a711ecd9fa5a1a2fa09711b83f8df7d7bc448"
+          }
+        },
+        {
+          "client_id": "495304470035-oun89urvfuvkcupj1bubhkh06idolqhj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavoury",
+            "certificate_hash": "4d80898c423e0120370b7c0722f0303a3a955839"
+          }
+        },
+        {
+          "client_id": "495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMACgcIpbg5wUZofkAr14lO6D1NqXFa-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

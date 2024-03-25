@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -36,6 +37,7 @@ android {
 
 dependencies {
 
+    implementation ("com.firebaseui:firebase-ui-auth:7.2.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -43,6 +45,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.android.gms:play-services-base:18.3.0")
+    implementation("com.google.firebase:firebase-firestore:24.10.3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.activity:activity:1.8.0")
