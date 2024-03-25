@@ -4,41 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#00FFFFFF"
-    tools:context=".ui.likes.LikesFragment">
+    >
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="90dp"
-        app:cardCornerRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/description"
-            android:src="@drawable/speed" />
-    </androidx.cardview.widget.CardView>
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="247dp"
+        android:layout_height="71dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="228dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/primary_color"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/baseline_share_24"
+        android:background="@drawable/profile_follow_btn"
+        android:text="follow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.574"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="#11E37E"
-        android:contentDescription="@string/speed"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_myRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/follow_button"
+        app:layout_constraintStart_toStartOf="@+id/follow_button"
+        app:layout_constraintTop_toBottomOf="@+id/follow_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

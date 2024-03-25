@@ -25,4 +25,8 @@
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
     <string name="back">Back</string>
+    <string name="Recipes">Recipes</string>
+    <string name="liked" />
+    <string name="ivy_so">ivy so</string>
+    <string name="pancake">Pancake</string>
 </resources>

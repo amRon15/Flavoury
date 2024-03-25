@@ -25,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.Setting.SettingActivity"
+            >
+
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

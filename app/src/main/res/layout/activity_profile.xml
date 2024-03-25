@@ -4,30 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.myProfile.MyProfileFragment">
 
-
-    <ImageButton
-        android:id="@+id/sharingButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/speed"
-        android:src="@drawable/baseline_share_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/mainText_color"
-        />
-
-
+    >
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/ivyso"
         android:layout_width="152dp"
         android:layout_height="140dp"
         android:layout_marginTop="50dp"
@@ -56,7 +37,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+        app:layout_constraintTop_toBottomOf="@+id/ivyso" />
 
     <TextView
         android:id="@+id/recipes23"
@@ -132,47 +113,28 @@
         app:layout_constraintEnd_toEndOf="@+id/follower1422"
         app:layout_constraintStart_toStartOf="@+id/follower1422" />
 
-    <ImageButton
-        android:id="@+id/icon_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:background="#FFFFFF"
-        android:contentDescription="@string/title_setting"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/baseline_settings_24"
-        app:layout_constraintBottom_toBottomOf="@+id/sharingButton"
-        app:layout_constraintStart_toEndOf="@+id/sharingButton"
-        app:layout_constraintTop_toTopOf="@+id/sharingButton"
-        app:tint="@color/mainText_color"  />
 
-
-
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="247dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/profile_follow_btn"
+        android:text="follow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_list"
-        android:layout_width="405dp"
-        android:layout_height="373dp"
-        android:contentDescription="list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/following354" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="61dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="285dp"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/baseline_add_circle_24"
-        app:layout_constraintEnd_toStartOf="@+id/sharingButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/mainText_color" />
+        android:id="@+id/profile_myRecyclerView"
+        android:layout_width="410dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:layout_height="351dp"
+        app:layout_constraintEnd_toEndOf="@+id/follow_button"
+        app:layout_constraintStart_toStartOf="@+id/follow_button"
+        app:layout_constraintTop_toBottomOf="@+id/follow_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

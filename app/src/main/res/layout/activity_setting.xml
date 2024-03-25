@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Setting_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:backgroundTint="#00FFFFFF"
     >
 
     <ImageButton
-        android:id="@+id/icon_backbutton"
+        android:id="@+id/backbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -35,10 +34,10 @@
         android:text="Settings"
         android:textColor="@color/mainText_color"
         android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/icon_backbutton"
+        app:layout_constraintEnd_toEndOf="@+id/backbutton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/icon_backbutton"
-        app:layout_constraintTop_toBottomOf="@+id/icon_backbutton" />
+        app:layout_constraintStart_toStartOf="@+id/backbutton"
+        app:layout_constraintTop_toBottomOf="@+id/backbutton" />
 
     <ImageButton
         android:id="@+id/setting_icon"
@@ -228,7 +227,7 @@
         android:text="Dark Mode"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Setting_line3" />
 
@@ -313,21 +312,22 @@
         app:layout_constraintTop_toTopOf="@+id/textView11"
         app:srcCompat="@drawable/baseline_arrow_forward_ios_24" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
+        android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:fontFamily="@font/inter_semibold"
-        android:padding="25dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/white"
+        android:padding="15dp"
         android:text="Logout"
-        android:textColor="@color/Secondary_color"
-        android:textSize="15dp"
         app:cornerRadius="35dp"
+        android:textColor="@color/Secondary_color"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton8"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/Setting_line3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.929" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
