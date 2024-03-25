@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/foodpancake"
+        android:id="@+id/fooditem"
         android:layout_width="150dp"
         android:layout_height="110dp"
         android:layout_marginEnd="221dp"
@@ -24,9 +24,9 @@
         android:layout_height="30dp"
         android:textSize="20dp"
         android:text="food"
-        app:layout_constraintEnd_toEndOf="@+id/foodpancake"
-        app:layout_constraintStart_toStartOf="@+id/foodpancake"
-        app:layout_constraintTop_toBottomOf="@+id/foodpancake" />
+        app:layout_constraintEnd_toEndOf="@+id/fooditem"
+        app:layout_constraintStart_toStartOf="@+id/fooditem"
+        app:layout_constraintTop_toBottomOf="@+id/fooditem" />
 
     <TextView
         android:layout_width="wrap_content"

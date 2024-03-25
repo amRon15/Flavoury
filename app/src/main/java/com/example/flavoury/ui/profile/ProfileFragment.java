@@ -45,12 +45,10 @@ public class ProfileFragment extends Fragment {
         int spanCount = 2;
         profile_myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         profile_myRecyclerView.setAdapter(adapter);
-
         /*final TextView textView = binding.textProfile;
+
         ProfileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
         return root;
-
-
     }
 
     private List<Profileitems> generateProfileitems() {

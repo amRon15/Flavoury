@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.profile;
 
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 
         holder.foodtext.setText(profileitems.getFood());
         holder.fooddrc.setText(profileitems.getText());
-        holder.foodpancake.setImageResource(profileitems.getIcon());
+        holder.fooditem.setImageResource(profileitems.getIcon());
     }
 
     @Override
@@ -44,12 +45,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView foodtext;
         public TextView fooddrc;
-        public ImageView foodpancake;
+        public ImageView fooditem;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             foodtext=itemView.findViewById(R.id.foodtext);
             fooddrc=itemView.findViewById(R.id.fooddrc);
-            foodpancake=itemView.findViewById(R.id.foodpancake);
+            fooditem=itemView.findViewById(R.id.fooditem);
         }
+
     }
 }
