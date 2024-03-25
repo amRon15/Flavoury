@@ -18,7 +18,7 @@ public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_Ingre
     @NonNull
     @Override
     public MyviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_ingredients,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_detail_ingredients,parent,false);
         return new MyviewHolder(view);
     }
 
@@ -37,7 +37,7 @@ public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_Ingre
         TextView food;
         public MyviewHolder(@NonNull View itemView){
             super(itemView);
-            food = itemView.findViewById(R.id.foodname);
+            food = itemView.findViewById(R.id.detail_ingredients_name);
         }
    }
 }

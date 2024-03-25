@@ -3,7 +3,6 @@ package com.example.flavoury.ui.search;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     @NonNull
     @Override
     public SearchHistoryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_history_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_search_history, parent, false);
         return new MyViewHolder(view);
     }
 

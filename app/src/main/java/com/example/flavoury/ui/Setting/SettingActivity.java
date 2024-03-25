@@ -15,11 +15,11 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.fragment_setting);
         getSupportActionBar().hide();
 
 
-        backbutton = findViewById(R.id.backbutton);
+        backbutton = findViewById(R.id.setting_backBtn);
 
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override

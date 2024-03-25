@@ -20,7 +20,7 @@ public class LikesPostAdapter extends RecyclerView.Adapter<LikesPostAdapter.MyVi
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.likes_post_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_likes_post,parent,false);
         return new MyViewHolder(view);
     }
 

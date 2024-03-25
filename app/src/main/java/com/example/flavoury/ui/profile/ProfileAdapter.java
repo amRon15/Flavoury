@@ -1,6 +1,5 @@
 package com.example.flavoury.ui.profile;
 
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.R;
-import com.example.flavoury.ui.myProfile.MyProfile_recipes_Adapter;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {
@@ -23,7 +21,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
     @NonNull
     @Override
     public ProfileAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView=LayoutInflater.from(parent.getContext()).inflate(R.layout.profileitem,parent,false);
+        View itemView=LayoutInflater.from(parent.getContext()).inflate(R.layout.list_profile,parent,false);
 
         return new MyViewHolder(itemView);
     }
@@ -48,9 +46,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
         public ImageView fooditem;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodtext=itemView.findViewById(R.id.foodtext);
-            fooddrc=itemView.findViewById(R.id.fooddrc);
-            fooditem=itemView.findViewById(R.id.fooditem);
+            foodtext=itemView.findViewById(R.id.profile_list_recipeName);
+            fooddrc=itemView.findViewById(R.id.profile_list_category);
+            fooditem=itemView.findViewById(R.id.profile_list_recipeImg);
         }
 
     }

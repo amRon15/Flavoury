@@ -29,7 +29,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
     @NonNull
     @Override
     public RecipeListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_recipe_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_recipe, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -44,12 +44,12 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
         return recipes.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public ImageButton userIcon,recipeImg;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageButton userIcon, recipeImg;
         public Button userName;
-        public TextView recipeName,cookingTime,likes;
+        public TextView recipeName, cookingTime, likes;
 
-        public MyViewHolder(View itemView){
+        public MyViewHolder(View itemView) {
             super(itemView);
             userIcon = itemView.findViewById(R.id.home_pop_list_userImg);
             userName = itemView.findViewById(R.id.home_pop_list_userName);
@@ -59,7 +59,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             recipeImg = itemView.findViewById(R.id.home_pop_list_recipeImg);
         }
 
-        void bindData(RecipeWithUser recipeWithUser){
+        void bindData(RecipeWithUser recipeWithUser) {
             RecipeModel recipe = recipeWithUser.getRecipe();
             UserModel user = recipeWithUser.getUser();
 
@@ -67,6 +67,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             cookingTime.setText(recipe.getCookingSeconds());
             likes.setText(recipe.getLike());
             recipeName.setText(recipe.getRecipeName());
+        }
     }
 }
 
