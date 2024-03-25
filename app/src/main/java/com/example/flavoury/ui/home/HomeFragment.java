@@ -4,28 +4,59 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentHomeBinding;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    RecyclerView recyclerView,popRecyclerView,exploreRecyclerView;
+    String[] categoryType;
+    ArrayList<RecipeInList> popRecipes = new ArrayList<RecipeInList>();
+    ArrayList<RecipeInList> exploreRecipes = new ArrayList<RecipeInList>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
+        for(int i =0;i<4;i++){
+            popRecipes.add(new RecipeInList("user"+i,"salad",140,103));
+            exploreRecipes.add(new RecipeInList("user"+i,"Protein Pancake",201,52));
+        }
+
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        recyclerView = root.findViewById(R.id.home_catList);
+        categoryType = getResources().getStringArray(R.array.category);
+
+        popRecyclerView = root.findViewById(R.id.home_popList);
+        exploreRecyclerView = root.findViewById(R.id.home_exploreList);
+
+        RecipeListAdapter popListAdapter = new RecipeListAdapter(popRecipes);
+        RecipeListAdapter exploreListAdapter = new RecipeListAdapter(exploreRecipes);
+
+        popRecyclerView.setAdapter(popListAdapter);
+        popRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        exploreRecyclerView.setAdapter(exploreListAdapter);
+        exploreRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        CategoryListAdapter categoryListAdapter = new CategoryListAdapter(categoryType);
+        recyclerView.setAdapter(categoryListAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
         return root;
     }
 

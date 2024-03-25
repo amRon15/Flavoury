@@ -20,10 +20,6 @@ import java.lang.reflect.Array;
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
-    RecyclerView historyRecyclerView;
-
-    String[] myArray = {"Egg","Fish","Apple"};
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,14 +29,9 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        historyRecyclerView = root.findViewById(R.id.search_historyList);
-        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(myArray);
-        historyRecyclerView.setAdapter(searchHistoryAdapter);
-        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
         return root;
     }
-
 
     @Override
     public void onDestroyView() {

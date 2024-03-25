@@ -12,7 +12,6 @@
     <color name="mainText_color">#2E3E5C</color>
     <color name="secondaryText_color">#9FA5C0</color>
     <color name="outline_color">#D0DBEA</color>
-    <color name="searchview_color">#FAFAFA</color>
-    <color name="DetailRecipeBack_color">#9C979797</color>
-    <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
+    <color name="red">#FF0000</color>
+    <color name="cal_color">#FF7B7B</color>
 </resources>
