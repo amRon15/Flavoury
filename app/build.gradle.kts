@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.squareup.picasso:picasso:2.8")
     implementation ("com.firebaseui:firebase-ui-auth:7.2.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

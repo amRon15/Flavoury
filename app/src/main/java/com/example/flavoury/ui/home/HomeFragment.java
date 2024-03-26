@@ -70,9 +70,9 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void handleRecipes(List<RecipeWithUser> recipeWithUsers){
-        popListAdapter.setRecipeListAdapter(recipeWithUsers);
-        exploreListAdapter.setRecipeListAdapter(recipeWithUsers);
+    private void handleRecipes(List<RecipeModel> recipe){
+        popListAdapter.setRecipeListAdapter(recipe);
+        exploreListAdapter.setRecipeListAdapter(recipe);
 
         popListAdapter.notifyDataSetChanged();
         exploreListAdapter.notifyDataSetChanged();

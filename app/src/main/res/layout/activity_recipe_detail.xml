@@ -59,7 +59,6 @@
             android:layout_width="19dp"
             android:layout_height="19dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/recipe_detail_calsIcon"
             app:layout_constraintHorizontal_bias="0.096"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_detail_recipeName"
@@ -94,7 +93,7 @@
             app:layout_constraintTop_toBottomOf="@id/recipe_detail_recipeName" />
 
         <androidx.cardview.widget.CardView
-                    android:id="@+id/recipe_detail_userIcon"
+                    android:id="@+id/my_profile_userIcon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="12dp"
@@ -109,7 +108,7 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:contentDescription="@string/description"
-                        android:src="@drawable/speed"
+                        android:src="@drawable/ivysoo"
                         tools:layout_editor_absoluteX="95dp"
                         tools:layout_editor_absoluteY="478dp" />
                 </androidx.cardview.widget.CardView>
@@ -120,13 +119,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="265dp"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Speed"
+                    android:text="Ivy So"
                     android:textColor="@color/mainText_color"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/recipe_detail_userIcon"
+                    app:layout_constraintBottom_toBottomOf="@+id/my_profile_userIcon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/recipe_detail_userIcon"
-                    app:layout_constraintTop_toTopOf="@+id/recipe_detail_userIcon" />
+                    app:layout_constraintStart_toEndOf="@+id/my_profile_userIcon"
+                    app:layout_constraintTop_toTopOf="@+id/my_profile_userIcon" />
 
                 <ImageButton
                     android:id="@+id/recipe_detail_like_btn"
@@ -134,10 +133,10 @@
                     android:layout_height="45dp"
                     android:layout_marginStart="20dp"
                     android:backgroundTint="#00FFFFFF"
-                    app:layout_constraintBottom_toBottomOf="@+id/recipe_detail_userIcon"
+                    app:layout_constraintBottom_toBottomOf="@+id/my_profile_userIcon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/recipe_detail_userName"
-                    app:layout_constraintTop_toTopOf="@+id/recipe_detail_userIcon"
+                    app:layout_constraintTop_toTopOf="@+id/my_profile_userIcon"
                     app:srcCompat="@drawable/baseline_favorite_border_24" />
 
                 <TextView
@@ -281,11 +280,10 @@
             android:layout_marginEnd="75dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_step_title" />
-
+            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_step_title"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
 
 

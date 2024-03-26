@@ -1,22 +1,41 @@
 package com.example.flavoury;
 
-import java.util.Date;
-import java.util.List;
+import androidx.annotation.Nullable;
+
+import java.sql.Timestamp;
 import java.util.Map;
 
 public class RecipeModel {
 
     public RecipeModel(){}
-    private String catID;
-    private String recipeID;
-    private String recipeName;
-    private String recipeImg;
-    private String userID;
+    public RecipeModel(Map<String, Object> data){}
+    private String catID, recipeID, recipeName, userID, recipeImg,userName,userIcon;
     private int cookingMinutes, cookingSeconds, like;
-    private Date createDate;
-    private Map<String,Instruction> instruction;
-    private Map<String,Map<String,Ingredient>> ingredient;
     private boolean isPublic;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
+    }
+
+    public String getRecipeImg() {
+        return recipeImg;
+    }
+
+    public void setRecipeImg(String recipeImg) {
+        this.recipeImg = recipeImg;
+    }
 
     public String getCatID() {
         return catID;
@@ -40,14 +59,6 @@ public class RecipeModel {
 
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
-    }
-
-    public String getRecipeImg() {
-        return recipeImg;
-    }
-
-    public void setRecipeImg(String recipeImg) {
-        this.recipeImg = recipeImg;
     }
 
     public String getUserID() {
@@ -82,30 +93,6 @@ public class RecipeModel {
         this.like = like;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Map<String, Instruction> getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(Map<String, Instruction> instruction) {
-        this.instruction = instruction;
-    }
-
-    public Map<String, Map<String, Ingredient>> getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Map<String, Map<String, Ingredient>> ingredient) {
-        this.ingredient = ingredient;
-    }
-
     public boolean isPublic() {
         return isPublic;
     }
@@ -113,25 +100,42 @@ public class RecipeModel {
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
     }
+
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    public Ingredient getIngredientID() {
+        return ingredientID;
+    }
+
+    public void setIngredientID(Ingredient ingredientID) {
+        this.ingredientID = ingredientID;
+    }
+
+    public Map<String, String> getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(Map<String, String> instruction) {
+        this.instruction = instruction;
+    }
+
+    private Timestamp createDate;
+    private Ingredient ingredientID;
+    private Map<String,String> instruction;
 }
 
- class Ingredient {
-    private String name, portion;
-    String calories;
+class Ingredient{
+    private String portion, name;
+    private int calories;
 
-    public Ingredient() {
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPortion(String portion) {
-        this.portion = portion;
-    }
-
-    public void setCalories(String calories) {
-        this.calories = calories;
+    public int getCalories() {
+        return calories;
     }
 
     public String getName() {
@@ -141,23 +145,12 @@ public class RecipeModel {
     public String getPortion() {
         return portion;
     }
-
-    public String getCalories() {
-        return calories;
-    }
 }
 
- class Instruction {
-    String step;
-
-    public Instruction() {
-    }
+class Instruction{
+    private String step;
 
     public String getStep() {
         return step;
-    }
-
-    public void setStep(String step) {
-        this.step = step;
     }
 }

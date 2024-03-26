@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/detail_stepnumber"
+        android:id="@+id/detail_step_stepNum"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_marginStart="16dp"
@@ -19,17 +19,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/detail_detailofstep"
+        android:id="@+id/detail_step_stepDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="75dp"
         android:text="Your recipe has bewen uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on your profile."
-        app:layout_constraintBottom_toBottomOf="@+id/detail_stepnumber"
+        app:layout_constraintBottom_toBottomOf="@+id/detail_step_stepNum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/detail_stepnumber"
+        app:layout_constraintTop_toTopOf="@+id/detail_step_stepNum"
         app:layout_constraintVertical_bias="0.647" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.example.flavoury.ui.detail;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.My
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_step,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_detail_step,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -41,8 +40,8 @@ public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.My
         TextView step,detailStep;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            step = itemView.findViewById(R.id.detail_stepnumber);
-            detailStep = itemView.findViewById(R.id.detail_detailofstep);
+            step = itemView.findViewById(R.id.detail_step_stepNum);
+            detailStep = itemView.findViewById(R.id.detail_step_stepDetail);
         }
     }
 }

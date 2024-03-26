@@ -60,13 +60,13 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
-        sharingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireActivity(), ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+//        sharingButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(requireActivity(), ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return root;
 

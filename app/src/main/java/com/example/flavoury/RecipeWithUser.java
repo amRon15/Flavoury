@@ -1,21 +1,39 @@
 package com.example.flavoury;
 
+import androidx.annotation.Nullable;
+
 import com.firebase.ui.auth.data.model.User;
 
 public class RecipeWithUser {
-    private RecipeModel recipe;
-    private UserModel user;
+    private String userID, userName, userIcon;
 
-    public RecipeWithUser(RecipeModel recipe, UserModel user){
-        this.recipe = recipe;
-        this.user = user;
+    public RecipeWithUser(String userID, String userName, @Nullable String userIcon) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userIcon = userIcon;
     }
 
-    public RecipeModel getRecipe() {
-        return recipe;
+    public String getUserID() {
+        return userID;
     }
 
-    public UserModel getUser() {
-        return user;
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
     }
 }

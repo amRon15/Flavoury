@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recipe_detail_recipeName" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/recipe_detail_userIcon"
+            android:id="@+id/my_profile_userIcon"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:cardCornerRadius="100dp"
@@ -109,9 +109,9 @@
             android:text="Speed"
             android:textColor="@color/mainText_color"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_detail_userIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/my_profile_userIcon"
             app:layout_constraintHorizontal_bias="0.031"
-            app:layout_constraintStart_toEndOf="@+id/recipe_detail_userIcon"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_userIcon"
             app:layout_constraintTop_toBottomOf="@+id/recipe_detail_cookingMins"
             app:layout_constraintVertical_bias="0.717" />
 

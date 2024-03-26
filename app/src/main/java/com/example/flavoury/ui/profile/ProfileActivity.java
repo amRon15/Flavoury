@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         profile_myRecyclerView.setLayoutManager(layoutManager);
         profile_myRecyclerView.setAdapter(adapter);
 
-        follow_button = findViewById(R.id.follow_button);
+        follow_button = findViewById(R.id.profile_followBtn);
         follow_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

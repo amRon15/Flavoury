@@ -1,5 +1,7 @@
 package com.example.flavoury.ui.home;
 
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.RecipeWithUser;
 import com.example.flavoury.UserModel;
+import com.google.android.material.shape.RoundedCornerTreatment;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.MyViewHolder> {
 
-    private List<RecipeWithUser> recipes = new ArrayList<>();
+    private List<RecipeModel> recipes = new ArrayList<>();
 
-    public void setRecipeListAdapter(List<RecipeWithUser> recipeWithUsers) {
-        this.recipes = recipeWithUsers;
+    public void setRecipeListAdapter(List<RecipeModel> recipes) {
+        this.recipes = recipes;
     }
 
     @NonNull
@@ -35,13 +39,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull RecipeListAdapter.MyViewHolder holder, int position) {
-        RecipeWithUser recipe = recipes.get(position);
+        RecipeModel recipe = recipes.get(position);
         holder.bindData(recipe);
     }
 
     @Override
     public int getItemCount() {
-        return recipes.size();
+            return recipes.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -59,14 +63,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             recipeImg = itemView.findViewById(R.id.home_pop_list_recipeImg);
         }
 
-        void bindData(RecipeWithUser recipeWithUser) {
-            RecipeModel recipe = recipeWithUser.getRecipe();
-            UserModel user = recipeWithUser.getUser();
+        void bindData(RecipeModel recipe) {
 
-            userName.setText(user.getUserName());
-            cookingTime.setText(recipe.getCookingSeconds());
-            likes.setText(recipe.getLike());
+            userName.setText(recipe.getUserName());
             recipeName.setText(recipe.getRecipeName());
+            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
+            likes.setText(Integer.toString(recipe.getLike()));
+
+            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
         }
     }
 }
