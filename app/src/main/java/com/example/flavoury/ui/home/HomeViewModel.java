@@ -19,19 +19,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HomeViewModel extends ViewModel {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final MutableLiveData<List<RecipeModel>> recipeList = new MutableLiveData<List<RecipeModel>>();
+    ArrayList<RecipeModel> recipes = new ArrayList<>();
 
     public void fetchRecipes() {
-        db.collection("recipe")
+        db.collection("recipe").limit(5)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<RecipeModel> recipes = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 RecipeModel recipe = new RecipeModel();
                                 recipe.setRecipeID(document.getId());
@@ -39,6 +40,8 @@ public class HomeViewModel extends ViewModel {
                                 recipe.setRecipeName(document.getString("recipeName"));
                                 Long recipeLike = document.getLong("like");
                                 Long recipeCookingMinutes = document.getLong("cookingMinutes");
+                                recipe.setStep((Map<String, Object>) document.get("instruction"));
+                                recipe.setIngredients((Map<String, Object>) document.get("ingredientID"));
                                 if (recipeLike != null) {
                                     recipe.setLike(recipeLike.intValue());
                                 } else {
@@ -49,29 +52,33 @@ public class HomeViewModel extends ViewModel {
                                 } else {
                                     recipe.setCookingMinutes(0);
                                 }
-                                recipe.setRecipeImg(document.getString("recipeImg"));
-                                db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            for (QueryDocumentSnapshot userDocument : task.getResult()) {
-                                                String userName = userDocument.getString("userName");
-                                                String userID = userDocument.getId();
-                                                String userIcon = userDocument.getString("userIcon");
-                                                if (userID.equals(document.getString("userID"))) {
-                                                    recipe.setUserName(userName);
-                                                    Log.d("RecipeUser",recipe.getUserName());
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
+//                                recipe.setRecipeImg(document.getString("recipeImg"));
+
+
                                 recipes.add(recipe);
                             }
                             recipeList.postValue(recipes);
+
                         }
                     }
                 });
+//        db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot userDocument : task.getResult()) {
+//                        String userName = userDocument.getString("userName");
+//                        String userID = userDocument.getId();
+//                        String userIcon = userDocument.getString("userIcon");
+//                        for (int i = 0; i < recipes.size(); i++) {
+//                            if (recipes.get(i).getUserID().equals(userID)) {
+//                                recipes.get(i).setUserName(userName);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
 
 

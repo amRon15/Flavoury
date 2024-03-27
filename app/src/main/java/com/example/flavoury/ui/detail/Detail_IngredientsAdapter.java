@@ -9,11 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
+import com.example.flavoury.RecipeModel;
 
 public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_IngredientsAdapter.MyviewHolder> {
 
     String[] food;
-    public Detail_IngredientsAdapter(String [] food) {this.food = food;}
+    RecipeModel detailRecipe;
+    public Detail_IngredientsAdapter(String [] food,RecipeModel detailRecipe) {this.food = food;
+    this.detailRecipe = detailRecipe;}
 
     @NonNull
     @Override

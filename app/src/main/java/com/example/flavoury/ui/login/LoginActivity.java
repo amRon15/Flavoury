@@ -101,13 +101,10 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-
                                 Intent signUpIntent = new Intent(LoginActivity.this,RegistrationActivity.class);
                                 signUpIntent.putExtra("userEmail",account.getEmail());
                                 signUpIntent.putExtra("userId",account.getId());
                                 startActivity(signUpIntent);
-
-
                             }else{
                                 Toast.makeText(getApplicationContext(),"Failed to login",Toast.LENGTH_LONG).show();
                             }

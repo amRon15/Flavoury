@@ -1,6 +1,8 @@
 package com.example.flavoury.ui.home;
 
+import android.content.Intent;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserModel;
+import com.example.flavoury.ui.detail.DetailActivity;
 import com.google.android.material.shape.RoundedCornerTreatment;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -25,9 +29,13 @@ import java.util.List;
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.MyViewHolder> {
 
     private List<RecipeModel> recipes = new ArrayList<>();
+    private Intent detail_recipe_intent;
+    private FragmentActivity homeFragment;
+    private Bundle recipeBundle;
 
-    public void setRecipeListAdapter(List<RecipeModel> recipes) {
+    public void setRecipeListAdapter(List<RecipeModel> recipes, FragmentActivity homeFragment) {
         this.recipes = recipes;
+        this.homeFragment = homeFragment;
     }
 
     @NonNull
@@ -65,12 +73,21 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
         void bindData(RecipeModel recipe) {
 
-            userName.setText(recipe.getUserName());
+//            userName.setText(recipe.getUserName());
             recipeName.setText(recipe.getRecipeName());
             cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
             likes.setText(Integer.toString(recipe.getLike()));
+            recipeImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recipeBundle = new Bundle();
+                    recipeBundle.putSerializable("detailRecipe",recipe);
+                    detail_recipe_intent.putExtra("detailRecipe",recipeBundle);
+                    detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
+                }
+            });
 
-            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
+//            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
         }
     }
 }

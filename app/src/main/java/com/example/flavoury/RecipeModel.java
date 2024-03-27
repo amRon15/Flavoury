@@ -2,16 +2,34 @@ package com.example.flavoury;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Map;
 
-public class RecipeModel {
+public class RecipeModel implements Serializable {
 
     public RecipeModel(){}
-    public RecipeModel(Map<String, Object> data){}
     private String catID, recipeID, recipeName, userID, recipeImg,userName,userIcon;
     private int cookingMinutes, cookingSeconds, like;
     private boolean isPublic;
+    private Map<String,Object> step,ingredients;
+
+    public Map<String, Object> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Map<String, Object> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Map<String, Object> getStep() {
+        return step;
+    }
+
+    public void setStep(Map<String, Object> step) {
+        this.step = step;
+    }
 
     public String getUserName() {
         return userName;

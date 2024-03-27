@@ -71,8 +71,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void handleRecipes(List<RecipeModel> recipe){
-        popListAdapter.setRecipeListAdapter(recipe);
-        exploreListAdapter.setRecipeListAdapter(recipe);
+        popListAdapter.setRecipeListAdapter(recipe,getActivity());
+        exploreListAdapter.setRecipeListAdapter(recipe,getActivity());
 
         popListAdapter.notifyDataSetChanged();
         exploreListAdapter.notifyDataSetChanged();
