@@ -9,14 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
-import com.example.flavoury.RecipeModel;
+
+import java.util.Map;
 
 public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_IngredientsAdapter.MyviewHolder> {
 
-    String[] food;
-    RecipeModel detailRecipe;
-    public Detail_IngredientsAdapter(String [] food,RecipeModel detailRecipe) {this.food = food;
-    this.detailRecipe = detailRecipe;}
+    Map<String,Object> ingredients;
+    int ingredientSize;
+    public void setDetailIngredientsAdapter(Map<String,Object> ingredients, int ingredientSize) {
+        this.ingredients = ingredients;
+        this.ingredientSize = ingredientSize;
+        }
 
     @NonNull
     @Override
@@ -27,12 +30,15 @@ public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_Ingre
 
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder holder, int position){
-        holder.food.setText(food[position]);
+        String ingredientKey = (String) ingredients.keySet().toArray()[position];
+        Map<String,String> valueOfIngredient = (Map<String, String>) ingredients.get(ingredientKey);
+        String ingredient = (String) valueOfIngredient.get("name");
+        holder.food.setText(ingredient);
     }
 
     @Override
     public int getItemCount() {
-        return food.length;
+        return ingredientSize;
     }
 
     public class MyviewHolder extends RecyclerView.ViewHolder{
@@ -42,5 +48,5 @@ public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_Ingre
             super(itemView);
             food = itemView.findViewById(R.id.detail_ingredients_name);
         }
-   }
+    }
 }

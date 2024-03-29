@@ -6,14 +6,21 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class RecipeModel implements Serializable {
 
     public RecipeModel(){}
-    private String catID, recipeID, recipeName, userID, recipeImg,userName,userIcon;
+    private String catID, recipeID, recipeName, userID, recipeImg,userName,userIcon,description;
     private int cookingMinutes, cookingSeconds, like;
     private boolean isPublic;
-    private Map<String,Object> step,ingredients;
+    private Instruction instruction;
+
+    private Map<String,Object> ingredients,step;
+
+    public void setInstruction(Instruction instruction) {
+        this.instruction = instruction;
+    }
 
     public Map<String, Object> getIngredients() {
         return ingredients;
@@ -29,6 +36,14 @@ public class RecipeModel implements Serializable {
 
     public void setStep(Map<String, Object> step) {
         this.step = step;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUserName() {
@@ -135,17 +150,9 @@ public class RecipeModel implements Serializable {
         this.ingredientID = ingredientID;
     }
 
-    public Map<String, String> getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(Map<String, String> instruction) {
-        this.instruction = instruction;
-    }
 
     private Timestamp createDate;
     private Ingredient ingredientID;
-    private Map<String,String> instruction;
 }
 
 class Ingredient{

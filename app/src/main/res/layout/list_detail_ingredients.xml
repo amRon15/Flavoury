@@ -15,6 +15,7 @@
         android:textSize="15sp"
         android:drawableStart="@drawable/baseline_done_24"
         android:drawableTint="@color/DetailRecipeCircle_Done_color"
+        android:drawablePadding="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

@@ -40,8 +40,6 @@ public class HomeViewModel extends ViewModel {
                                 recipe.setRecipeName(document.getString("recipeName"));
                                 Long recipeLike = document.getLong("like");
                                 Long recipeCookingMinutes = document.getLong("cookingMinutes");
-                                recipe.setStep((Map<String, Object>) document.get("instruction"));
-                                recipe.setIngredients((Map<String, Object>) document.get("ingredientID"));
                                 if (recipeLike != null) {
                                     recipe.setLike(recipeLike.intValue());
                                 } else {
@@ -53,8 +51,6 @@ public class HomeViewModel extends ViewModel {
                                     recipe.setCookingMinutes(0);
                                 }
 //                                recipe.setRecipeImg(document.getString("recipeImg"));
-
-
                                 recipes.add(recipe);
                             }
                             recipeList.postValue(recipes);

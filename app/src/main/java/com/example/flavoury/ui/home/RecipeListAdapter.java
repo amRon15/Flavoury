@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
@@ -20,8 +21,7 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserModel;
 import com.example.flavoury.ui.detail.DetailActivity;
 import com.google.android.material.shape.RoundedCornerTreatment;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
     private List<RecipeModel> recipes = new ArrayList<>();
     private Intent detail_recipe_intent;
-    private FragmentActivity homeFragment;
-    private Bundle recipeBundle;
-
-    public void setRecipeListAdapter(List<RecipeModel> recipes, FragmentActivity homeFragment) {
+    private Context homeFragment;
+    public void setRecipeListAdapter(List<RecipeModel> recipes, Context homeFragment) {
         this.recipes = recipes;
         this.homeFragment = homeFragment;
     }
@@ -80,10 +78,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             recipeImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recipeBundle = new Bundle();
-                    recipeBundle.putSerializable("detailRecipe",recipe);
-                    detail_recipe_intent.putExtra("detailRecipe",recipeBundle);
                     detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
+                    detail_recipe_intent.putExtra("detailRecipeID",recipe.getRecipeID());
+                    homeFragment.startActivity(detail_recipe_intent);
                 }
             });
 
