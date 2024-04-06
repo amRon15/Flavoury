@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,9 @@ import java.util.Map;
 public class HomeViewModel extends ViewModel {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private MutableLiveData<List<RecipeModel>> recipeList = new MutableLiveData<List<RecipeModel>>();
+    private MutableLiveData<List<RecipeModel>> randomRecipeList = new MutableLiveData<List<RecipeModel>>();
     private final ArrayList<RecipeModel> recipes = new ArrayList<>();
+    private ArrayList<RecipeModel> randomRecipes = new ArrayList<>();
     private ArrayList<String> likeRecipes = new ArrayList<>();
     private ArrayList<String> recipeUserIDs = new ArrayList<>();
     private final FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -85,9 +88,11 @@ public class HomeViewModel extends ViewModel {
                                     recipe.setCookingMinutes(0);
                                 }
 //                                recipe.setRecipeImg(document.getString("recipeImg"));
-
+                                randomRecipes.add(recipe);
                                 recipes.add(recipe);
                             }
+                            Collections.shuffle(randomRecipes);
+                            randomRecipeList.postValue(randomRecipes);
                             recipeList.postValue(recipes);
                         }
                     }
@@ -102,7 +107,19 @@ public class HomeViewModel extends ViewModel {
         }
     }
 
+    public void resetData(){
+        recipes.clear();
+        randomRecipes.clear();
+        recipeList.postValue(recipes);
+        randomRecipeList.postValue(randomRecipes);
+    }
+
     public LiveData<List<RecipeModel>> getRecipeList() {
         return recipeList;
     }
+
+    public LiveData<List<RecipeModel>> getRandomRecipeList() {
+        return randomRecipeList;
+    }
+
 }

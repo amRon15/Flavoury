@@ -28,7 +28,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/profile_userName"
+        android:id="@+id/my_profile_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_userIcon" />
 
     <TextView
-        android:id="@+id/profile_recipeTitle"
+        android:id="@+id/my_profile_recipeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="116dp"
@@ -49,7 +49,7 @@
         android:text="@string/Recipes"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_userName" />
+        app:layout_constraintTop_toBottomOf="@+id/my_profile_userName" />
 
     <TextView
         android:id="@+id/profile_likesTitle"
@@ -62,8 +62,8 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.368"
-        app:layout_constraintStart_toEndOf="@+id/profile_recipeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/profile_userName" />
+        app:layout_constraintStart_toEndOf="@+id/my_profile_recipeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/my_profile_userName" />
 
     <TextView
         android:id="@+id/profile_recipeNum"
@@ -72,9 +72,9 @@
         android:fontFamily="@font/inter_semibold"
         android:text="23"
         android:textColor="#202321"
-        app:layout_constraintBottom_toTopOf="@+id/profile_recipeTitle"
-        app:layout_constraintEnd_toEndOf="@+id/profile_recipeTitle"
-        app:layout_constraintStart_toStartOf="@+id/profile_recipeTitle" />
+        app:layout_constraintBottom_toTopOf="@+id/my_profile_recipeTitle"
+        app:layout_constraintEnd_toEndOf="@+id/my_profile_recipeTitle"
+        app:layout_constraintStart_toStartOf="@+id/my_profile_recipeTitle" />
 
     <TextView
         android:id="@+id/profile_likesNum"

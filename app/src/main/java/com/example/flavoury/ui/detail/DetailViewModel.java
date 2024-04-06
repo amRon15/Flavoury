@@ -90,9 +90,9 @@ public class DetailViewModel extends ViewModel {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot documentSnapshot = task.getResult();
-                                    if(documentSnapshot.get("likeRecipe")!=null) {
-                                        for(String recipeID : (ArrayList<String>) documentSnapshot.get("likeRecipe")){
-                                            if(recipeID.contains(intentFromRecipe)){
+                                    if (documentSnapshot.get("likeRecipe") != null) {
+                                        for (String recipeID : (ArrayList<String>) documentSnapshot.get("likeRecipe")) {
+                                            if (recipeID.contains(intentFromRecipe)) {
                                                 recipe.setRecipeLike(true);
                                                 break;
                                             }

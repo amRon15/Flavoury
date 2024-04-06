@@ -94,6 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/inter_medium"
         android:text="@string/view_more"
@@ -104,22 +105,22 @@
         app:layout_constraintStart_toEndOf="@+id/home_pop_title"
         app:layout_constraintTop_toBottomOf="@+id/home_catList" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_popList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_pop_title" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_popList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_pop_title" />
 
-    <TextView
+        <TextView
         android:id="@+id/home_explore_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Explore Dishes"
         android:textColor="@color/mainText_color"
@@ -131,6 +132,7 @@
         android:id="@+id/home_view_explore_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/inter_medium"
         android:text="@string/view_more"
@@ -143,9 +145,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_exploreList"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="70dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"

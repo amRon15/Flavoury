@@ -6,18 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ToggleButton;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
+import com.example.flavoury.RecipeModel;
+import com.example.flavoury.UserProfileModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.ui.Setting.SettingActivity;
 
-import com.example.flavoury.ui.profile.ProfileActivity;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,34 +29,38 @@ import java.util.List;
 public class MyProfileFragment extends Fragment {
 
     private FragmentMyProfileBinding binding;
-    RecyclerView recyclerView_list;
-    private RecyclerView MyProfileFragment;
-    ToggleButton toggleButton;
-
-
+    RecyclerView myProfileRecipeRecyclerView;
+    MyProfileRecipeAdapter myProfileRecipeAdapter;
+    MyProfileViewModel myProfileViewModel;
+    ImageButton settingBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
-        MyProfileViewModel myProfileViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
-        /*View rootView = inflater.inflate(R.layout.fragment_my_profile,container,false);*/
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        myProfileRecipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
+        myProfileRecipeAdapter = new MyProfileRecipeAdapter();
+        myProfileRecipeRecyclerView.setAdapter(myProfileRecipeAdapter);
+        myProfileRecipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
-        RecyclerView recyclerView_list = root.findViewById(R.id.my_profile_recipe_recyclerView);
-        MyProfile_recipes_Adapter adapter = new MyProfile_recipes_Adapter(generateMyProfile_RecyclerView_list());
-        int spanCount = 2;
-        recyclerView_list.setLayoutManager(new GridLayoutManager(getActivity(),spanCount));
-        recyclerView_list.setAdapter(adapter);
+        myProfileViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
+        myProfileViewModel.fetchRecipe();
+        myProfileViewModel.fetchMyUserData();
+        myProfileViewModel.getRecipeList().observe(getViewLifecycleOwner(), this::handleRecipe);
+        myProfileViewModel.getUserData().observe(getViewLifecycleOwner(), new Observer<UserProfileModel>() {
+            @Override
+            public void onChanged(UserProfileModel userProfileModel) {
+                setView(root, userProfileModel);
+            }
+        });
 
+        return root;
+    }
 
-        ImageButton icon_setting = root.findViewById(R.id.my_profile_setting);
-        ImageButton sharingButton = root.findViewById(R.id.my_profile_sharingButton);
-
-
-        icon_setting.setOnClickListener(new View.OnClickListener() {
+    private void setView(View root, UserProfileModel userData) {
+        settingBtn = root.findViewById(R.id.my_profile_setting);
+        settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireActivity(), SettingActivity.class);
@@ -60,48 +68,22 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
-//        sharingButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(requireActivity(), ProfileActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        TextView recipeNum = root.findViewById(R.id.my_profile_recipeNum);
+        TextView recipeLikes = root.findViewById(R.id.my_profile_likeNum);
+        TextView userName = root.findViewById(R.id.my_profile_userName);
 
-        return root;
-
-
-
-
+        userName.setText(userData.getUserName());
     }
 
 
-
-
-    private List<MyProfile_RecyclerView_list> generateMyProfile_RecyclerView_list() {
-        List<MyProfile_RecyclerView_list> myProfileRecyclerViewLists = new ArrayList<>();
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"food","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon,"burger","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
-        myProfileRecyclerViewLists.add(new MyProfile_RecyclerView_list(R.drawable.burgericon ,"burger","food • >60mins"));
-
-
-        return myProfileRecyclerViewLists;
+    private void handleRecipe(List<RecipeModel> recipes) {
+        myProfileRecipeAdapter.setMyProfileRecipeAdapter(recipes, getContext());
+        myProfileRecipeAdapter.notifyDataSetChanged();
     }
-
-
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        myProfileViewModel.resetData();
     }
-
-
-
-
-
 }

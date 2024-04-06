@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.RecipeWithUser;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 import com.example.flavoury.ui.login.LoginActivity;
 import com.example.flavoury.ui.login.RegistrationActivity;
@@ -33,7 +32,7 @@ public class HomeFragment extends Fragment {
     RecyclerView catRecyclerView,popRecyclerView,exploreRecyclerView;
     String[] categoryType;
     RecipeListAdapter popListAdapter,exploreListAdapter;
-
+    HomeViewModel homeViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -59,24 +58,27 @@ public class HomeFragment extends Fragment {
         catRecyclerView.setAdapter(categoryListAdapter);
         catRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.fetchRecipes();
         homeViewModel.getRecipeList().observe(getViewLifecycleOwner(),this::handleRecipes);
-
+        homeViewModel.getRandomRecipeList().observe(getViewLifecycleOwner(), this::handleRandomRecipe);
         return root;
     }
 
     private void handleRecipes(List<RecipeModel> recipe){
         popListAdapter.setRecipeListAdapter(recipe,getContext());
-        exploreListAdapter.setRecipeListAdapter(recipe,getContext());
-
         popListAdapter.notifyDataSetChanged();
+    }
+
+    private void handleRandomRecipe(List<RecipeModel> recipe){
+        exploreListAdapter.setRecipeListAdapter(recipe,getContext());
         exploreListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        homeViewModel.resetData();
+
     }
 }

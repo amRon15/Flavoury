@@ -40,17 +40,6 @@ public class SearchFragment extends Fragment {
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         historyRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
 
-        Button to_detail_recipe = root.findViewById(R.id.to_detail_recipe);
-
-        to_detail_recipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(requireActivity(), DetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         return root;
 
 

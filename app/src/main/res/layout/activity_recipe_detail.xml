@@ -83,7 +83,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/recipe_detail_userIcon"
+            android:id="@+id/my_profile_userIcon"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginStart="24dp"
@@ -111,7 +111,7 @@
             android:text=""
             android:textColor="@color/mainText_color"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/recipe_detail_userIcon"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_userIcon"
             app:layout_constraintTop_toBottomOf="@+id/recipe_detail_cookingMins" />
 
         <ToggleButton
@@ -146,13 +146,13 @@
             android:layout_height="1dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginTop="10dp"
             android:background="@color/secondaryText_color"
             android:outlineAmbientShadowColor="@color/secondaryText_color"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_userName"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_userIcon"
             app:layout_constraintVertical_bias="0.039" />
 
         <TextView

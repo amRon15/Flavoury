@@ -43,15 +43,12 @@
         app:layout_constraintStart_toEndOf="@+id/search_searchView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/to_detail_recipe"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="208dp"
-        android:text="Detail Recipe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_historyList" />
+        app:layout_constraintTop_toBottomOf="@id/search_historyList" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
