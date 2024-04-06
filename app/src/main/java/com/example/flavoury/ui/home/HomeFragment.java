@@ -34,9 +34,6 @@ public class HomeFragment extends Fragment {
     String[] categoryType;
     RecipeListAdapter popListAdapter,exploreListAdapter;
 
-    FirebaseAuth firebaseAuth;
-    ImageButton button;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -63,9 +60,8 @@ public class HomeFragment extends Fragment {
         catRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getRecipeList().observe(getViewLifecycleOwner(),this::handleRecipes);
         homeViewModel.fetchRecipes();
-
+        homeViewModel.getRecipeList().observe(getViewLifecycleOwner(),this::handleRecipes);
 
         return root;
     }

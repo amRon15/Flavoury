@@ -80,13 +80,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
 
+    <ToggleButton
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/home_pop_likeToggle"
+        android:background="@drawable/toggle_select"
+        app:layout_constraintEnd_toStartOf="@id/home_pop_list_like"
+        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:textOn=""
+        android:textOff="" />
+
     <TextView
         android:id="@+id/home_pop_list_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/baseline_favorite_24"
-        android:drawableTint="@color/red"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="15dp"
         android:fontFamily="@font/inter"
         android:gravity="center"
         android:text="103"
@@ -94,7 +105,6 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.341"
-        app:layout_constraintStart_toEndOf="@+id/home_pop_list_time"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

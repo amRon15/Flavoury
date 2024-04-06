@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
+import com.example.flavoury.ui.home.HomeFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth auth;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     int data;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private BeginSignInRequest signInRequest;
@@ -101,10 +103,15 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                Intent signUpIntent = new Intent(LoginActivity.this,RegistrationActivity.class);
-                                signUpIntent.putExtra("userEmail",account.getEmail());
-                                signUpIntent.putExtra("userId",account.getId());
-                                startActivity(signUpIntent);
+                                if(user==null) {
+                                    Intent signUpIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                                    signUpIntent.putExtra("userEmail", account.getEmail());
+                                    signUpIntent.putExtra("userId", account.getId());
+                                    startActivity(signUpIntent);
+                                }else{
+                                    Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(homeIntent);
+                                }
                             }else{
                                 Toast.makeText(getApplicationContext(),"Failed to login",Toast.LENGTH_LONG).show();
                             }

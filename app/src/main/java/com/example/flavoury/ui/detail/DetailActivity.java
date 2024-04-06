@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +36,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_recipe_detail);
         getSupportActionBar().hide();
 
         recipe_detail_backBtn = findViewById(R.id.recipe_detail_back_btn);
@@ -54,8 +56,8 @@ public class DetailActivity extends AppCompatActivity {
         String intentFromRecipe = fromRecipe.getStringExtra("detailRecipeID");
 
 
-        detailStepRecyclerView = findViewById(R.id.detail_step_recyclerView);
-        detail_ingredients_recyclerview = findViewById(R.id.detail_ingredients_recyclerview);
+        detailStepRecyclerView = findViewById(R.id.recipe_detail_step_recyclerView);
+        detail_ingredients_recyclerview = findViewById(R.id.recipe_detail_ingredients_recyclerView);
 
         detailStepAdapter = new DetailStepAdapter();
         detailIngredientsAdapter = new Detail_IngredientsAdapter();
@@ -74,12 +76,12 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(RecipeModel recipeModels) {
                 handleRecyclerView(recipeModels);
-                setView(recipeModels);
+                setView(recipeModels,detailViewModel);
             }
         });
     }
 
-    private void setView(RecipeModel recipe) {
+    private void setView(RecipeModel recipe, DetailViewModel detailViewModel) {
         //ImageView recipeImg = findViewById(R.id.recipe_detail_recipeImg);
         TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
         TextView recipeCookingTime = findViewById(R.id.recipe_detail_cookingMins);
@@ -87,6 +89,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView recipeDescription = findViewById(R.id.recipe_detail_description);
         TextView userName = findViewById(R.id.recipe_detail_userName);
         TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
+        ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
 
         recipeCals.setText("");
         recipeName.setText(recipe.getRecipeName());
@@ -94,6 +97,15 @@ public class DetailActivity extends AppCompatActivity {
         recipeLike.setText(recipe.getLike() + " Likes");
         recipeDescription.setText("This is a recipe of " + recipe.getRecipeName());
         userName.setText(recipe.getUserName());
+        recipeLikeToggle.setChecked(recipe.getIsRecipeLike());
+
+        recipeLikeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                detailViewModel.handleLikeRecipe(isChecked);
+            }
+        });
+
     }
 
     private void handleRecyclerView(RecipeModel recipe) {

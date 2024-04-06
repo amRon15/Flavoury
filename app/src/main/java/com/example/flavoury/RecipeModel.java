@@ -13,10 +13,19 @@ public class RecipeModel implements Serializable {
     public RecipeModel(){}
     private String catID, recipeID, recipeName, userID, recipeImg,userName,userIcon,description;
     private int cookingMinutes, cookingSeconds, like;
-    private boolean isPublic;
+    private boolean isPublic,isRecipeLike;
     private Instruction instruction;
 
     private Map<String,Object> ingredients,step;
+
+
+    public boolean getIsRecipeLike() {
+        return isRecipeLike;
+    }
+
+    public void setRecipeLike(boolean recipeLike) {
+        isRecipeLike = recipeLike;
+    }
 
     public void setInstruction(Instruction instruction) {
         this.instruction = instruction;

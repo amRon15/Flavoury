@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -51,13 +52,18 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
     @Override
     public int getItemCount() {
-            return recipes.size();
+            if(!recipes.isEmpty()){
+                return 5;
+            }else {
+                return 0;
+            }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageButton userIcon, recipeImg;
         public Button userName;
         public TextView recipeName, cookingTime, likes;
+        ToggleButton likeToggle;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -67,11 +73,12 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             likes = itemView.findViewById(R.id.home_pop_list_like);
             recipeName = itemView.findViewById(R.id.home_pop_list_recipeName);
             recipeImg = itemView.findViewById(R.id.home_pop_list_recipeImg);
+            likeToggle = itemView.findViewById(R.id.home_pop_likeToggle);
         }
 
         void bindData(RecipeModel recipe) {
 
-//            userName.setText(recipe.getUserName());
+            userName.setText(recipe.getUserName());
             recipeName.setText(recipe.getRecipeName());
             cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
             likes.setText(Integer.toString(recipe.getLike()));
@@ -83,6 +90,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                     homeFragment.startActivity(detail_recipe_intent);
                 }
             });
+            likeToggle.setChecked(recipe.getIsRecipeLike());
 
 //            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
         }
