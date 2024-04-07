@@ -7,32 +7,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flavoury.databinding.FragmentAddRecipeBinding;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 
-public class addRecipeFragment extends Fragment {
-
-    private FragmentAddRecipeBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        addRecipeViewModel addRecipeViewModel =
-                new ViewModelProvider(this).get(addRecipeViewModel.class);
-
-        binding = FragmentAddRecipeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textCreateRecipe;
-        addRecipeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
-    }
-
+public class addRecipeFragment extends AppCompatActivity {
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        getActionBar().hide();
+
+
     }
+
 }

@@ -257,6 +257,7 @@
         app:srcCompat="@drawable/baseline_arrow_forward_ios_24" />
 
     <Button
+        android:id="@+id/setting_logoutBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"

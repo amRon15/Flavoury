@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.RecipeWithUser;
 import com.example.flavoury.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -92,8 +91,8 @@ public class HomeViewModel extends ViewModel {
                                 recipes.add(recipe);
                             }
                             Collections.shuffle(randomRecipes);
-                            randomRecipeList.postValue(randomRecipes);
-                            recipeList.postValue(recipes);
+                            randomRecipeList.setValue(randomRecipes);
+                            recipeList.setValue(recipes);
                         }
                     }
                 });

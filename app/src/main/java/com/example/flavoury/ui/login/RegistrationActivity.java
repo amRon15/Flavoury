@@ -45,7 +45,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration_page);
+        setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
 
 

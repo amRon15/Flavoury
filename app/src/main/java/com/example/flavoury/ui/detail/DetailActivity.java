@@ -2,8 +2,10 @@ package com.example.flavoury.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Scene;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -82,7 +84,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setView(RecipeModel recipe, DetailViewModel detailViewModel) {
-        //ImageView recipeImg = findViewById(R.id.recipe_detail_recipeImg);
+        ImageView recipeImg = findViewById(R.id.recipe_detail_recipeImg);
         TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
         TextView recipeCookingTime = findViewById(R.id.recipe_detail_cookingMins);
         TextView recipeLike = findViewById(R.id.recipe_detail_likeNum);
@@ -103,9 +105,14 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 detailViewModel.handleLikeRecipe(isChecked);
+                compoundButton.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        compoundButton.animate().scaleX(1).scaleY(1).setDuration(100);
+                    }
+                });
             }
         });
-
     }
 
     private void handleRecyclerView(RecipeModel recipe) {

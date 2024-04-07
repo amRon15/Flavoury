@@ -66,12 +66,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void handleRecipes(List<RecipeModel> recipe){
-        popListAdapter.setRecipeListAdapter(recipe,getContext());
+        popListAdapter.setRecipeListAdapter(recipe,getContext(),homeViewModel);
         popListAdapter.notifyDataSetChanged();
     }
 
     private void handleRandomRecipe(List<RecipeModel> recipe){
-        exploreListAdapter.setRecipeListAdapter(recipe,getContext());
+        exploreListAdapter.setRecipeListAdapter(recipe,getContext(),homeViewModel);
         exploreListAdapter.notifyDataSetChanged();
     }
 

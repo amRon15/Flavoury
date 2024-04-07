@@ -1,15 +1,22 @@
 package com.example.flavoury.ui.home;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -32,10 +39,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
     private List<RecipeModel> recipes = new ArrayList<>();
     private Intent detail_recipe_intent;
     private Context homeFragment;
-    public void setRecipeListAdapter(List<RecipeModel> recipes, Context homeFragment) {
+    private HomeViewModel homeViewModel;
+
+    public void setRecipeListAdapter(List<RecipeModel> recipes, Context homeFragment,HomeViewModel homeViewModel) {
         this.recipes = recipes;
         this.homeFragment = homeFragment;
+        this.homeViewModel = homeViewModel;
     }
+
 
     @NonNull
     @Override
@@ -52,11 +63,11 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
     @Override
     public int getItemCount() {
-            if(!recipes.isEmpty()){
-                return recipes.size();
-            }else {
-                return 0;
-            }
+        if (!recipes.isEmpty()) {
+            return recipes.size();
+        } else {
+            return 0;
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -86,11 +97,24 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 @Override
                 public void onClick(View v) {
                     detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
-                    detail_recipe_intent.putExtra("detailRecipeID",recipe.getRecipeID());
+                    detail_recipe_intent.putExtra("detailRecipeID", recipe.getRecipeID());
+
                     homeFragment.startActivity(detail_recipe_intent);
                 }
             });
             likeToggle.setChecked(recipe.getIsRecipeLike());
+            likeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    homeViewModel.handleLikeRecipe(isChecked, recipe.getRecipeID());
+                    compoundButton.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            compoundButton.animate().scaleX(1).scaleY(1).setDuration(100);
+                        }
+                    });
+                }
+            });
 
 //            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
         }
