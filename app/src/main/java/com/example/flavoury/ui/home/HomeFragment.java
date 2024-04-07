@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentHomeBinding;
+import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.login.LoginActivity;
 import com.example.flavoury.ui.login.RegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,21 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        ImageButton addRecipeBtn = root.findViewById(R.id.homeAddBtn);
+        addRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.animate().scaleX(1).scaleY(1).setDuration(100);
+                    }
+                });
+                Intent addRecipeIntent = new Intent(getActivity(), AddRecipeActivity.class);
+                startActivity(addRecipeIntent);
+            }
+        });
 
         categoryType = getResources().getStringArray(R.array.category);
 

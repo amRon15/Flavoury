@@ -84,7 +84,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:id="@+id/home_pop_likeToggle"
-        android:background="@drawable/toggle_select"
+        android:background="@drawable/selector_like"
         app:layout_constraintEnd_toStartOf="@id/home_pop_list_like"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName"
         android:layout_marginTop="10dp"
