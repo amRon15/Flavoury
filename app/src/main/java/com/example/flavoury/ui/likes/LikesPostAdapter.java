@@ -64,7 +64,7 @@ public class LikesPostAdapter extends RecyclerView.Adapter<LikesPostAdapter.MyVi
                 @Override
                 public void onClick(View view) {
                     detail_recipe_intent = new Intent(likesFragment, DetailActivity.class);
-                    detail_recipe_intent.putExtra("detailRecipeID",recipe.getRecipeID());
+                    detail_recipe_intent.putExtra("detailRecipe",recipe);
                     likesFragment.startActivity(detail_recipe_intent);
                 }
             });

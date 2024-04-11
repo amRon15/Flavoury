@@ -8,15 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
-import java.util.Map;
+import java.util.ArrayList;
 
-public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_IngredientsAdapter.MyviewHolder> {
+public class DetailIngredientsAdapter extends RecyclerView.Adapter<DetailIngredientsAdapter.MyviewHolder> {
 
-    Map<String,Object> ingredients;
+    ArrayList<Ingredients> ingredients;
     int ingredientSize;
-    public void setDetailIngredientsAdapter(Map<String,Object> ingredients, int ingredientSize) {
+    public void setDetailIngredientsAdapter(ArrayList<Ingredients> ingredients, int ingredientSize) {
         this.ingredients = ingredients;
         this.ingredientSize = ingredientSize;
         }
@@ -30,10 +31,8 @@ public class Detail_IngredientsAdapter extends RecyclerView.Adapter<Detail_Ingre
 
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder holder, int position){
-        String ingredientKey = (String) ingredients.keySet().toArray()[position];
-        Map<String,String> valueOfIngredient = (Map<String, String>) ingredients.get(ingredientKey);
-        String ingredient = (String) valueOfIngredient.get("name");
-        holder.food.setText(ingredient);
+        Ingredients ingredient = ingredients.get(position);
+        holder.food.setText(ingredient.getPortion() + " "+ingredient.getIngredient());
     }
 
     @Override

@@ -20,13 +20,10 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdapter.MyViewHolder> {
+    ArrayList<String> steps;
 
-    boolean isRecipeReady;
-    ArrayList<AddRecipeModel.Step> steps;
-
-    public void setAddRecipeStepAdapter(ArrayList<AddRecipeModel.Step> steps, boolean isRecipeReady) {
+    public void setAddRecipeStepAdapter(ArrayList<String> steps) {
         this.steps = steps;
-        this.isRecipeReady = isRecipeReady;
     }
 
     @NonNull
@@ -38,8 +35,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        AddRecipeModel.Step step = steps.get(position);
-        holder.bindData(step, position);
+        holder.bindData(steps,position);
     }
 
     @Override
@@ -59,7 +55,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
             removeBtn = itemView.findViewById(R.id.add_recipe_step_remove);
         }
 
-        void bindData(AddRecipeModel.Step step, int position) {
+        void bindData(ArrayList<String> steps, int position) {
             this.stepNum.setText("Step " + (position + 1));
             this.step.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -69,8 +65,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    step.setStep(charSequence.toString());
-                    isRecipeReady = charSequence.length()!=0;
+                    step.setText(charSequence.toString());
                 }
 
                 @Override

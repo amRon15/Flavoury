@@ -7,7 +7,7 @@
     tools:context=".ui.search.SearchFragment">
 
 
-    <androidx.appcompat.widget.SearchView
+    <SearchView
         android:id="@+id/search_searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,14 +22,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:queryHint="Search Here ...." />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_historyList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_searchView" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/search_historyList"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/searchView" />-->
 
     <ImageButton
         android:id="@+id/search_filter_btn"
@@ -44,11 +44,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:id="@+id/search_recipeRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_historyList" />
+        app:layout_constraintTop_toBottomOf="@id/search_searchView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

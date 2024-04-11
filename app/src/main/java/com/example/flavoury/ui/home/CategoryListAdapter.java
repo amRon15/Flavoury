@@ -29,12 +29,22 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.button.setText(categoryType[position]);
+        if (position==5){
+            holder.button.setText("Other");
+        }else {
+            holder.button.setText(categoryType[position]);
+        }
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectIndex = holder.getAdapterPosition();
-                notifyDataSetChanged();
+                notifyItemRangeChanged(0, categoryType.length);
+                view.animate().scaleX(1.1f).scaleY(1.1f).setDuration(100).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.animate().scaleX(1).scaleY(1).setDuration(100);
+                    }
+                });
             }
         });
         if(selectIndex==position){
@@ -42,11 +52,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }else{
             holder.button.setBackgroundResource(R.drawable.home_category_unselect);
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return categoryType.length;
+        return 6;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private Button button;

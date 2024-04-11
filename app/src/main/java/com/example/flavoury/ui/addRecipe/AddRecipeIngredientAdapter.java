@@ -14,16 +14,16 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
 import java.util.ArrayList;
 
 public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIngredientAdapter.MyViewHolder> {
     boolean isRecipeReady;
-    ArrayList<AddRecipeModel.Ingredient> ingredients;
-    public void setAddRecipeIngredientAdapter(ArrayList<AddRecipeModel.Ingredient> ingredients, boolean isRecipeReady){
+    ArrayList<Ingredients> ingredients;
+    public void setAddRecipeIngredientAdapter(ArrayList<Ingredients> ingredients){
         this.ingredients = ingredients;
-        this.isRecipeReady = isRecipeReady;
     }
 
     @NonNull
@@ -35,7 +35,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
     @Override
     public void onBindViewHolder(@NonNull AddRecipeIngredientAdapter.MyViewHolder holder, int position) {
-        AddRecipeModel.Ingredient ingredient = ingredients.get(position);
+        Ingredients ingredient = ingredients.get(position);
         holder.bindData(ingredient,position);
     }
 
@@ -55,7 +55,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
             removeBtn = itemView.findViewById(R.id.add_recipe_ingredient_remove);
         }
 
-        void bindData(AddRecipeModel.Ingredient ingredient, int position){
+        void bindData(Ingredients ingredient, int position){
             this.ingredient.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -97,16 +97,24 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 @Override
                 public void onClick(View v) {
                     detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
-                    detail_recipe_intent.putExtra("detailRecipeID", recipe.getRecipeID());
+                    detail_recipe_intent.putExtra("detailRecipe", recipe);
 
                     homeFragment.startActivity(detail_recipe_intent);
                 }
             });
+
             likeToggle.setChecked(recipe.getIsRecipeLike());
             likeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
                     homeViewModel.handleLikeRecipe(isChecked, recipe.getRecipeID());
+                    //Set the like number when toggle
+                    if (recipe.getIsRecipeLike()) {
+                        likes.setText(isChecked ? recipe.getLike() + "" : recipe.getLike() - 1 + "");
+                    } else {
+                        likes.setText(isChecked ? recipe.getLike() + 1 + "" : recipe.getLike() + "");
+                    }
                     compoundButton.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
                         @Override
                         public void run() {

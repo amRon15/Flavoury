@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,8 +40,10 @@ public class HomeViewModel extends ViewModel {
     private ArrayList<String> recipeUserIDs = new ArrayList<>();
     private final FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
     private final String myUserID = myUser.getUid();
+    private RecipeModel recipe;
 
     public void fetchRecipes() {
+        //fetching current user's Field likeRecipe recipeID
         db.collection("User").document(myUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -50,6 +53,7 @@ public class HomeViewModel extends ViewModel {
                 }
             }
         });
+        //fetching 5 recipe from recipe Collection
         db.collection("recipe").limit(5)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -57,39 +61,25 @@ public class HomeViewModel extends ViewModel {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                RecipeModel recipe = new RecipeModel();
+                                recipe = document.toObject(RecipeModel.class);
                                 recipe.setRecipeID(document.getId());
+                                //loop recipeID of user's likeRecipe & if true set it to is like, so the heart btn will be filled
                                 for(String likeRecipe : likeRecipes){
                                     if(likeRecipe.contains(document.getId())){
                                         recipe.setRecipeLike(true);
                                     }
                                 }
-                                String recipeUserID = document.getString("userID");
-                                recipeUserIDs.add(recipeUserID);
-                                recipe.setUserID(recipeUserID);
-                                db.collection("User").document(recipeUserID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                //fetching the user of this recipe
+                                db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         recipe.setUserName(documentSnapshot.getString("userName"));
                                     }
                                 });
-                                recipe.setRecipeName(document.getString("recipeName"));
-                                Long recipeLike = document.getLong("like");
-                                Long recipeCookingMinutes = document.getLong("cookingMinutes");
-                                if (recipeLike != null) {
-                                    recipe.setLike(recipeLike.intValue());
-                                } else {
-                                    recipe.setLike(0);
-                                }
-                                if (recipeCookingMinutes != null) {
-                                    recipe.setCookingMinutes(recipeCookingMinutes.intValue());
-                                } else {
-                                    recipe.setCookingMinutes(0);
-                                }
-//                                recipe.setRecipeImg(document.getString("recipeImg"));
                                 randomRecipes.add(recipe);
                                 recipes.add(recipe);
                             }
+                            //shuffle is to random the recipe to send it to the explore recipe list
                             Collections.shuffle(randomRecipes);
                             randomRecipeList.setValue(randomRecipes);
                             recipeList.setValue(recipes);
@@ -98,14 +88,21 @@ public class HomeViewModel extends ViewModel {
                 });
     }
 
+    //add / remove recipeID inside User collection -> current user document -> Field likesRecipe when toggle heart button
     public void handleLikeRecipe(boolean isChecked,String recipeID){
+        DocumentReference docRefUser = db.collection("User").document(myUserID);
+        DocumentReference docRefRecipe = db.collection("recipe").document(recipeID);
         if (isChecked) {
-            db.collection("User").document(myUserID).update("likeRecipe", FieldValue.arrayUnion(recipeID));
-        }else {
-            db.collection("User").document(myUserID).update("likeRecipe", FieldValue.arrayRemove(recipeID));
+            docRefUser.update("likeRecipe", FieldValue.arrayUnion(recipeID));
+            docRefRecipe.update("likes", FieldValue.increment(1));
+
+        } else {
+            docRefUser.update("likeRecipe", FieldValue.arrayRemove(recipeID));
+            docRefRecipe.update("likes", FieldValue.increment(-1));
         }
     }
 
+    //reset data if user leave the current page
     public void resetData(){
         recipes.clear();
         randomRecipes.clear();

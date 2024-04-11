@@ -1,23 +1,18 @@
 package com.example.flavoury.ui.profile;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
-import com.example.flavoury.databinding.FragmentSearchBinding;
-import com.example.flavoury.ui.myProfile.MyProfile_RecyclerView_list;
-import com.example.flavoury.ui.search.SearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

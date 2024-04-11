@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserProfileModel;
 import com.firebase.ui.auth.data.model.User;
@@ -30,7 +31,9 @@ public class MyProfileViewModel extends ViewModel {
     private final MutableLiveData<List<RecipeModel>> recipeList = new MutableLiveData<List<RecipeModel>>();
     private ArrayList<RecipeModel> recipes = new ArrayList<>();
     private UserProfileModel myUserProfile = new UserProfileModel();
-    private int recipeLikes;
+    private int recipeLikes= 0, recipeNum = 0;
+    private RecipeModel recipe = new RecipeModel();
+
 
     public void fetchMyUserData() {
         db.collection("User").document(myUserID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -43,23 +46,19 @@ public class MyProfileViewModel extends ViewModel {
     }
 
     public void fetchRecipe() {
+        //fetch recipe that own by current user
         db.collection("recipe").whereEqualTo("userID", myUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        RecipeModel recipe = new RecipeModel();
-                        recipe.setRecipeName(documentSnapshot.getString("recipeName"));
-                        recipe.setRecipeID(documentSnapshot.getId());
-                        Long likes = documentSnapshot.getLong("like");
-                        if (likes != null) {
-                            recipeLikes += likes.intValue();
-                        }
-//                        recipe.setRecipeImg(documentSnapshot.getString("recipeImg"));
+                        recipe = documentSnapshot.toObject(RecipeModel.class);
+                        recipeNum++;
+                        recipeLikes += recipe.getLike();
                         recipes.add(recipe);
                     }
                     myUserProfile.setRecipeLikes(recipeLikes);
-                    myUserProfile.setRecipeNum(recipes.size());
+                    myUserProfile.setRecipeNum(recipeNum);
                     userProfile.postValue(myUserProfile);
                     recipeList.postValue(recipes);
                 }
@@ -67,6 +66,7 @@ public class MyProfileViewModel extends ViewModel {
         });
     }
 
+    //reset data if current user leave this page
     public void resetData() {
         recipes.clear();
         recipeList.postValue(recipes);

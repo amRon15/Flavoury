@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LikesViewModel extends ViewModel {
@@ -29,34 +30,42 @@ public class LikesViewModel extends ViewModel {
     private final String myUserID = myUser.getUid();
     private MutableLiveData<List<RecipeModel>> recipeList = new MutableLiveData<>();
     private ArrayList<RecipeModel> recipes = new ArrayList<>();
+    private RecipeModel recipe = new RecipeModel();
+
 
     public void fetchRecipe() {
         db.collection("User").document(myUserID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 ArrayList<String> likeRecipes = (ArrayList<String>) documentSnapshot.get("likeRecipe");
-                db.collection("recipe").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                db.collection("recipe").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot recipeDocument : task.getResult()){
-                                RecipeModel recipe = new RecipeModel();
-                                for (String recipeID : likeRecipes){
-                                    if(recipeID.equals(recipeDocument.getId())){
-                                        recipe.setRecipeID(recipeDocument.getId());
-                                        recipe.setRecipeImg(recipeDocument.getString("recipeImg"));
-                                        recipes.add(recipe);
-                                    }
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot recipeDocument : queryDocumentSnapshots){
+                            for (String recipeID : likeRecipes){
+                                if(recipeID.equals(recipeDocument.getId())){
+                                    recipe = recipeDocument.toObject(RecipeModel.class);
+                                    recipe.setRecipeID(recipeDocument.getId());
+                                    db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            recipe.setUserName(documentSnapshot.getString("userName"));
+                                            Log.d("recipe",documentSnapshot.getString("userName"));
+                                        }
+                                    });
+                                    recipes.add(recipe);
+
                                 }
                             }
-                            recipeList.postValue(recipes);
                         }
+                        recipeList.postValue(recipes);
                     }
                 });
             }
         });
     }
 
+    //reset data when current user leave this page
     public void resetDate(){
         recipes.clear();
         recipeList.postValue(recipes);

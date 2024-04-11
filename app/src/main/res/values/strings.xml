@@ -30,7 +30,14 @@
         <item>Japanese</item>
         <item>Chinese</item>
         <item>Vegan</item>
-        <item>More</item>
+        <item>Korean</item>
+        <item>American</item>
+        <item>Dessert</item>
+        <item>Hong Kong</item>
+        <item>Southeast Asia</item>
+        <item>Mexican</item>
+        <item>Fusion</item>
+        <item>Other</item>
     </string-array>
     <string name="back">Back</string>
     <string name="Recipes">Recipes</string>

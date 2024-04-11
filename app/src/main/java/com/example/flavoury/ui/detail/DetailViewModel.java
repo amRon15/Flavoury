@@ -45,7 +45,7 @@ public class DetailViewModel extends ViewModel {
     }
 
     private final MutableLiveData<RecipeModel> recipeList = new MutableLiveData<RecipeModel>();
-    RecipeModel recipe = new RecipeModel();
+    RecipeModel recipe;
     private ArrayList<String> myUserLikes = new ArrayList<>();
 
     public void fetchRecipe() {
@@ -57,33 +57,7 @@ public class DetailViewModel extends ViewModel {
                     DocumentSnapshot recipeDocument = task.getResult();
                     if (recipeDocument.exists()) {
 
-                        Map<String, Object> instructions = (Map<String, Object>) recipeDocument.getData().get("instruction");
-                        Map<String, Object> ingredients = (Map<String, Object>) recipeDocument.getData().get("ingredientID");
-
-                        Long cookingMinutes = recipeDocument.getLong("cookingMinutes");
-                        Long likes = recipeDocument.getLong("like");
-                        if (cookingMinutes != null) {
-                            recipe.setCookingMinutes(cookingMinutes.intValue());
-                        }
-                        if (likes != null) {
-                            recipe.setLike(likes.intValue());
-                        }
-                        recipe.setRecipeName(recipeDocument.getString("recipeName"));
-//                        recipe.setDescription(recipeDocument.getString(""));
-                        String userID = recipeDocument.getString("userID");
-                        recipe.setUserID(userID);
-
-                        //convert step to tree map order by asc
-                        if (instructions != null) {
-                            Map<String, Object> instructionTreeMap = new TreeMap<>(instructions);
-                            recipe.setStep(instructionTreeMap);
-                        }
-
-                        if (ingredients != null) {
-                            Map<String, Object> ingredientTreeMap = new TreeMap<>(ingredients);
-                            recipe.setIngredients(ingredientTreeMap);
-                        }
-
+                        recipe = recipeDocument.toObject(RecipeModel.class);
                         //get my user like recipe & check
                         db.collection("User").document(myUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -101,10 +75,7 @@ public class DetailViewModel extends ViewModel {
                                 }
                             }
                         });
-
-
-                        assert userID != null;
-                        db.collection("User").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        db.collection("User").document(recipe.getUserID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
@@ -122,11 +93,16 @@ public class DetailViewModel extends ViewModel {
         });
     }
 
-    public void handleLikeRecipe(boolean isChecked) {
+    public void handleLikeRecipe(boolean isChecked, String recipeID) {
+        DocumentReference docRefUser = db.collection("User").document(myUserID);
+        DocumentReference docRefRecipe = db.collection("recipe").document(recipeID);
         if (isChecked) {
-            db.collection("User").document(myUserID).update("likeRecipe", FieldValue.arrayUnion(intentFromRecipe));
+            docRefUser.update("likeRecipe", FieldValue.arrayUnion(intentFromRecipe));
+            docRefRecipe.update("likes", FieldValue.increment(1));
+
         } else {
-            db.collection("User").document(myUserID).update("likeRecipe", FieldValue.arrayRemove(intentFromRecipe));
+            docRefUser.update("likeRecipe", FieldValue.arrayRemove(intentFromRecipe));
+            docRefRecipe.update("likes", FieldValue.increment(-1));
         }
     }
 

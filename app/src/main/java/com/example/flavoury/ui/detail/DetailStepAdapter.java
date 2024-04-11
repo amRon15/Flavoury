@@ -9,18 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.MyViewHolder> {
 
-    Map<String, Object> steps;
+    ArrayList<String> steps;
     int stepSize;
 
 
-    public void setDetailStepAdapter(Map<String, Object> steps,int stepSize) {
+    public void setDetailStepAdapter(ArrayList<String> steps,int stepSize) {
         this.steps = steps;
         this.stepSize = stepSize;
     }
@@ -34,10 +36,8 @@ public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String stepKey = (String) steps.keySet().toArray()[position];
-        String step = (String) steps.get(stepKey);
-        holder.step.setText(stepKey);
-        holder.detailStep.setText(step);
+        holder.step.setText("Step "+(position+1));
+        holder.detailStep.setText(steps.get(position));
 
     }
 

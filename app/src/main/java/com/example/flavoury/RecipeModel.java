@@ -1,23 +1,60 @@
 package com.example.flavoury;
 
-import androidx.annotation.Nullable;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Date;
+
+import javax.annotation.Nullable;
 
 public class RecipeModel implements Serializable {
 
     public RecipeModel(){}
-    private String catID, recipeID, recipeName, userID, recipeImg,userName,userIcon,description;
+
+    public RecipeModel(String recipeName, String userID, @Nullable String description, int cookingMinutes, ArrayList<String> steps, ArrayList<Ingredients> ingredients, Date createDate) {
+        this.recipeName = recipeName;
+        this.userID = userID;
+        this.description = description;
+        this.cookingMinutes = cookingMinutes;
+        this.steps = steps;
+        this.ingredients = ingredients;
+        this.createDate = createDate;
+    }
+
+    private String category, recipeID ,recipeName, userID, recipeImg,userName,userIcon,description;
     private int cookingMinutes, cookingSeconds, like;
     private boolean isPublic,isRecipeLike;
-    private Instruction instruction;
+    private ArrayList<String> steps;
+    private ArrayList<Ingredients> ingredients;
+    private Date createDate;
 
-    private Map<String,Object> ingredients,step;
+    public String getRecipeID() {
+        return recipeID;
+    }
 
+    public void setRecipeID(String recipeID) {
+        this.recipeID = recipeID;
+    }
+
+    public boolean isRecipeLike() {
+        return isRecipeLike;
+    }
+
+    public ArrayList<String> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(ArrayList<String> steps) {
+        this.steps = steps;
+    }
+
+    public ArrayList<Ingredients> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredients> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     public boolean getIsRecipeLike() {
         return isRecipeLike;
@@ -25,26 +62,6 @@ public class RecipeModel implements Serializable {
 
     public void setRecipeLike(boolean recipeLike) {
         isRecipeLike = recipeLike;
-    }
-
-    public void setInstruction(Instruction instruction) {
-        this.instruction = instruction;
-    }
-
-    public Map<String, Object> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Map<String, Object> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Map<String, Object> getStep() {
-        return step;
-    }
-
-    public void setStep(Map<String, Object> step) {
-        this.step = step;
     }
 
     public String getDescription() {
@@ -79,20 +96,12 @@ public class RecipeModel implements Serializable {
         this.recipeImg = recipeImg;
     }
 
-    public String getCatID() {
-        return catID;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCatID(String catID) {
-        this.catID = catID;
-    }
-
-    public String getRecipeID() {
-        return recipeID;
-    }
-
-    public void setRecipeID(String recipeID) {
-        this.recipeID = recipeID;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getRecipeName() {
@@ -143,48 +152,13 @@ public class RecipeModel implements Serializable {
         isPublic = aPublic;
     }
 
-    public Timestamp getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public Ingredient getIngredientID() {
-        return ingredientID;
-    }
 
-    public void setIngredientID(Ingredient ingredientID) {
-        this.ingredientID = ingredientID;
-    }
-
-
-    private Timestamp createDate;
-    private Ingredient ingredientID;
-}
-
-class Ingredient{
-    private String portion, name;
-    private int calories;
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPortion() {
-        return portion;
-    }
-}
-
-class Instruction{
-    private String step;
-
-    public String getStep() {
-        return step;
-    }
 }

@@ -2,18 +2,15 @@ package com.example.flavoury.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Scene;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -24,15 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 
-import org.w3c.dom.Text;
-
-import java.util.List;
+import java.io.Serializable;
 
 public class DetailActivity extends AppCompatActivity {
     RecipeModel detailRecipe;
     RecyclerView detailStepRecyclerView, detail_ingredients_recyclerview;
     DetailStepAdapter detailStepAdapter;
-    Detail_IngredientsAdapter detailIngredientsAdapter;
+    DetailIngredientsAdapter detailIngredientsAdapter;
     ImageButton recipe_detail_backBtn;
 
 
@@ -58,20 +53,17 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-        Bundle fromHomeFragment = getIntent().getExtras();
-        if (fromHomeFragment != null) {
-            detailRecipe = (RecipeModel) getIntent().getSerializableExtra("detailRecipe");
-        }
+        detailRecipe = (RecipeModel) getIntent().getSerializableExtra("detailRecipe");
 
         Intent fromRecipe = getIntent();
-        String intentFromRecipe = fromRecipe.getStringExtra("detailRecipeID");
+//        String intentFromRecipe = fromRecipe.getStringExtra("detailRecipeID");
 
 
         detailStepRecyclerView = findViewById(R.id.recipe_detail_step_recyclerView);
         detail_ingredients_recyclerview = findViewById(R.id.recipe_detail_ingredients_recyclerView);
 
         detailStepAdapter = new DetailStepAdapter();
-        detailIngredientsAdapter = new Detail_IngredientsAdapter();
+        detailIngredientsAdapter = new DetailIngredientsAdapter();
 
         detailStepRecyclerView.setAdapter(detailStepAdapter);
         detailStepRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -80,16 +72,11 @@ public class DetailActivity extends AppCompatActivity {
         detail_ingredients_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         DetailViewModel detailViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(DetailViewModel.class);
-        detailViewModel.setRecipeID(intentFromRecipe);
-        detailViewModel.fetchRecipe();
+//        detailViewModel.setRecipeID(intentFromRecipe);
+//        detailViewModel.fetchRecipe();
+        setView(detailRecipe,detailViewModel);
+        handleRecyclerView(detailRecipe);
 
-        detailViewModel.getRecipeList().observe(this, new Observer<RecipeModel>() {
-            @Override
-            public void onChanged(RecipeModel recipeModels) {
-                handleRecyclerView(recipeModels);
-                setView(recipeModels,detailViewModel);
-            }
-        });
     }
 
     private void setView(RecipeModel recipe, DetailViewModel detailViewModel) {
@@ -106,14 +93,25 @@ public class DetailActivity extends AppCompatActivity {
         recipeName.setText(recipe.getRecipeName());
         recipeCookingTime.setText("~" + recipe.getCookingMinutes() + " Mins");
         recipeLike.setText(recipe.getLike() + " Likes");
-        recipeDescription.setText("This is a recipe of " + recipe.getRecipeName());
+        if (recipe.getDescription()!=null){
+            recipeDescription.setText(recipe.getDescription());
+        }else {
+            recipeDescription.setText("This is a recipe of " + recipe.getRecipeName());
+        }
         userName.setText(recipe.getUserName());
         recipeLikeToggle.setChecked(recipe.getIsRecipeLike());
 
         recipeLikeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                detailViewModel.handleLikeRecipe(isChecked);
+                detailViewModel.handleLikeRecipe(isChecked, recipe.getRecipeID());
+
+                //Set the like number when toggle
+                if (recipe.getIsRecipeLike()){
+                    recipeLike.setText(isChecked ? (recipe.getLike() + " Likes") : ((recipe.getLike() - 1) + " Likes"));
+                }else {
+                    recipeLike.setText(isChecked ? (recipe.getLike() + 1 + " Likes") : (recipe.getLike() + " Likes"));
+                }
                 compoundButton.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -126,7 +124,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void handleRecyclerView(RecipeModel recipe) {
         detailIngredientsAdapter.setDetailIngredientsAdapter(recipe.getIngredients(), recipe.getIngredients().size());
-        detailStepAdapter.setDetailStepAdapter(recipe.getStep(), recipe.getStep().size());
+        detailStepAdapter.setDetailStepAdapter(recipe.getSteps(), recipe.getSteps().size());
 
         detailIngredientsAdapter.notifyDataSetChanged();
         detailStepAdapter.notifyDataSetChanged();

@@ -1,6 +1,7 @@
 package com.example.flavoury.ui.addRecipe;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.annotation.Nullable;
 
@@ -8,20 +9,30 @@ public class AddRecipeModel {
 
     public AddRecipeModel(){}
 
-    public AddRecipeModel(String recipeName, @Nullable String description, int cookingMinutes, ArrayList<Ingredient> ingredients, ArrayList<Step> steps,String userID) {
-        this.recipeName = recipeName;
-        this.description = description;
-        this.cookingMinutes = cookingMinutes;
-        this.ingredients = ingredients;
-        this.steps = steps;
-        this.userID = userID;
-    }
 
     String recipeName, description, userID;
     int cookingMinutes;
     ArrayList<Ingredient> ingredients;
     ArrayList<Step> steps;
+    Date createDate;
 
+    public AddRecipeModel(String recipeName,@Nullable String description, String userID, int cookingMinutes, ArrayList<Ingredient> ingredients, ArrayList<Step> steps, Date createDate) {
+        this.recipeName = recipeName;
+        this.description = description;
+        this.userID = userID;
+        this.cookingMinutes = cookingMinutes;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.createDate = createDate;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
     public String getUserID() {
         return userID;

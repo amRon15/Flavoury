@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.flavoury.RecipeModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +31,7 @@ public class AddRecipeViewModel extends ViewModel {
         myUserID.setValue(myUser.getUid());
     }
 
-    public void addRecipeToDB(AddRecipeModel recipe, OnBackPressedCallback onBackPressedCallback, Context context){
+    public void addRecipeToDB(RecipeModel recipe, OnBackPressedCallback onBackPressedCallback, Context context){
         db.collection("recipe").add(recipe).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {

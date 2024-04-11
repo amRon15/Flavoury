@@ -17,9 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
+import com.example.flavoury.RecipeModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -29,8 +32,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     EditText editRecipeName, editDescription, editDuration;
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
-    ArrayList<AddRecipeModel.Ingredient> ingredients = new ArrayList<>();
-    ArrayList<AddRecipeModel.Step> steps = new ArrayList<>();
+    ArrayList<Ingredients> ingredients = new ArrayList<>();
+    ArrayList<String> steps = new ArrayList<>();
     boolean isRecipeReady;
     String recipeName, description, duration;
     int cookingMinutes;
@@ -44,8 +47,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
 
-        ingredients.add(new AddRecipeModel.Ingredient());
-        steps.add(new AddRecipeModel.Step());
+        ingredients.add(new Ingredients());
+        steps.add(new String());
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -70,11 +73,11 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         addRecipeIngredient.setAdapter(addRecipeIngredientAdapter);
         addRecipeIngredient.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        addRecipeIngredientAdapter.setAddRecipeIngredientAdapter(ingredients, isRecipeReady);
+        addRecipeIngredientAdapter.setAddRecipeIngredientAdapter(ingredients);
 
         addRecipeStep.setAdapter(addRecipeStepAdapter);
         addRecipeStep.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        addRecipeStepAdapter.setAddRecipeStepAdapter(steps, isRecipeReady);
+        addRecipeStepAdapter.setAddRecipeStepAdapter(steps);
 
     }
 
@@ -147,7 +150,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                addIngredientList.add(new AddRecipeModel());
-                ingredients.add(new AddRecipeModel.Ingredient());
+                ingredients.add(new Ingredients());
                 addRecipeIngredientAdapter.notifyItemRangeChanged(0,ingredients.size());
                 scaleAnim(view);
             }
@@ -156,7 +159,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                addStepList.add(new AddRecipeModel());
-                steps.add(new AddRecipeModel.Step());
+                steps.add(new String());
                 addRecipeStepAdapter.notifyDataSetChanged();
                 scaleAnim(view);
             }
@@ -170,11 +173,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         addRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (recipeName==null || duration==null || ingredients.get(0).getIngredient()==null || steps.get(0).getStep()==null){
+                if (recipeName==null || duration==null || ingredients.get(0).getIngredient()==null || steps.get(0)==null){
                     Toast.makeText(getApplicationContext(),"Required Field Must Not Be Empty",Toast.LENGTH_LONG).show();
                     Log.d("FAILED","REQUIRED");
                 }else {
-                    AddRecipeModel recipe = new AddRecipeModel(recipeName, description, cookingMinutes, ingredients, steps, userID);
+                    Date createDate = new Date(System.currentTimeMillis());
+                    RecipeModel recipe = new RecipeModel(recipeName,description,userID,cookingMinutes,steps,ingredients,createDate);
                     addRecipeViewModel.addRecipeToDB(recipe, onBackPressedCallback,getApplicationContext());
                 }
             }

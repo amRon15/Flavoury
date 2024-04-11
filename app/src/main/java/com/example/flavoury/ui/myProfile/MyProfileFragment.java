@@ -20,6 +20,7 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserProfileModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.ui.Setting.SettingActivity;
+import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 
 import org.w3c.dom.Text;
 
@@ -32,7 +33,7 @@ public class MyProfileFragment extends Fragment {
     RecyclerView myProfileRecipeRecyclerView;
     MyProfileRecipeAdapter myProfileRecipeAdapter;
     MyProfileViewModel myProfileViewModel;
-    ImageButton settingBtn;
+    ImageButton settingBtn, addRecipeBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +61,20 @@ public class MyProfileFragment extends Fragment {
 
     private void setView(View root, UserProfileModel userData) {
         settingBtn = root.findViewById(R.id.my_profile_setting);
+        addRecipeBtn = root.findViewById(R.id.my_profile_addRecipe);
+        addRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        v.animate().scaleX(1).scaleY(1).setDuration(100);
+                    }
+                });
+                Intent addRecipeIntent = new Intent(getActivity(), AddRecipeActivity.class);
+                startActivity(addRecipeIntent);
+            }
+        });
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,8 +97,8 @@ public class MyProfileFragment extends Fragment {
     }
 
 
-    private void handleRecipe(List<RecipeModel> recipes) {
-        myProfileRecipeAdapter.setMyProfileRecipeAdapter(recipes, getContext());
+    private void handleRecipe(List<RecipeModel> recipe) {
+        myProfileRecipeAdapter.setMyProfileRecipeAdapter(recipe, getContext());
         myProfileRecipeAdapter.notifyDataSetChanged();
     }
 
