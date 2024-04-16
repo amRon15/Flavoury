@@ -43,18 +43,20 @@ public class LikesViewModel extends ViewModel {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot recipeDocument : queryDocumentSnapshots){
                             for (String recipeID : likeRecipes){
-                                if(recipeID.equals(recipeDocument.getId())){
-                                    recipe = recipeDocument.toObject(RecipeModel.class);
-                                    recipe.setRecipeID(recipeDocument.getId());
-                                    db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            recipe.setUserName(documentSnapshot.getString("userName"));
-                                            Log.d("recipe",documentSnapshot.getString("userName"));
-                                        }
-                                    });
-                                    recipes.add(recipe);
-
+                                if (!recipeID.isEmpty()) {
+                                    if (recipeID.equals(recipeDocument.getId())) {
+                                        recipe = recipeDocument.toObject(RecipeModel.class);
+                                        recipe.setRecipeID(recipeDocument.getId());
+                                        recipe.setRecipeLike(true);
+                                        db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                recipe.setUserName(documentSnapshot.getString("userName"));
+                                                Log.d("recipe", documentSnapshot.getString("userName"));
+                                            }
+                                        });
+                                        recipes.add(recipe);
+                                    }
                                 }
                             }
                         }
@@ -63,6 +65,10 @@ public class LikesViewModel extends ViewModel {
                 });
             }
         });
+    }
+
+    public void matchData(){
+
     }
 
     //reset data when current user leave this page

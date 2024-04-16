@@ -55,10 +55,6 @@ public class DetailActivity extends AppCompatActivity {
 
         detailRecipe = (RecipeModel) getIntent().getSerializableExtra("detailRecipe");
 
-        Intent fromRecipe = getIntent();
-//        String intentFromRecipe = fromRecipe.getStringExtra("detailRecipeID");
-
-
         detailStepRecyclerView = findViewById(R.id.recipe_detail_step_recyclerView);
         detail_ingredients_recyclerview = findViewById(R.id.recipe_detail_ingredients_recyclerView);
 
@@ -72,8 +68,6 @@ public class DetailActivity extends AppCompatActivity {
         detail_ingredients_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         DetailViewModel detailViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(DetailViewModel.class);
-//        detailViewModel.setRecipeID(intentFromRecipe);
-//        detailViewModel.fetchRecipe();
         setView(detailRecipe,detailViewModel);
         handleRecyclerView(detailRecipe);
 

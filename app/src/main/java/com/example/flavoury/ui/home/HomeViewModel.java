@@ -50,42 +50,47 @@ public class HomeViewModel extends ViewModel {
                 if (task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
                     likeRecipes = (ArrayList<String>) documentSnapshot.get("likeRecipe");
+                    //fetching 5 recipe from recipe Collection
+                    db.collection("recipe").limit(5)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            recipe = document.toObject(RecipeModel.class);
+                                            recipe.setRecipeID(document.getId());
+                                            //loop recipeID of user's likeRecipe & if true set it to is like, so the heart btn will be filled
+                                            for(String likeRecipe : likeRecipes){
+                                                if(likeRecipe.contains(document.getId())){
+                                                    recipe.setRecipeLike(true);
+                                                }
+                                            }
+                                            //fetching the user of this recipe
+                                            db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    recipe.setUserName(documentSnapshot.getString("userName"));
+                                                }
+                                            });
+                                            randomRecipes.add(recipe);
+                                            recipes.add(recipe);
+                                        }
+                                        //shuffle is to random the recipe to send it to the explore recipe list
+                                        Collections.shuffle(randomRecipes);
+                                        randomRecipeList.setValue(randomRecipes);
+                                        recipeList.setValue(recipes);
+                                    }
+                                }
+                            });
                 }
             }
         });
-        //fetching 5 recipe from recipe Collection
-        db.collection("recipe").limit(5)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                recipe = document.toObject(RecipeModel.class);
-                                recipe.setRecipeID(document.getId());
-                                //loop recipeID of user's likeRecipe & if true set it to is like, so the heart btn will be filled
-                                for(String likeRecipe : likeRecipes){
-                                    if(likeRecipe.contains(document.getId())){
-                                        recipe.setRecipeLike(true);
-                                    }
-                                }
-                                //fetching the user of this recipe
-                                db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        recipe.setUserName(documentSnapshot.getString("userName"));
-                                    }
-                                });
-                                randomRecipes.add(recipe);
-                                recipes.add(recipe);
-                            }
-                            //shuffle is to random the recipe to send it to the explore recipe list
-                            Collections.shuffle(randomRecipes);
-                            randomRecipeList.setValue(randomRecipes);
-                            recipeList.setValue(recipes);
-                        }
-                    }
-                });
+
+    }
+
+    public void matchData(){
+
     }
 
     //add / remove recipeID inside User collection -> current user document -> Field likesRecipe when toggle heart button

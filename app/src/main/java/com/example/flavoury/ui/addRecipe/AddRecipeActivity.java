@@ -79,6 +79,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         addRecipeStep.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         addRecipeStepAdapter.setAddRecipeStepAdapter(steps);
 
+
     }
 
     private void setView(String userID) {
@@ -151,8 +152,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                addIngredientList.add(new AddRecipeModel());
                 ingredients.add(new Ingredients());
-                addRecipeIngredientAdapter.notifyItemRangeChanged(0,ingredients.size());
                 scaleAnim(view);
+                addRecipeIngredientAdapter.notifyDataSetChanged();
             }
         });
         addStep.setOnClickListener(new View.OnClickListener() {
@@ -160,8 +161,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                addStepList.add(new AddRecipeModel());
                 steps.add(new String());
-                addRecipeStepAdapter.notifyDataSetChanged();
                 scaleAnim(view);
+                addRecipeStepAdapter.notifyDataSetChanged();
             }
         });
         cancelRecipe.setOnClickListener(new View.OnClickListener() {

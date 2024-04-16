@@ -96,7 +96,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
                 @Override
                 public void onClick(View view) {
                     ingredients.remove(position);
-                    notifyItemRangeChanged(position, ingredients.size());
+                    notifyDataSetChanged();
                 }
             });
         }

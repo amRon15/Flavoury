@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.flavoury.RecipeModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,49 +49,14 @@ public class DetailViewModel extends ViewModel {
     RecipeModel recipe;
     private ArrayList<String> myUserLikes = new ArrayList<>();
 
-    public void fetchRecipe() {
-
-        db.collection("recipe").document(intentFromRecipe).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void fetchRecipe(RecipeModel recipe) {
+        db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot recipeDocument = task.getResult();
-                    if (recipeDocument.exists()) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        recipe = recipeDocument.toObject(RecipeModel.class);
-                        //get my user like recipe & check
-                        db.collection("User").document(myUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot documentSnapshot = task.getResult();
-                                    if (documentSnapshot.get("likeRecipe") != null) {
-                                        for (String recipeID : (ArrayList<String>) documentSnapshot.get("likeRecipe")) {
-                                            if (recipeID.contains(intentFromRecipe)) {
-                                                recipe.setRecipeLike(true);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                        db.collection("User").document(recipe.getUserID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot documentSnapshot = task.getResult();
-                                    String userName = documentSnapshot.getString("userName");
-                                    String userIcon = documentSnapshot.getString("userIcon");
-                                    recipe.setUserName(userName);
-                                }
-                                recipeList.postValue(recipe);
-                            }
-                        });
-                    }
-                }
             }
         });
+
     }
 
     public void handleLikeRecipe(boolean isChecked, String recipeID) {
