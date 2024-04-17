@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment {
 
     //send the list to adapter & show the recipes in recyclerView
     public void handleRecyclerView(List<RecipeModel> recipes) {
-        searchRecipeAdapter.setSearchRecipeAdapter(recipes);
+        searchRecipeAdapter.setSearchRecipeAdapter(recipes,getContext());
         searchRecipeAdapter.notifyDataSetChanged();
     }
 

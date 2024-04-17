@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Timestamp;
 
@@ -40,7 +42,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText userNameText;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Uri userIcon;
-    FirebaseUser user;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     TextView userEmailText;
 
     String userName,userId,userEmail,currentUserEmail;
@@ -49,6 +51,20 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
+
+        db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isComplete()){
+                    for (QueryDocumentSnapshot userDoc : task.getResult()){
+                        if (userDoc.getId().equals(user.getUid())){
+                            Intent mainIntent = new Intent(RegistrationActivity.this,MainActivity.class);
+                            startActivity(mainIntent);
+                        }
+                    }
+                }
+            }
+        });
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();

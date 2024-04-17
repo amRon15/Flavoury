@@ -1,5 +1,7 @@
 package com.example.flavoury.ui.search;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.RoundCornerTransform;
+import com.example.flavoury.ui.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,13 +22,18 @@ import java.util.List;
 
 public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapter.MyViewHolder> {
     private List<RecipeModel> recipes = new ArrayList<>();
-    public void setSearchRecipeAdapter(List<RecipeModel> recipes){
+    private Intent detail_recipe_intent;
+    private Context searchFragment;
+
+    public void setSearchRecipeAdapter(List<RecipeModel> recipes, Context searchFragment) {
         this.recipes = recipes;
+        this.searchFragment = searchFragment;
     }
+
     @NonNull
     @Override
     public SearchRecipeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_search_recipe,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_search_recipe, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -37,15 +45,15 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
 
     @Override
     public int getItemCount() {
-        if (recipes !=null){
+        if (recipes != null) {
             return recipes.size();
-        }else {
+        } else {
             return 0;
         }
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageButton recipeImg, userIcon;
         TextView recipeName, recipeCookingMinutes, recipeCat, userName;
 
@@ -59,13 +67,22 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             userIcon = itemView.findViewById(R.id.search_userIcon);
         }
 
-        void bindData(RecipeModel recipe){
-            if (recipeImg!=null ){
+        void bindData(RecipeModel recipe) {
+            if (recipeImg != null) {
                 Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
             }
             recipeName.setText(recipe.getRecipeName());
             recipeCookingMinutes.setText("~ " + recipe.getCookingMinutes() + " Mins");
             userName.setText(recipe.getUserName());
+            recipeImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    detail_recipe_intent = new Intent(searchFragment, DetailActivity.class);
+                    detail_recipe_intent.putExtra("detailRecipe", recipe);
+
+                    searchFragment.startActivity(detail_recipe_intent);
+                }
+            });
         }
     }
 }
