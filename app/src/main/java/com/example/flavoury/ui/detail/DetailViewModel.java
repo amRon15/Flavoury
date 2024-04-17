@@ -53,7 +53,8 @@ public class DetailViewModel extends ViewModel {
         db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-
+                recipe.setUserName(documentSnapshot.getString("userName"));
+                recipeList.postValue(recipe);
             }
         });
 

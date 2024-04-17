@@ -26,9 +26,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.RoundCornerTransform;
 import com.example.flavoury.UserModel;
 import com.example.flavoury.ui.detail.DetailActivity;
 import com.google.android.material.shape.RoundedCornerTreatment;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -89,7 +91,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
         void bindData(RecipeModel recipe) {
 
-            userName.setText(recipe.getUserName());
+            if (recipe.getUserName() != null) {
+                userName.setText(recipe.getUserName());
+            }
             recipeName.setText(recipe.getRecipeName());
             cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
             likes.setText(Integer.toString(recipe.getLike()));
@@ -124,7 +128,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 }
             });
 
-//            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
+            if (recipe.getRecipeImg()!=null) {
+                Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
+            }
         }
     }
 }

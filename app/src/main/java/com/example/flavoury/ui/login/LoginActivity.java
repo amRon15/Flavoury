@@ -33,6 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private boolean isUserRegister;
     int data;
     private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private BeginSignInRequest signInRequest;
@@ -48,6 +49,26 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
+
+        db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isComplete()){
+                    for (QueryDocumentSnapshot userDoc : task.getResult()){
+                        if (userDoc.getId().equals(user.getUid())){
+                            Log.d("User",userDoc.getId()+" : " + user.getUid());
+                            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                        }else {
+//                            Intent signUpIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+//                            signUpIntent.putExtra("userEmail", user.getEmail());
+//                            signUpIntent.putExtra("userId", user.getUid());
+//                            startActivity(signUpIntent);
+                        }
+                    }
+                }
+            }
+        });
 
         getSupportActionBar().hide();
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -93,17 +114,21 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                db.collection("User").document(account.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        if(documentSnapshot.getId().equals(account.getId())){
-                                            Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(homeIntent);
-                                        }else{
-                                            Intent signUpIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                                            signUpIntent.putExtra("userEmail", account.getEmail());
-                                            signUpIntent.putExtra("userId", account.getId());
-                                            startActivity(signUpIntent);
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isComplete()){
+                                            for (QueryDocumentSnapshot userDoc : task.getResult()){
+                                                if(userDoc.getId().equals(account.getId())){
+                                                    Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    startActivity(homeIntent);
+                                                }else{
+                                                    Intent signUpIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                                                    signUpIntent.putExtra("userEmail", user.getEmail());
+                                                    signUpIntent.putExtra("userId", user.getUid());
+                                                    startActivity(signUpIntent);
+                                                }
+                                            }
                                         }
                                     }
                                 });

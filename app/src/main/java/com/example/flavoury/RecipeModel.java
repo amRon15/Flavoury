@@ -22,7 +22,7 @@ public class RecipeModel implements Serializable {
     }
 
     private String category, recipeID ,recipeName, userID, recipeImg,userName,userIcon,description;
-    private int cookingMinutes, cookingSeconds, like;
+    private int cookingMinutes, like;
     private boolean isPublic,isRecipeLike;
     private ArrayList<String> steps;
     private ArrayList<Ingredients> ingredients;
@@ -128,13 +128,6 @@ public class RecipeModel implements Serializable {
         this.cookingMinutes = cookingMinutes;
     }
 
-    public int getCookingSeconds() {
-        return cookingSeconds;
-    }
-
-    public void setCookingSeconds(int cookingSeconds) {
-        this.cookingSeconds = cookingSeconds;
-    }
 
     public int getLike() {
         return like;

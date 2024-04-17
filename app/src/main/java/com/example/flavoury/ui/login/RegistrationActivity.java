@@ -23,8 +23,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -55,7 +57,9 @@ public class RegistrationActivity extends AppCompatActivity {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         // get intent data from LoginActivity intent put extra
         Intent fromLoginActivity = getIntent();
-        userId = fromLoginActivity.getStringExtra("userId");
+
+//        userId = fromLoginActivity.getStringExtra("userId");
+        userId = user.getUid();
         if(currentUserEmail.isEmpty()) {
             userEmail = fromLoginActivity.getStringExtra("userEmail");
         }else{
@@ -117,12 +121,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 UserModel newUser = new UserModel(userName,userEmail,currentTime,userIcon );
                 Log.d("RegistrationActivity", "User " + newUser);
 
-                    db.collection("User").add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    db.collection("User").document(userId).set(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d("Registration",documentReference.getId());
-                                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                                    startActivity(intent);
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isComplete()){
+                                        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
                                 }
                             })
             .addOnFailureListener(new OnFailureListener() {

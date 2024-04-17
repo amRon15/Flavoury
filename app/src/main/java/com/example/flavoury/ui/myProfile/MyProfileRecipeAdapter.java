@@ -52,17 +52,14 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView recipeName;
         public ImageButton recipeIcon;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeName = itemView.findViewById(R.id.my_profile_recipeName);
             recipeIcon = itemView.findViewById(R.id.my_profile_recipeIcon);
         }
 
         void bindData(RecipeModel recipe) {
-            recipeName.setText(recipe.getRecipeName());
             recipeIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

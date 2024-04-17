@@ -49,7 +49,9 @@ public class HomeViewModel extends ViewModel {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    likeRecipes = (ArrayList<String>) documentSnapshot.get("likeRecipe");
+                    if (documentSnapshot.get("likeRecipe") != null ) {
+                        likeRecipes = (ArrayList<String>) documentSnapshot.get("likeRecipe");
+                    }
                     //fetching 5 recipe from recipe Collection
                     db.collection("recipe").limit(5)
                             .get()
@@ -61,9 +63,11 @@ public class HomeViewModel extends ViewModel {
                                             recipe = document.toObject(RecipeModel.class);
                                             recipe.setRecipeID(document.getId());
                                             //loop recipeID of user's likeRecipe & if true set it to is like, so the heart btn will be filled
-                                            for(String likeRecipe : likeRecipes){
-                                                if(likeRecipe.contains(document.getId())){
-                                                    recipe.setRecipeLike(true);
+                                            if (likeRecipes != null) {
+                                                for (String likeRecipe : likeRecipes) {
+                                                    if (likeRecipe!= null && likeRecipe.contains(document.getId())) {
+                                                        recipe.setRecipeLike(true);
+                                                    }
                                                 }
                                             }
                                             //fetching the user of this recipe

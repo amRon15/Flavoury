@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.google.android.material.internal.TextWatcherAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,7 +84,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     private void setView(String userID) {
-
+        Log.d("USer", userID);
         editRecipeName = findViewById(R.id.add_recipe_recipeName);
         editDescription = findViewById(R.id.add_recipe_description);
         editDuration = findViewById(R.id.add_recipe_recipeTime);
@@ -93,6 +94,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         cancelRecipe = findViewById(R.id.add_recipe_cancelBtn);
 
         addRecipe.setEnabled(true);
+
         editRecipeName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -109,6 +111,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
             }
         });
+
         editDescription.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -179,7 +182,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     Log.d("FAILED","REQUIRED");
                 }else {
                     Date createDate = new Date(System.currentTimeMillis());
-                    RecipeModel recipe = new RecipeModel(recipeName,description,userID,cookingMinutes,steps,ingredients,createDate);
+                    RecipeModel recipe = new RecipeModel(recipeName,userID,description,cookingMinutes,steps,ingredients,createDate);
                     addRecipeViewModel.addRecipeToDB(recipe, onBackPressedCallback,getApplicationContext());
                 }
             }

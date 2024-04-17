@@ -46,6 +46,9 @@ public class MyProfileViewModel extends ViewModel {
     }
 
     public void fetchRecipe() {
+        recipes = new ArrayList<>();
+        recipeLikes = 0;
+        recipeNum = 0;
         //fetch recipe that own by current user
         db.collection("recipe").whereEqualTo("userID", myUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

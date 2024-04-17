@@ -31,31 +31,36 @@ public class LikesViewModel extends ViewModel {
     private MutableLiveData<List<RecipeModel>> recipeList = new MutableLiveData<>();
     private ArrayList<RecipeModel> recipes = new ArrayList<>();
     private RecipeModel recipe = new RecipeModel();
+    private ArrayList<String> likeRecipes;
 
 
     public void fetchRecipe() {
         db.collection("User").document(myUserID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ArrayList<String> likeRecipes = (ArrayList<String>) documentSnapshot.get("likeRecipe");
+                if (documentSnapshot.get("likeRecipe") !=null ){
+                    likeRecipes = (ArrayList<String>) documentSnapshot.get("likeRecipe");
+                }
                 db.collection("recipe").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot recipeDocument : queryDocumentSnapshots){
-                            for (String recipeID : likeRecipes){
-                                if (!recipeID.isEmpty()) {
-                                    if (recipeID.equals(recipeDocument.getId())) {
-                                        recipe = recipeDocument.toObject(RecipeModel.class);
-                                        recipe.setRecipeID(recipeDocument.getId());
-                                        recipe.setRecipeLike(true);
-                                        db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                recipe.setUserName(documentSnapshot.getString("userName"));
-                                                Log.d("recipe", documentSnapshot.getString("userName"));
-                                            }
-                                        });
-                                        recipes.add(recipe);
+                            if (likeRecipes != null) {
+                                for (String recipeID : likeRecipes) {
+                                    if (recipeID != null) {
+                                        if (recipeID.equals(recipeDocument.getId())) {
+                                            recipe = recipeDocument.toObject(RecipeModel.class);
+                                            recipe.setRecipeID(recipeDocument.getId());
+                                            recipe.setRecipeLike(true);
+                                            db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    recipe.setUserName(documentSnapshot.getString("userName"));
+                                                    Log.d("recipe", documentSnapshot.getString("userName"));
+                                                }
+                                            });
+                                            recipes.add(recipe);
+                                        }
                                     }
                                 }
                             }

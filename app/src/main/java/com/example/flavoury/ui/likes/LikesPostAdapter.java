@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.RoundCornerTransform;
 import com.example.flavoury.ui.detail.DetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -36,7 +38,6 @@ public class LikesPostAdapter extends RecyclerView.Adapter<LikesPostAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        holder.postImageBtn.setImageResource(R.drawable.ic_launcher_foreground);
         RecipeModel recipe = recipes.get(position);
         holder.bindData(recipe);
     }
@@ -52,15 +53,16 @@ public class LikesPostAdapter extends RecyclerView.Adapter<LikesPostAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageButton postImageBtn;
+        ImageButton recipeImg;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            postImageBtn = itemView.findViewById(R.id.likes_post_list_image);
+            recipeImg = itemView.findViewById(R.id.likes_post_list_image);
         }
 
         void bindData(RecipeModel recipe) {
-            postImageBtn.setOnClickListener(new View.OnClickListener() {
+            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
+            recipeImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     detail_recipe_intent = new Intent(likesFragment, DetailActivity.class);

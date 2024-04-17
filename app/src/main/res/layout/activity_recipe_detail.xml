@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baked_pork_chop_rice" />
+        android:backgroundTint="@color/outline_color"/>
 
     <ImageButton
         android:id="@+id/recipe_detail_back_btn"

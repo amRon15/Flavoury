@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.RoundCornerTransform;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 
@@ -68,8 +70,15 @@ public class DetailActivity extends AppCompatActivity {
         detail_ingredients_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         DetailViewModel detailViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(DetailViewModel.class);
-        setView(detailRecipe,detailViewModel);
-        handleRecyclerView(detailRecipe);
+        detailViewModel.fetchRecipe(detailRecipe);
+        detailViewModel.getRecipeList().observe(this, new Observer<RecipeModel>() {
+            @Override
+            public void onChanged(RecipeModel recipeModel) {
+                setView(recipeModel,detailViewModel);
+                handleRecyclerView(recipeModel);
+            }
+        });
+
 
     }
 
@@ -83,6 +92,9 @@ public class DetailActivity extends AppCompatActivity {
         TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
         ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
 
+        if (recipe.getRecipeImg()!=null) {
+            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
+        }
         recipeCals.setText("");
         recipeName.setText(recipe.getRecipeName());
         recipeCookingTime.setText("~" + recipe.getCookingMinutes() + " Mins");

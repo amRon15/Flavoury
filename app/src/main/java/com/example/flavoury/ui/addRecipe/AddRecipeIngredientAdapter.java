@@ -20,7 +20,6 @@ import com.example.flavoury.R;
 import java.util.ArrayList;
 
 public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIngredientAdapter.MyViewHolder> {
-    boolean isRecipeReady;
     ArrayList<Ingredients> ingredients;
     public void setAddRecipeIngredientAdapter(ArrayList<Ingredients> ingredients){
         this.ingredients = ingredients;
@@ -81,7 +80,6 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     ingredient.setPortion(charSequence.toString());
-                    isRecipeReady = charSequence.length()!=0;
                 }
 
                 @Override

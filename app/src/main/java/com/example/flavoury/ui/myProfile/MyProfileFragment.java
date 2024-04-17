@@ -2,6 +2,7 @@ package com.example.flavoury.ui.myProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,15 @@ public class MyProfileFragment extends Fragment {
         myProfileViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
         myProfileViewModel.fetchRecipe();
         myProfileViewModel.fetchMyUserData();
-        myProfileViewModel.getRecipeList().observe(getViewLifecycleOwner(), this::handleRecipe);
+
+        myProfileViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<RecipeModel>>() {
+            @Override
+            public void onChanged(List<RecipeModel> recipeModels) {
+                if (recipeModels != null) {
+                    handleRecipe(recipeModels);
+                }
+            }
+        });
         myProfileViewModel.getUserData().observe(getViewLifecycleOwner(), new Observer<UserProfileModel>() {
             @Override
             public void onChanged(UserProfileModel userProfileModel) {
@@ -62,6 +71,8 @@ public class MyProfileFragment extends Fragment {
     private void setView(View root, UserProfileModel userData) {
         settingBtn = root.findViewById(R.id.my_profile_setting);
         addRecipeBtn = root.findViewById(R.id.my_profile_addRecipe);
+        TextView recipeNum = root.findViewById(R.id.my_profile_recipeNum);
+        TextView recipeLikes = root.findViewById(R.id.my_profile_likeNum);
         addRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,12 +99,11 @@ public class MyProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        TextView recipeNum = root.findViewById(R.id.my_profile_recipeNum);
-        TextView recipeLikes = root.findViewById(R.id.my_profile_likeNum);
         TextView userName = root.findViewById(R.id.my_profile_userName);
-
         userName.setText(userData.getUserName());
+        Log.d("Likes",userData.getRecipeNum()+"");
+        recipeNum.setText(userData.getRecipeNum()+"");
+        recipeLikes.setText(userData.getRecipeLikes()+"");
     }
 
 

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.RoundCornerTransform;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +46,12 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        ImageButton recipeIcon, userIcon;
+        ImageButton recipeImg, userIcon;
         TextView recipeName, recipeCookingMinutes, recipeCat, userName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeIcon = itemView.findViewById(R.id.search_recipeIcon);
+            recipeImg = itemView.findViewById(R.id.search_recipeIcon);
             recipeCat = itemView.findViewById(R.id.search_recipeCategory);
             recipeName = itemView.findViewById(R.id.search_recipeName);
             recipeCookingMinutes = itemView.findViewById(R.id.search_recipeCookingTime);
@@ -58,6 +60,9 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
         }
 
         void bindData(RecipeModel recipe){
+            if (recipeImg!=null ){
+                Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
+            }
             recipeName.setText(recipe.getRecipeName());
             recipeCookingMinutes.setText("~ " + recipe.getCookingMinutes() + " Mins");
             userName.setText(recipe.getUserName());
