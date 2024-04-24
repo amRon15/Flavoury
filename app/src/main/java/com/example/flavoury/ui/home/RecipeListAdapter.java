@@ -90,7 +90,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
         }
 
         void bindData(RecipeModel recipe) {
-
+            Log.d("Recipe","RecipeName:" + recipe.getRecipeName() + ", RecipeIMG: "+recipe.getRecipeImg());
             if (recipe.getUserName() != null) {
                 userName.setText(recipe.getUserName());
             }

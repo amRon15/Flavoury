@@ -65,11 +65,11 @@ public class DetailViewModel extends ViewModel {
         DocumentReference docRefRecipe = db.collection("recipe").document(recipeID);
         if (isChecked) {
             docRefUser.update("likeRecipe", FieldValue.arrayUnion(intentFromRecipe));
-            docRefRecipe.update("likes", FieldValue.increment(1));
+            docRefRecipe.update("like", FieldValue.increment(1));
 
         } else {
             docRefUser.update("likeRecipe", FieldValue.arrayRemove(intentFromRecipe));
-            docRefRecipe.update("likes", FieldValue.increment(-1));
+            docRefRecipe.update("like", FieldValue.increment(-1));
         }
     }
 

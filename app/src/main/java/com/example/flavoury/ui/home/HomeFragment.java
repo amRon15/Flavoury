@@ -3,6 +3,7 @@ package com.example.flavoury.ui.home;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
@@ -84,18 +87,18 @@ public class HomeFragment extends Fragment {
 
     private void handleRecipes(List<RecipeModel> recipe){
         popListAdapter.setRecipeListAdapter(recipe,getContext(),homeViewModel);
-        popListAdapter.notifyDataSetChanged();
+        popListAdapter.notifyItemRangeChanged(0, popListAdapter.getItemCount());
     }
 
     private void handleRandomRecipe(List<RecipeModel> recipe){
         exploreListAdapter.setRecipeListAdapter(recipe,getContext(),homeViewModel);
-        exploreListAdapter.notifyDataSetChanged();
+        exploreListAdapter.notifyItemRangeChanged(0, exploreListAdapter.getItemCount());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         homeViewModel.resetData();
-
     }
+
 }

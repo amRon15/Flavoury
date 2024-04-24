@@ -18,6 +18,8 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentLikesBinding;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LikesFragment extends Fragment {
 
@@ -38,7 +40,6 @@ public class LikesFragment extends Fragment {
         likesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
 
         likesViewModel = new ViewModelProvider(this).get(LikesViewModel.class);
-        likesViewModel.fetchRecipe();
         likesViewModel.getRecipeList().observe(getViewLifecycleOwner(),this::handleRecipes);
 
         return root;
@@ -54,5 +55,12 @@ public class LikesFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         likesViewModel.resetDate();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        likesViewModel.resetDate();
+        likesViewModel.fetchRecipe();
     }
 }

@@ -83,7 +83,9 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
                 @Override
                 public void onClick(View view) {
                     steps.remove(position);
-                    notifyDataSetChanged();
+                    step.setText("");
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,getItemCount());
                 }
             });
         }

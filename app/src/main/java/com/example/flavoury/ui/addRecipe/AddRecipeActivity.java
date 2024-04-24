@@ -156,16 +156,16 @@ public class AddRecipeActivity extends AppCompatActivity {
 //                addIngredientList.add(new AddRecipeModel());
                 ingredients.add(new Ingredients());
                 scaleAnim(view);
-                addRecipeIngredientAdapter.notifyDataSetChanged();
+                addRecipeIngredientAdapter.notifyItemInserted(ingredients.size()-1);
             }
         });
         addStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                addStepList.add(new AddRecipeModel());
-                steps.add(new String());
+                steps.add("");
                 scaleAnim(view);
-                addRecipeStepAdapter.notifyDataSetChanged();
+                addRecipeStepAdapter.notifyItemInserted(steps.size()-1);
             }
         });
         cancelRecipe.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +201,4 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

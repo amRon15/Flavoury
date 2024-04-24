@@ -44,6 +44,7 @@ public class HomeViewModel extends ViewModel {
 
     public void fetchRecipes() {
         //fetching current user's Field likeRecipe recipeID
+        resetData();
         db.collection("User").document(myUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -103,11 +104,11 @@ public class HomeViewModel extends ViewModel {
         DocumentReference docRefRecipe = db.collection("recipe").document(recipeID);
         if (isChecked) {
             docRefUser.update("likeRecipe", FieldValue.arrayUnion(recipeID));
-            docRefRecipe.update("likes", FieldValue.increment(1));
+            docRefRecipe.update("like", FieldValue.increment(1));
 
         } else {
             docRefUser.update("likeRecipe", FieldValue.arrayRemove(recipeID));
-            docRefRecipe.update("likes", FieldValue.increment(-1));
+            docRefRecipe.update("like", FieldValue.increment(-1));
         }
     }
 

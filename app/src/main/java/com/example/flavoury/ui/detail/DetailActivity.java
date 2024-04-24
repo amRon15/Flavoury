@@ -98,7 +98,7 @@ public class DetailActivity extends AppCompatActivity {
         recipeCals.setText("");
         recipeName.setText(recipe.getRecipeName());
         recipeCookingTime.setText("~" + recipe.getCookingMinutes() + " Mins");
-        recipeLike.setText(recipe.getLike() + " Likes");
+        recipeLike.setText(recipe.getLike() + " Like");
         if (recipe.getDescription()!=null){
             recipeDescription.setText(recipe.getDescription());
         }else {
@@ -114,9 +114,9 @@ public class DetailActivity extends AppCompatActivity {
 
                 //Set the like number when toggle
                 if (recipe.getIsRecipeLike()){
-                    recipeLike.setText(isChecked ? (recipe.getLike() + " Likes") : ((recipe.getLike() - 1) + " Likes"));
+                    recipeLike.setText(isChecked ? (recipe.getLike() + " Like") : ((recipe.getLike() - 1) + " Like"));
                 }else {
-                    recipeLike.setText(isChecked ? (recipe.getLike() + 1 + " Likes") : (recipe.getLike() + " Likes"));
+                    recipeLike.setText(isChecked ? (recipe.getLike() + 1 + " Like") : (recipe.getLike() + " Like"));
                 }
                 compoundButton.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
                     @Override

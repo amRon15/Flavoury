@@ -1,10 +1,7 @@
 package com.example.flavoury.ui.addRecipe;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,17 +42,17 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        EditText ingredient, portion;
+        EditText editIngredient, editPortion;
         ImageButton removeBtn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredient = itemView.findViewById(R.id.add_recipe_ingredient);
-            portion = itemView.findViewById(R.id.add_recipe_portion);
+            editIngredient = itemView.findViewById(R.id.add_recipe_ingredient);
+            editPortion = itemView.findViewById(R.id.add_recipe_portion);
             removeBtn = itemView.findViewById(R.id.add_recipe_ingredient_remove);
         }
 
         void bindData(Ingredients ingredient, int position){
-            this.ingredient.addTextChangedListener(new TextWatcher() {
+            editIngredient.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -71,7 +68,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
                 }
             });
-            this.portion.addTextChangedListener(new TextWatcher() {
+            editPortion.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -94,7 +91,10 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
                 @Override
                 public void onClick(View view) {
                     ingredients.remove(position);
-                    notifyDataSetChanged();
+                    editIngredient.setText("");
+                    editPortion.setText("");
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, getItemCount());
                 }
             });
         }
