@@ -60,6 +60,14 @@
           }
         },
         {
+          "client_id": "495304470035-oun89urvfuvkcupj1bubhkh06idolqhj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavoury",
+            "certificate_hash": "4d80898c423e0120370b7c0722f0303a3a955839"
+          }
+        },
+        {
           "client_id": "495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com",
           "client_type": 3
         }

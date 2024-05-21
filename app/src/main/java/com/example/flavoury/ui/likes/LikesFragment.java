@@ -32,8 +32,6 @@ public class LikesFragment extends Fragment {
         likesRecyclerView.setAdapter(likesPostAdapter);
         likesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
 
-
-
         return root;
     }
 

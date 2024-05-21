@@ -14,4 +14,8 @@
     <color name="outline_color">#D0DBEA</color>
     <color name="red">#FF0000</color>
     <color name="cal_color">#FF7B7B</color>
+    <color name="disable_grey">#CCCCCC</color>
+    <color name="searchview_color">#FAFAFA</color>
+    <color name="DetailRecipeBack_color">#9C979797</color>
+    <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
 </resources>

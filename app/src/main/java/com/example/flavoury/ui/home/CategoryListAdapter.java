@@ -1,7 +1,6 @@
 package com.example.flavoury.ui.home;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_category_btn_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_category_btn,parent,false);
         return new MyViewHolder(view);
     }
 

@@ -32,4 +32,9 @@
         <item>Vegan</item>
         <item>More</item>
     </string-array>
+    <string name="back">Back</string>
+    <string name="Recipes">Recipes</string>
+    <string name="liked" />
+    <string name="ivy_so">ivy so</string>
+    <string name="pancake">Pancake</string>
 </resources>

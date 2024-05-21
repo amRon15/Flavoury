@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="5sp"
+    android:layout_marginHorizontal="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <Button
         android:id="@+id/home_pop_list_userName"
         android:layout_width="wrap_content"
-        android:layout_height="16sp"
-        android:layout_marginTop="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/inter"
         android:text="User"
+        android:lines="1"
+        android:ellipsize="end"
         android:textAlignment="textStart"
         android:textColor="@color/mainText_color"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/home_pop_list_userImg"
-        app:layout_constraintTop_toTopOf="parent"
-         />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/home_pop_list_userImg"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textAlignment="textEnd"
         android:background="@drawable/round_rectangle_shape"
+
         />
 
     <ImageButton
         android:id="@+id/home_pop_list_recipeImg"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -56,21 +56,23 @@
         android:fontFamily="@font/inter_semibold"
         android:text="Salad"
         android:textSize="16sp"
+        android:ellipsize="end"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeImg" />
 
     <TextView
-        android:id="@+id/home_pop_list_cal"
+        android:id="@+id/home_pop_list_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/baseline_flash_on_24"
+        android:drawableStart="@drawable/baseline_access_time_24"
         android:drawableTint="@color/cal_color"
         android:fontFamily="@font/inter"
         android:gravity="center"
-        android:text="280 cals"
+        android:text="280 Mins"
         android:textColor="@color/secondaryText_color"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +94,7 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.341"
-        app:layout_constraintStart_toEndOf="@+id/home_pop_list_cal"
+        app:layout_constraintStart_toEndOf="@+id/home_pop_list_time"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

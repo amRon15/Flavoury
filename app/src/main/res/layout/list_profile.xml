@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="28dp"
+    android:layout_marginTop="20dp">
+
+
+    <ImageView
+        android:id="@+id/profile_list_recipeImg"
+        android:layout_width="150dp"
+        android:layout_height="110dp"
+        android:layout_marginEnd="221dp"
+        android:layout_marginBottom="581dp"
+        android:src="@drawable/pancake"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/profile_list_recipeName"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textSize="20dp"
+        android:text="food"
+        app:layout_constraintEnd_toEndOf="@+id/profile_list_recipeImg"
+        app:layout_constraintStart_toStartOf="@+id/profile_list_recipeImg"
+        app:layout_constraintTop_toBottomOf="@+id/profile_list_recipeImg" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_list_category"
+        android:text="dessert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_list_recipeName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
