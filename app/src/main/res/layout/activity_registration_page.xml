@@ -32,8 +32,8 @@
 
     <ImageButton
         android:id="@+id/registration_userIcon"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
         android:layout_marginTop="20dp"
         android:background="@drawable/circle_user_icon"
         app:layout_constraintEnd_toEndOf="parent"

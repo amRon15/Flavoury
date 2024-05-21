@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_email" />
+        app:layout_constraintTop_toBottomOf="@+id/login_username" />
 
     <TextView
         android:id="@+id/login_forgotPw"
@@ -85,18 +85,18 @@
         app:layout_constraintTop_toBottomOf="@id/login_password" />
 
     <EditText
-        android:id="@+id/login_email"
+        android:id="@+id/login_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:imeActionLabel="loginEmail"
         android:layout_marginTop="28dp"
-        android:drawableStart="@drawable/baseline_email_24"
+        android:drawableStart="@drawable/baseline_person_24"
         android:drawablePadding="5dp"
         android:fontFamily="@font/inter"
-        android:hint="Email"
+        android:hint="Username"
+        android:imeActionLabel="loginUsername"
+        android:imeOptions="actionDone"
+        android:inputType="text"
         android:textColorHint="@color/secondaryText_color"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
