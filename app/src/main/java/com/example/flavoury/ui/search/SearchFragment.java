@@ -52,10 +52,8 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (recipes != null) {
-                    onSearchRecipe(query, recipes);
                 }
                 if (query.isEmpty()){
-                    onSearchRecipe("",new ArrayList<>());
                 }
                 searchView.clearFocus();
                 return false;
@@ -64,7 +62,6 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (recipes != null) {
-                    onSearchRecipe(newText, recipes);
                 }
                 return false;
             }
@@ -75,9 +72,6 @@ public class SearchFragment extends Fragment {
 //        historyRecyclerView.setAdapter(searchHistoryAdapter);
 //        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 //        historyRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
-        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        searchViewModel.fetchRecipe();
-        searchViewModel.getRecipe().observe(getViewLifecycleOwner(), this::getRecipes);
 
         return root;
     }
@@ -107,7 +101,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        searchViewModel.resetData();
         binding = null;
     }
 }

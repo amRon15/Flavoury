@@ -24,56 +24,9 @@ import java.util.List;
 
 public class MyProfileViewModel extends ViewModel {
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
-    public final String myUserID = myUser.getUid();
     private final MutableLiveData<UserProfileModel> userProfile = new MutableLiveData<UserProfileModel>();
     private final MutableLiveData<List<RecipeModel>> recipeList = new MutableLiveData<List<RecipeModel>>();
-    private ArrayList<RecipeModel> recipes = new ArrayList<>();
-    private UserProfileModel myUserProfile = new UserProfileModel();
-    private int recipeLikes= 0, recipeNum = 0;
-    private RecipeModel recipe = new RecipeModel();
 
-
-    public void fetchMyUserData() {
-        db.collection("User").document(myUserID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                myUserProfile.setUserID(myUserID);
-                myUserProfile.setUserName(documentSnapshot.getString("userName"));
-            }
-        });
-    }
-
-    public void fetchRecipe() {
-        recipes = new ArrayList<>();
-        recipeLikes = 0;
-        recipeNum = 0;
-        //fetch recipe that own by current user
-        db.collection("recipe").whereEqualTo("userID", myUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                        recipe = documentSnapshot.toObject(RecipeModel.class);
-                        recipeNum++;
-                        recipeLikes += recipe.getLike();
-                        recipes.add(recipe);
-                    }
-                    myUserProfile.setRecipeLikes(recipeLikes);
-                    myUserProfile.setRecipeNum(recipeNum);
-                    userProfile.postValue(myUserProfile);
-                    recipeList.postValue(recipes);
-                }
-            }
-        });
-    }
-
-    //reset data if current user leave this page
-    public void resetData() {
-        recipes.clear();
-        recipeList.postValue(recipes);
-    }
 
     public LiveData<UserProfileModel> getUserData() {
         return userProfile;

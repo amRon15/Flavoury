@@ -60,28 +60,24 @@ public class HomeFragment extends Fragment {
         });
 
         categoryType = getResources().getStringArray(R.array.category);
-
+//
         catRecyclerView = root.findViewById(R.id.home_catList);
-        popRecyclerView = root.findViewById(R.id.home_popList);
-        exploreRecyclerView = root.findViewById(R.id.home_exploreList);
-
+//        popRecyclerView = root.findViewById(R.id.home_popList);
+//        exploreRecyclerView = root.findViewById(R.id.home_exploreList);
+//
         CategoryListAdapter categoryListAdapter = new CategoryListAdapter(categoryType);
-        popListAdapter = new RecipeListAdapter();
-        exploreListAdapter = new RecipeListAdapter();
-
-        popRecyclerView.setAdapter(popListAdapter);
-        popRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-
-        exploreRecyclerView.setAdapter(exploreListAdapter);
-        exploreRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-
+//        popListAdapter = new RecipeListAdapter();
+//        exploreListAdapter = new RecipeListAdapter();
+//
+//        popRecyclerView.setAdapter(popListAdapter);
+//        popRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+//
+//        exploreRecyclerView.setAdapter(exploreListAdapter);
+//        exploreRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+//
         catRecyclerView.setAdapter(categoryListAdapter);
         catRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.fetchRecipes();
-        homeViewModel.getRecipeList().observe(getViewLifecycleOwner(),this::handleRecipes);
-        homeViewModel.getRandomRecipeList().observe(getViewLifecycleOwner(), this::handleRandomRecipe);
         return root;
     }
 
@@ -98,7 +94,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        homeViewModel.resetData();
     }
 
 }

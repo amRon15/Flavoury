@@ -31,47 +31,12 @@ import java.util.TreeMap;
 public class DetailViewModel extends ViewModel {
 
     String intentFromRecipe;
+    private final MutableLiveData<RecipeModel> recipeList = new MutableLiveData<RecipeModel>();
 
     public void setRecipeID(String recipeID) {
         intentFromRecipe = recipeID;
     }
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
-    private final String myUserID;
-
-    {
-        assert myUser != null;
-        myUserID = myUser.getUid();
-    }
-
-    private final MutableLiveData<RecipeModel> recipeList = new MutableLiveData<RecipeModel>();
-    RecipeModel recipe;
-    private ArrayList<String> myUserLikes = new ArrayList<>();
-
-    public void fetchRecipe(RecipeModel recipe) {
-        db.collection("User").document(recipe.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                recipe.setUserName(documentSnapshot.getString("userName"));
-                recipeList.postValue(recipe);
-            }
-        });
-
-    }
-
-    public void handleLikeRecipe(boolean isChecked, String recipeID) {
-        DocumentReference docRefUser = db.collection("User").document(myUserID);
-        DocumentReference docRefRecipe = db.collection("recipe").document(recipeID);
-        if (isChecked) {
-            docRefUser.update("likeRecipe", FieldValue.arrayUnion(intentFromRecipe));
-            docRefRecipe.update("like", FieldValue.increment(1));
-
-        } else {
-            docRefUser.update("likeRecipe", FieldValue.arrayRemove(intentFromRecipe));
-            docRefRecipe.update("like", FieldValue.increment(-1));
-        }
-    }
 
     public LiveData<RecipeModel> getRecipeList() {
         return recipeList;

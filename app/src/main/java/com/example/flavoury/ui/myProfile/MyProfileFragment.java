@@ -41,29 +41,10 @@ public class MyProfileFragment extends Fragment {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        myProfileRecipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
-        myProfileRecipeAdapter = new MyProfileRecipeAdapter();
-        myProfileRecipeRecyclerView.setAdapter(myProfileRecipeAdapter);
-        myProfileRecipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-
-        myProfileViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
-        myProfileViewModel.fetchRecipe();
-        myProfileViewModel.fetchMyUserData();
-
-        myProfileViewModel.getRecipeList().observe(getViewLifecycleOwner(), new Observer<List<RecipeModel>>() {
-            @Override
-            public void onChanged(List<RecipeModel> recipeModels) {
-                if (recipeModels != null) {
-                    handleRecipe(recipeModels);
-                }
-            }
-        });
-        myProfileViewModel.getUserData().observe(getViewLifecycleOwner(), new Observer<UserProfileModel>() {
-            @Override
-            public void onChanged(UserProfileModel userProfileModel) {
-                setView(root, userProfileModel);
-            }
-        });
+//        myProfileRecipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
+//        myProfileRecipeAdapter = new MyProfileRecipeAdapter();
+//        myProfileRecipeRecyclerView.setAdapter(myProfileRecipeAdapter);
+//        myProfileRecipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         return root;
     }
@@ -115,6 +96,5 @@ public class MyProfileFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        myProfileViewModel.resetData();
     }
 }

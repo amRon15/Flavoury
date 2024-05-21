@@ -107,27 +107,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 }
             });
 
-            likeToggle.setChecked(recipe.getIsRecipeLike());
-            likeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
-                    homeViewModel.handleLikeRecipe(isChecked, recipe.getRecipeID());
-                    //Set the like number when toggle
-                    if (recipe.getIsRecipeLike()) {
-                        likes.setText(isChecked ? recipe.getLike() + "" : recipe.getLike() - 1 + "");
-                    } else {
-                        likes.setText(isChecked ? recipe.getLike() + 1 + "" : recipe.getLike() + "");
-                    }
-                    compoundButton.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            compoundButton.animate().scaleX(1).scaleY(1).setDuration(100);
-                        }
-                    });
-                }
-            });
-
             if (recipe.getRecipeImg()!=null) {
                 Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
             }

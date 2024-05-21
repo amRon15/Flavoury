@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -39,95 +41,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private GoogleSignInClient googleSignInClient;
-    private FirebaseAuth auth;
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     int data;
-    private ActivityResultLauncher<Intent> someActivityResultLauncher;
-    private BeginSignInRequest signInRequest;
-
+    TextView signUpBtn;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().hide();
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("495304470035-lq09m4fbm8cj0qlfb96nhcos553vjs1s.apps.googleusercontent.com")
-                .requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
-        auth = FirebaseAuth.getInstance();
-
-        if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        signUpBtn = findViewById(R.id.login_signUpBtn);
+        signUpBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
             startActivity(intent);
-        }
-
-        someActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                data = result.getResultCode();
-            }
         });
 
-        SignInButton signInButton = findViewById(R.id.login_google_signIn);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setOnClickListener(view -> {
-            Intent signInIntent = googleSignInClient.getSignInIntent();
-            someActivityResultLauncher.launch(signInIntent);
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (resultCode == this.data) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
-            if (task.isSuccessful()) {
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
-
-            }
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                auth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isComplete()) {
-                                        for (QueryDocumentSnapshot userDoc : task.getResult()) {
-                                            if (userDoc.getId().equals(auth.getUid())) {
-                                                Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                                startActivity(homeIntent);
-                                            } else {
-                                                Intent signUpIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                                                signUpIntent.putExtra("userEmail", Objects.requireNonNull(auth.getCurrentUser()).getEmail());
-                                                signUpIntent.putExtra("userId", auth.getCurrentUser().getUid());
-                                                startActivity(signUpIntent);
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Failed to login", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Toast.makeText(this, "Login fail, " + e, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }
 

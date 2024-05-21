@@ -58,11 +58,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
-        addRecipeViewModel = new ViewModelProvider(this).get(AddRecipeViewModel.class);
-        addRecipeViewModel.fetchMyUserID();
-        addRecipeViewModel.getUserID().observe(this, this::setView);
-
-        handleRecyclerView();
     }
 
     private void handleRecyclerView() {
@@ -172,19 +167,6 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
-        addRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (recipeName==null || duration==null || ingredients.get(0).getIngredient()==null || steps.get(0)==null){
-                    Toast.makeText(getApplicationContext(),"Required Field Must Not Be Empty",Toast.LENGTH_LONG).show();
-                    Log.d("FAILED","REQUIRED");
-                }else {
-                    Date createDate = new Date(System.currentTimeMillis());
-                    RecipeModel recipe = new RecipeModel(recipeName,userID,description,cookingMinutes,steps,ingredients,createDate);
-                    addRecipeViewModel.addRecipeToDB(recipe, onBackPressedCallback,getApplicationContext());
-                }
             }
         });
 

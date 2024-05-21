@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageButton
+        android:id="@+id/registration_backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/baseline_arrow_back_ios_new_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/recipe_detail_cookingMins"
         android:layout_width="wrap_content"
@@ -13,70 +23,133 @@
         android:fontFamily="@font/italiana"
         android:text="@string/app_name"
         android:textColor="@color/primary_color"
-        android:textSize="60sp"
+        android:textSize="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageButton
         android:id="@+id/registration_userIcon"
         android:layout_width="150sp"
         android:layout_height="150sp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/round_rectangle_shape"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circle_user_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_detail_cookingMins" />
 
-    <EditText
-        android:id="@+id/registration_userName"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:imeActionLabel="setUserName"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/registration_editIcon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50sp"
-        android:layout_marginTop="28dp"
-        android:drawableStart="@drawable/baseline_person_24"
-        android:drawablePadding="10sp"
-        android:hint="User Name"
-        android:textSize="20sp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/inter"
+        android:text="Edit User Icon"
+        android:textColor="@color/Secondary_color"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_userIcon" />
 
-    <TextView
-        android:id="@+id/registration_userEmail"
+    <EditText
+        android:id="@+id/registration_userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50sp"
-        android:layout_marginTop="28dp"
-        android:textSize="20sp"
-        app:drawableStartCompat="@drawable/baseline_email_24"
-        android:drawablePadding="10sp"
-        android:textColor="@color/secondaryText_color"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="24dp"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/inter"
+        android:hint="User Name"
+        android:imeActionLabel="setUserName"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColorHint="@color/secondaryText_color"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_userName" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_userEmail" />
 
     <Button
         android:id="@+id/registration_signUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginHorizontal="50sp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_rectangle_login"
+        android:fontFamily="@font/inter_semibold"
         android:text="Sign Up"
         android:textColor="@color/white"
-        android:fontFamily="@font/inter"
-        android:background="@drawable/selector_signup_btn"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_userEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_confirmPassword" />
+
+    <EditText
+        android:id="@+id/registration_confirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/inter"
+        android:hint="Confirm Password"
+        android:imeActionLabel="setUserPassword"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColorHint="@color/secondaryText_color"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_password" />
+
+    <EditText
+        android:id="@+id/registration_userEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/baseline_email_24"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/inter"
+        android:hint="Email"
+        android:imeActionLabel="setEmail"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColorHint="@color/secondaryText_color"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_editIcon" />
+
+    <EditText
+        android:id="@+id/registration_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/inter"
+        android:hint="Password"
+        android:imeActionLabel="confirmUserPassword"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColorHint="@color/secondaryText_color"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_userName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

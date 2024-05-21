@@ -34,13 +34,11 @@ public class LikesFragment extends Fragment {
         binding = FragmentLikesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        likesRecyclerView = root.findViewById(R.id.likes_postList);
-        likesPostAdapter = new LikesPostAdapter();
-        likesRecyclerView.setAdapter(likesPostAdapter);
-        likesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+//        likesRecyclerView = root.findViewById(R.id.likes_postList);
+//        likesPostAdapter = new LikesPostAdapter();
+//        likesRecyclerView.setAdapter(likesPostAdapter);
+//        likesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
 
-        likesViewModel = new ViewModelProvider(this).get(LikesViewModel.class);
-        likesViewModel.getRecipeList().observe(getViewLifecycleOwner(),this::handleRecipes);
 
         return root;
     }
@@ -53,14 +51,5 @@ public class LikesFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
-        likesViewModel.resetDate();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        likesViewModel.resetDate();
-        likesViewModel.fetchRecipe();
     }
 }
