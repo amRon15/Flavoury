@@ -42,7 +42,7 @@ public class RegistrationActivity extends AppCompatActivity {
     ImageButton userIconBtn, backBtn;
     EditText userNameText;
     Uri userIcon;
-    TextView userEmailText;
+    TextView userEmailText, editIconText;
 
     String userName,userId,userEmail,currentUserEmail;
 
@@ -62,7 +62,30 @@ public class RegistrationActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
 
         backBtn = findViewById(R.id.registration_backBtn);
+        userIconBtn = findViewById(R.id.registration_userIcon);
+        editIconText = findViewById(R.id.registration_editIcon);
+
         backBtn.setOnClickListener(view -> onBackPressedCallback.handleOnBackPressed());
+
+        // callback for photo picker
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
+            if(uri != null){
+                Log.d("PhotoPicker", "Selected uri " + uri);
+                userIconBtn.setImageURI(uri);
+                userIcon = uri;
+            }else {
+                Log.d("PhotoPicker","no media selected");
+            }
+        });
+
+        // click to launch photo picker
+        userIconBtn.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
+
+        editIconText.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
     }
 
     @Override
