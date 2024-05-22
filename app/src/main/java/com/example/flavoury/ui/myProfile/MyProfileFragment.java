@@ -34,7 +34,7 @@ public class MyProfileFragment extends Fragment {
     RecyclerView myProfileRecipeRecyclerView;
     MyProfileRecipeAdapter myProfileRecipeAdapter;
     MyProfileViewModel myProfileViewModel;
-    ImageButton settingBtn, addRecipeBtn;
+    ImageButton settingBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,22 +51,8 @@ public class MyProfileFragment extends Fragment {
 
     private void setView(View root, UserProfileModel userData) {
         settingBtn = root.findViewById(R.id.my_profile_setting);
-        addRecipeBtn = root.findViewById(R.id.my_profile_addRecipe);
         TextView recipeNum = root.findViewById(R.id.my_profile_recipeNum);
         TextView recipeLikes = root.findViewById(R.id.my_profile_likeNum);
-        addRecipeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        v.animate().scaleX(1).scaleY(1).setDuration(100);
-                    }
-                });
-                Intent addRecipeIntent = new Intent(getActivity(), AddRecipeActivity.class);
-                startActivity(addRecipeIntent);
-            }
-        });
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
