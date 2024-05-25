@@ -4,111 +4,193 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ui.myProfile.MyProfileFragment">
 
-    >
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_userIcon"
-        android:layout_width="152dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="50dp"
-        app:cardCornerRadius="60dp"
+    <LinearLayout
+        android:id="@+id/profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/description"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:background="@drawable/circle_background"
-            android:src="@drawable/ivysoo" />
-    </androidx.cardview.widget.CardView>
+        <ImageButton
+            android:id="@+id/profile_backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_arrow_back_ios_new_24" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/profile_sharingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_share_24"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/profile_userIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/circle_user_icon"
+        android:contentDescription="@string/description"
+        android:scaleType="centerCrop"
+        app:circularflow_defaultRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_toolbar" />
 
     <TextView
-        android:id="@+id/my_profile_userName"
+        android:id="@+id/profile_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="@string/ivy_so"
-        android:textColor="#202321"
-        android:textSize="30sp"
+        android:text="username"
+        android:textColor="@color/mainText_color"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_userIcon" />
 
-    <TextView
-        android:id="@+id/my_profile_recipeTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/profile_userInfo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/Recipes"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_profile_userName" />
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/profile_userName">
 
-    <TextView
-        android:id="@+id/profile_likesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Likes"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.368"
-        app:layout_constraintStart_toEndOf="@+id/my_profile_recipeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/my_profile_userName" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/profile_recipeNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_semibold"
-        android:text="23"
-        android:textColor="#202321"
-        app:layout_constraintBottom_toTopOf="@+id/my_profile_recipeTitle"
-        app:layout_constraintEnd_toEndOf="@+id/my_profile_recipeTitle"
-        app:layout_constraintStart_toStartOf="@+id/my_profile_recipeTitle" />
+            <TextView
+                android:id="@+id/my_profile_recipeNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="0"
+                android:textColor="@color/mainText_color" />
 
-    <TextView
-        android:id="@+id/profile_likesNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="354"
-        android:textColor="#202321"
-        android:fontFamily="@font/inter_semibold"
-        app:layout_constraintBottom_toTopOf="@+id/profile_likesTitle"
-        app:layout_constraintEnd_toEndOf="@+id/profile_likesTitle"
-        app:layout_constraintStart_toStartOf="@+id/profile_likesTitle" />
+            <TextView
+                android:id="@+id/my_profile_recipeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Recipes"
+                android:textColor="@color/mainText_color"
+                android:textSize="12dp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_followerNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="0"
+                android:textColor="@color/mainText_color" />
+
+            <TextView
+                android:id="@+id/profile_follower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Followers"
+                android:textColor="@color/mainText_color"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_followingNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="0"
+                android:textColor="@color/mainText_color" />
+
+            <TextView
+                android:id="@+id/profile_following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Followings"
+                android:textColor="@color/mainText_color"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Follow"
         android:id="@+id/profile_followBtn"
-        android:layout_width="247dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="328dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/profile_follow_btn"
-        android:text="follow"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_userInfo"
+        android:layout_marginHorizontal="50dp"
+        android:fontFamily="@font/inter"
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_rectangle_login"
+        android:layout_marginVertical="10dp" />
+
+    <ImageButton
+        android:id="@+id/profile_gridIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/baseline_grid_on_24"
+        app:layout_constraintTop_toBottomOf="@id/profile_followBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/profile_div"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_gridIcon"
+        android:background="@color/primary_color" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/profile_myRecyclerView"
-        android:layout_width="410dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:layout_height="351dp"
-        app:layout_constraintEnd_toEndOf="@+id/profile_followBtn"
-        app:layout_constraintStart_toStartOf="@+id/profile_followBtn"
-        app:layout_constraintTop_toBottomOf="@+id/profile_followBtn" />
+        android:id="@+id/profile_recipe_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_div" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

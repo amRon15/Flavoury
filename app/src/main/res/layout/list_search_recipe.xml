@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginVertical="10dp"
-    android:layout_marginTop="20dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/rounded_rec_search_post_card"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
     <ImageButton
         android:id="@+id/search_recipeIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@drawable/round_rectangle_shape"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginHorizontal="10dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="@drawable/rounded_rec_recipe_img"
+        android:layout_marginHorizontal="5dp"
         />
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="27dp"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/search_recipeIcon"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/search_recipeName"
@@ -35,22 +32,22 @@
             android:fontFamily="@font/inter"
             android:lines="1"
             android:text="Recipe Name"
-            android:layout_marginBottom="5dp"
             android:textColor="@color/mainText_color"
             android:textSize="18dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
+            android:layout_marginVertical="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/search_recipeCategory"
+                android:id="@+id/search_recipeLikes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Category"
+                android:text="100"
+                android:drawableStart="@drawable/baseline_favorite_24"
                 android:textColor="@color/secondaryText_color"
                 android:textSize="15dp" />
 
@@ -60,8 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/inter"
-                android:text="Cooking Time"
+                android:gravity="center_vertical"
+                android:text=">120 mins"
                 android:textColor="@color/secondaryText_color"
+                android:drawableStart="@drawable/baseline_access_time_24"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -71,19 +70,17 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter"
-                android:text="By"
-                android:textColor="@color/secondaryText_color"
-                android:textSize="15dp" />
+            <ImageButton
+                android:id="@+id/search_userIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/circle_user_icon" />
 
             <TextView
                 android:id="@+id/search_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/inter"
                 android:lines="1"
@@ -91,15 +88,9 @@
                 android:textColor="@color/secondaryText_color"
                 android:textSize="15dp" />
 
-            <ImageButton
-                android:id="@+id/search_userIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/baseline_person_24" />
-
         </LinearLayout>
 
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

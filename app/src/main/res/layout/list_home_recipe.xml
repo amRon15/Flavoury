@@ -1,111 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginHorizontal="5dp">
 
-
-    <Button
-        android:id="@+id/home_pop_list_userName"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/inter"
-        android:text="User"
-        android:lines="1"
-        android:ellipsize="end"
-        android:textAlignment="textStart"
-        android:textColor="@color/mainText_color"
-        android:textSize="12sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_pop_list_userBox"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/home_pop_list_userImg"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textAlignment="textEnd"
-        android:background="@drawable/baseline_person_24"
+        app:layout_constraintTop_toTopOf="parent">
 
-        />
+        <ImageButton
+            android:id="@+id/home_pop_list_userImg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/circle_user_icon" />
+
+        <TextView
+            android:id="@+id/home_pop_list_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter"
+            android:layout_marginHorizontal="5dp"
+            android:lines="1"
+            android:text="User"
+            android:textColor="@color/mainText_color"
+            android:textSize="12dp" />
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/home_pop_list_recipeImg"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_rec_recipe_img"
+        android:backgroundTint="@color/outline_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_userImg"
-        android:background="@drawable/round_rectangle_shape"
-        android:backgroundTint="@color/outline_color"/>
+        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_userBox" />
 
     <TextView
         android:id="@+id/home_pop_list_recipeName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Salad"
-        android:textSize="16sp"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
+        android:fontFamily="@font/inter_semibold"
         android:lines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        android:text="Salad"
+        android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeImg" />
 
-    <TextView
-        android:id="@+id/home_pop_list_time"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/baseline_access_time_24"
-        android:drawableTint="@color/cal_color"
-        android:fontFamily="@font/inter"
-        android:gravity="center"
-        android:text="280 Mins"
-        android:textColor="@color/secondaryText_color"
-        android:textSize="10sp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
+        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName">
 
-    <ToggleButton
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/home_pop_likeToggle"
-        android:background="@drawable/selector_like"
-        app:layout_constraintEnd_toStartOf="@id/home_pop_list_like"
-        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:textOn=""
-        android:textOff="" />
+        <TextView
+            android:id="@+id/home_pop_list_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/baseline_access_time_24"
+            android:drawableTint="@color/cal_color"
+            android:fontFamily="@font/inter"
+            android:gravity="center_vertical"
+            android:text="280 Mins"
+            android:textColor="@color/secondaryText_color"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
 
-    <TextView
-        android:id="@+id/home_pop_list_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="15dp"
-        android:fontFamily="@font/inter"
-        android:gravity="center"
-        android:text="103"
-        android:textColor="@color/secondaryText_color"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.341"
-        app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
+        <ToggleButton
+            android:id="@+id/home_pop_likeToggle"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/selector_like"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintEnd_toStartOf="@id/home_pop_list_like"
+            app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
+
+        <TextView
+            android:id="@+id/home_pop_list_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:gravity="center"
+            android:text="103"
+            android:textColor="@color/secondaryText_color"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.341"
+            app:layout_constraintTop_toBottomOf="@+id/home_pop_list_recipeName" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
