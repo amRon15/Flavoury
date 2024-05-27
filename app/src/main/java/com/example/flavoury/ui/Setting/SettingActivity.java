@@ -43,7 +43,7 @@ public class SettingActivity extends AppCompatActivity {
         logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
 
         logoutBtn = findViewById(R.id.setting_logoutBtn);
-        backbutton = findViewById(R.id.setting_backBtn);
+//        backbutton = findViewById(R.id.setting_backBtn);
 
         logoutDialog = new Dialog(this);
         logoutDialog.setContentView(R.layout.dialog_box_logout);
