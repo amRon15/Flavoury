@@ -6,31 +6,30 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
-import com.example.flavoury.RecipeModel;
-import com.google.android.material.internal.TextWatcherAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
     RecyclerView addRecipeIngredient, addRecipeStep;
     ImageButton addIngredient, addStep;
-    Button addRecipe, cancelRecipe;
-    EditText editRecipeName, editDescription, editDuration;
+    TextView addRecipe, cancelRecipe;
+    EditText editRecipeName, editDescription;
+    Spinner durationSpinner;
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
     ArrayList<Ingredients> ingredients = new ArrayList<>();
@@ -58,6 +57,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
+        durationSpinner = findViewById(R.id.add_recipe_recipeTime);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.minutes,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        durationSpinner.setAdapter(adapter);
+
     }
 
     private void handleRecyclerView() {
@@ -82,10 +90,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         Log.d("USer", userID);
         editRecipeName = findViewById(R.id.add_recipe_recipeName);
         editDescription = findViewById(R.id.add_recipe_description);
-        editDuration = findViewById(R.id.add_recipe_recipeTime);
+
         addIngredient = findViewById(R.id.add_recipe_add_ingredient);
         addStep = findViewById(R.id.add_recipe_add_step);
-        addRecipe = findViewById(R.id.add_recipe_addBtn);
+        addRecipe = findViewById(R.id.add_recipe_saveBtn);
         cancelRecipe = findViewById(R.id.add_recipe_cancelBtn);
 
         addRecipe.setEnabled(true);
@@ -123,28 +131,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
             }
         });
-        editDuration.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                duration = charSequence.toString();
-
-                try {
-                    cookingMinutes = Integer.parseInt(charSequence.toString());
-                }catch (NumberFormatException e){
-                    cookingMinutes = 0;
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

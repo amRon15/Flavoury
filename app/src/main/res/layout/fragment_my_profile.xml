@@ -120,32 +120,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/my_profile_likeNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="0"
-                android:textColor="@color/mainText_color" />
-
-            <TextView
-                android:id="@+id/my_profile_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="Likes"
-                android:textColor="@color/mainText_color"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
                 android:id="@+id/my_profile_followerNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,6 +138,31 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/my_profile_followingNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="0"
+                android:textColor="@color/mainText_color" />
+
+            <TextView
+                android:id="@+id/my_profile_following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Followings"
+                android:textColor="@color/mainText_color"
+                android:textSize="12dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -172,7 +171,6 @@
         android:id="@+id/my_profile_recipe_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         android:paddingBottom="70dp"
         app:layout_constraintEnd_toEndOf="parent"

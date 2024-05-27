@@ -53,23 +53,15 @@ public class LikesPostAdapter extends RecyclerView.Adapter<LikesPostAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageButton recipeImg;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeImg = itemView.findViewById(R.id.likes_post_list_image);
+
         }
 
         void bindData(RecipeModel recipe) {
-            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
-            recipeImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    detail_recipe_intent = new Intent(likesFragment, DetailActivity.class);
-                    detail_recipe_intent.putExtra("detailRecipe",recipe);
-                    likesFragment.startActivity(detail_recipe_intent);
-                }
-            });
+
         }
     }
 

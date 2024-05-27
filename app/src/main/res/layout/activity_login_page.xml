@@ -10,7 +10,7 @@
         android:id="@+id/login_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="140dp"
         android:fontFamily="@font/italiana"
         android:text="@string/app_name"
         android:textColor="@color/primary_color"
@@ -19,16 +19,97 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/login_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/inter"
+        android:hint="Username"
+        android:imeActionLabel="loginUsername"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColorHint="@color/secondaryText_color"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_hint" />
+
+    <TextView
+        android:id="@+id/login_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/italiana"
+        android:text="Sign to continue"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_title" />
+
+    <TextView
+        android:id="@+id/login_forgotPw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="44dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Forgot Password?"
+        android:textColor="@color/Secondary_color"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_password" />
+
+    <Button
+        android:id="@+id/login_loginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_rectangle_login"
+        android:fontFamily="@font/inter_semibold"
+        android:onClick='logIn'
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintTop_toBottomOf="@+id/login_forgotPw"
+        tools:layout_editor_absoluteX="48dp" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="28dp"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/inter"
+        android:hint="Password"
+        android:imeActionLabel="loginPassword"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:textColorHint="@color/secondaryText_color"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_username" />
+
     <LinearLayout
         android:id="@+id/login_signUpBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_loginBtn">
 
@@ -50,87 +131,6 @@
 
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="20dp"
-        android:drawableStart="@drawable/baseline_lock_24"
-        android:drawablePadding="5dp"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:imeActionLabel="loginPassword"
-        android:fontFamily="@font/inter"
-        android:hint="Password"
-        android:textColorHint="@color/secondaryText_color"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_username" />
-
-    <TextView
-        android:id="@+id/login_forgotPw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="48dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Forgot Password?"
-        android:textColor="@color/Secondary_color"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_password" />
-
-    <EditText
-        android:id="@+id/login_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="28dp"
-        android:drawableStart="@drawable/baseline_person_24"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/inter"
-        android:hint="Username"
-        android:imeActionLabel="loginUsername"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:textColorHint="@color/secondaryText_color"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_hint" />
-
-    <Button
-        android:id="@+id/login_loginBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_rectangle_login"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Login"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_forgotPw"
-        tools:layout_editor_absoluteX="50dp"
-        android:onClick='logIn'/>
-
-    <TextView
-        android:id="@+id/login_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/italiana"
-        android:text="Sign to continue"
-        android:textSize="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

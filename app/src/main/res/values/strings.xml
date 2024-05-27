@@ -45,4 +45,20 @@
     <string name="liked" />
     <string name="ivy_so">ivy so</string>
     <string name="pancake">Pancake</string>
+    <string-array name="minutes">
+        <item>5 mins</item>
+        <item>10 mins</item>
+        <item>15 mins</item>
+        <item>20 mins</item>
+        <item>30 mins</item>
+        <item>40 mins</item>
+        <item>50 mins</item>
+        <item>60 mins</item>
+        <item>70 mins</item>
+        <item>80 mins</item>
+        <item>90 mins</item>
+        <item>100 mins</item>
+        <item>120 mins</item>
+        <item>>120 mins</item>
+    </string-array>
 </resources>

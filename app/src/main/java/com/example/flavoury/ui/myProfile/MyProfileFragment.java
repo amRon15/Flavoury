@@ -52,7 +52,9 @@ public class MyProfileFragment extends Fragment {
     private void setView(View root, UserProfileModel userData) {
         settingBtn = root.findViewById(R.id.my_profile_setting);
         TextView recipeNum = root.findViewById(R.id.my_profile_recipeNum);
-        TextView recipeLikes = root.findViewById(R.id.my_profile_likeNum);
+        TextView followingNum = root.findViewById(R.id.my_profile_followingNum);
+        TextView followerNum = root.findViewById(R.id.my_profile_followerNum);
+
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +70,8 @@ public class MyProfileFragment extends Fragment {
         });
         TextView userName = root.findViewById(R.id.my_profile_userName);
         userName.setText(userData.getUserName());
-        Log.d("Likes",userData.getRecipeNum()+"");
         recipeNum.setText(userData.getRecipeNum()+"");
-        recipeLikes.setText(userData.getRecipeLikes()+"");
+
     }
 
 
