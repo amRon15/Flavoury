@@ -62,16 +62,48 @@ public class RegistrationActivity extends AppCompatActivity {
 
         Button signBtn = findViewById(R.id.registration_signUp);
 
+        //back to prev page callback function
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
+        backBtn = findViewById(R.id.registration_backBtn);
+        backBtn.setOnClickListener(view -> onBackPressedCallback.handleOnBackPressed());
+
+        userIconBtn = findViewById(R.id.registration_userIcon);
+//        // callback for photo picker
+//        ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
+//            if(uri != null){
+//                Log.d("PhotoPicker", "Selected uri " + uri);
+//                userIconBtn.setImageURI(uri);
+//                userIcon = uri;
+//            }else {
+//                Log.d("PhotoPicker","no media selected");
+//            }
+//        });
+//
+//        // click to launch photo picker
+//        userIconBtn.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+//                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+//                .build()));
+//
+//        editIconText.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+//                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+//                .build()));
+
         signBtn.setOnClickListener(view -> {
             String username = ((EditText) findViewById(R.id.registration_userName)).getText().toString();
             String email = ((EditText) findViewById(R.id.registration_userEmail)).getText().toString();
             String password = ((EditText) findViewById(R.id.registration_password)).getText().toString();
             String ccpassword = ((EditText) findViewById(R.id.registration_confirmPassword)).getText().toString();
-            performsignUp(username, email, password, ccpassword);
+            performSignUp(username, email, password, ccpassword);
         });
     }
 
-    private void performsignUp(String username, String email, String password, String ccpassword) {
+    private void performSignUp(String username, String email, String password, String ccpassword) {
 
         if (!password.equals(ccpassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -146,48 +178,11 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
         signUpThread.start();
-
-
-        //back to prev page callback function
-//        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                finish();
-//            }
-//        };
-//        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
-//
-//        backBtn = findViewById(R.id.registration_backBtn);
-//        userIconBtn = findViewById(R.id.registration_userIcon);
-//        editIconText = findViewById(R.id.registration_editIcon);
-//
-//        backBtn.setOnClickListener(view -> onBackPressedCallback.handleOnBackPressed());
-//
-//
-
-//        // callback for photo picker
-//        ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
-//            if(uri != null){
-//                Log.d("PhotoPicker", "Selected uri " + uri);
-//                userIconBtn.setImageURI(uri);
-//                userIcon = uri;
-//            }else {
-//                Log.d("PhotoPicker","no media selected");
-//            }
-//        });
-//
-//        // click to launch photo picker
-//        userIconBtn.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
-//                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-//                .build()));
-//
-//        editIconText.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
-//                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-//                .build()));
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+    //
 }
