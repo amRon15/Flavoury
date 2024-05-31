@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <Button
             android:id="@+id/home_search_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +26,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="null"
+            android:gravity="center_vertical"
+            android:background="@color/fui_transparent"
             android:fontFamily="@font/inter"
             android:hint="Search For Recipe"
             android:textColor="@color/mainText_color"
@@ -38,7 +39,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="@drawable/circle_backbutton"
+            android:background="@drawable/circle_back_btn"
             android:backgroundTint="@color/primary_color"
             android:src="@drawable/baseline_search_24"
             app:tint="@color/white" />

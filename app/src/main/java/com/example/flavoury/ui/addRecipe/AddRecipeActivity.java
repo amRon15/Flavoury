@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,14 +26,16 @@ import java.util.ArrayList;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
-    RecyclerView addRecipeIngredient, addRecipeStep;
+    RecyclerView addRecipeIngredient, addRecipeStep, addRecipeCategory;
     ImageButton addIngredient, addStep;
     TextView addRecipe, cancelRecipe;
     EditText editRecipeName, editDescription;
-    Spinner durationSpinner;
+    Spinner durationSpinner, servingSpinner;
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
+    AddRecipeCategoryAdapter addRecipeCategoryAdapter;
     ArrayList<Ingredients> ingredients = new ArrayList<>();
+    String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
     boolean isRecipeReady;
     String recipeName, description, duration;
@@ -47,8 +50,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
 
-        ingredients.add(new Ingredients());
-        steps.add(new String());
+        categoryList = getResources().getStringArray(R.array.category);
+        addRecipeCategory = findViewById(R.id.add_recipe_category_list);
+
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -58,14 +62,22 @@ public class AddRecipeActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         durationSpinner = findViewById(R.id.add_recipe_recipeTime);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> durationAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.minutes,
                 android.R.layout.simple_spinner_item
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        durationSpinner.setAdapter(adapter);
+        durationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        durationSpinner.setAdapter(durationAdapter);
 
+        servingSpinner = findViewById(R.id.add_recipe_recipePortion);
+        ArrayAdapter<CharSequence> servingAdapter = ArrayAdapter.createFromResource(this, R.array.serving_size, android.R.layout.simple_spinner_item);
+        servingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        servingSpinner.setAdapter(servingAdapter);
+
+        addRecipeCategoryAdapter = new AddRecipeCategoryAdapter(categoryList);
+        addRecipeCategory.setAdapter(addRecipeCategoryAdapter);
+        addRecipeCategory.setLayoutManager(new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT));
     }
 
     private void handleRecyclerView() {
@@ -138,7 +150,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 //                addIngredientList.add(new AddRecipeModel());
                 ingredients.add(new Ingredients());
                 scaleAnim(view);
-                addRecipeIngredientAdapter.notifyItemInserted(ingredients.size()-1);
+                addRecipeIngredientAdapter.notifyItemInserted(ingredients.size() - 1);
             }
         });
         addStep.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +159,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 //                addStepList.add(new AddRecipeModel());
                 steps.add("");
                 scaleAnim(view);
-                addRecipeStepAdapter.notifyItemInserted(steps.size()-1);
+                addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
             }
         });
         cancelRecipe.setOnClickListener(new View.OnClickListener() {

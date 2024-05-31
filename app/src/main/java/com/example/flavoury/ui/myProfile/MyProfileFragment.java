@@ -2,7 +2,6 @@ package com.example.flavoury.ui.myProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,29 +10,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserProfileModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
-import com.example.flavoury.ui.Setting.SettingActivity;
-import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
+import com.example.flavoury.ui.setting.SettingActivity;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyProfileFragment extends Fragment {
 
     private FragmentMyProfileBinding binding;
-    RecyclerView myProfileRecipeRecyclerView;
-    MyProfileRecipeAdapter myProfileRecipeAdapter;
-    MyProfileViewModel myProfileViewModel;
     ImageButton settingBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -76,8 +65,7 @@ public class MyProfileFragment extends Fragment {
 
 
     private void handleRecipe(List<RecipeModel> recipe) {
-        myProfileRecipeAdapter.setMyProfileRecipeAdapter(recipe, getContext());
-        myProfileRecipeAdapter.notifyDataSetChanged();
+
     }
 
     @Override

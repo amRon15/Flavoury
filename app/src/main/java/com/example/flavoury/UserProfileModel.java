@@ -2,11 +2,11 @@ package com.example.flavoury;
 
 public class UserProfileModel {
 
-    public UserProfileModel(){
-
+    public UserProfileModel() {
     }
-   String userName, userID, userIcon;
-   int recipeNum, recipeLikes;
+
+    String userName, userID, userIcon;
+    int recipeNum, recipeLikes, followerNum, followingNum;
 
     public String getUserName() {
         return userName;
@@ -24,14 +24,6 @@ public class UserProfileModel {
         this.userID = userID;
     }
 
-    public String getUserIcon() {
-        return userIcon;
-    }
-
-    public void setUserIcon(String userIcon) {
-        this.userIcon = userIcon;
-    }
-
     public int getRecipeNum() {
         return recipeNum;
     }
@@ -46,5 +38,21 @@ public class UserProfileModel {
 
     public void setRecipeLikes(int recipeLikes) {
         this.recipeLikes = recipeLikes;
+    }
+
+    public int getFollowerNum() {
+        return followerNum;
+    }
+
+    public void setFollowerNum(int followerNum) {
+        this.followerNum = followerNum;
+    }
+
+    public int getFollowingNum() {
+        return followingNum;
+    }
+
+    public void setFollowingNum(int followingNum) {
+        this.followingNum = followingNum;
     }
 }

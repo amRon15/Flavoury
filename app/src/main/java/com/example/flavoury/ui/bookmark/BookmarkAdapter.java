@@ -1,4 +1,4 @@
-package com.example.flavoury.ui.myProfile;
+package com.example.flavoury.ui.bookmark;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 
-public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipeAdapter.MyViewHolder>{
-
+public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,7 +28,6 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
         }

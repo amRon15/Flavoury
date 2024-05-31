@@ -152,6 +152,4 @@ public class RecipeModel implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-
-
 }

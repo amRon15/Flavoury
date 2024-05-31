@@ -44,8 +44,7 @@ public class LikesFragment extends Fragment {
     }
 
     public void handleRecipes(List<RecipeModel> recipe){
-        likesPostAdapter.setLikesPostAdapter(recipe,getContext());
-        likesPostAdapter.notifyDataSetChanged();
+
     }
 
     @Override

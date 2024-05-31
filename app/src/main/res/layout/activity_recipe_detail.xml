@@ -23,7 +23,7 @@
             <ImageButton
                 android:id="@+id/recipe_detail_backBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/baseline_arrow_back_ios_new_24" />
 
             <Space
@@ -36,6 +36,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/baseline_share_24" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/recipe_detail_editBtn"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/baseline_mode_edit_24"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

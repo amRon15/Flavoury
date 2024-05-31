@@ -1,4 +1,4 @@
-package com.example.flavoury.ui.myProfile;
+package com.example.flavoury.ui.search;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
+import com.example.flavoury.ui.likes.LikesPostAdapter;
 
-public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipeAdapter.MyViewHolder>{
+public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.MyViewHolder> {
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_post,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_user,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -29,8 +30,7 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView){
             super(itemView);
         }
     }

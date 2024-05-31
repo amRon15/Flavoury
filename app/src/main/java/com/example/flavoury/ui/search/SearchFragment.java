@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -13,11 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentSearchBinding;
 import com.example.flavoury.ui.detail.DetailActivity;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
+    LinearLayout searchBox;
     RecyclerView historyRecyclerView, recipeRecyclerView;
     SearchView searchView;
     List<RecipeModel> recipes = new ArrayList<RecipeModel>();
@@ -40,32 +46,20 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        searchBox = root.findViewById(R.id.search_search_box);
         recipeRecyclerView = root.findViewById(R.id.search_recipeRecyclerView);
-        searchRecipeAdapter = new SearchRecipeAdapter();
-        recipeRecyclerView.setAdapter(searchRecipeAdapter);
-        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        searchView = root.findViewById(R.id.search_searchView);
-
-        //dynamically show the recipes according to the text in searchView
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (recipes != null) {
-                }
-                if (query.isEmpty()){
-                }
-                searchView.clearFocus();
-                return false;
-            }
+            public void onClick(View v) {
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (recipes != null) {
-                }
-                return false;
             }
         });
+//        searchRecipeAdapter = new SearchRecipeAdapter();
+//        recipeRecyclerView.setAdapter(searchRecipeAdapter);
+//        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+        //dynamically show the recipes according to the text in searchView
 
 //        historyRecyclerView = root.findViewById(R.id.search_historyList);
 //        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(myArray);
@@ -94,8 +88,7 @@ public class SearchFragment extends Fragment {
 
     //send the list to adapter & show the recipes in recyclerView
     public void handleRecyclerView(List<RecipeModel> recipes) {
-        searchRecipeAdapter.setSearchRecipeAdapter(recipes,getContext());
-        searchRecipeAdapter.notifyDataSetChanged();
+
     }
 
     @Override

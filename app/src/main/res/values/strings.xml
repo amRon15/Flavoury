@@ -26,18 +26,22 @@
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
     <string-array name="category">
-        <item>All</item>
-        <item>Fitness</item>
-        <item>Japanese</item>
-        <item>Chinese</item>
-        <item>Vegan</item>
-        <item>Korean</item>
         <item>American</item>
         <item>Dessert</item>
-        <item>Hong Kong</item>
-        <item>Southeast Asia</item>
-        <item>Mexican</item>
+        <item>Chinese</item>
+        <item>European</item>
+        <item>Fitness</item>
         <item>Fusion</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Mexican</item>
+        <item>Vegan</item>
+        <item>Spanish</item>
+        <item>Southeast Asia</item>
+        <item>Thai</item>
+        <item>Vietnamese</item>
         <item>Other</item>
     </string-array>
     <string name="back">Back</string>
@@ -59,6 +63,14 @@
         <item>90 mins</item>
         <item>100 mins</item>
         <item>120 mins</item>
-        <item>>120 mins</item>
+        <item>> 120 mins</item>
+    </string-array>
+    <string-array name="serving_size">
+        <item>1 Serving</item>
+        <item>2 Serving</item>
+        <item>3 Serving</item>
+        <item>4 Serving</item>
+        <item>5 Serving</item>
+        <item>> 5 Serving</item>
     </string-array>
 </resources>

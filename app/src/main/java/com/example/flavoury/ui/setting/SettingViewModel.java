@@ -1,4 +1,4 @@
-package com.example.flavoury.ui.Setting;
+package com.example.flavoury.ui.setting;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

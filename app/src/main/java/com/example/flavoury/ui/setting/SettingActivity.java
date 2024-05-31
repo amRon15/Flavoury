@@ -1,4 +1,4 @@
-package com.example.flavoury.ui.Setting;
+package com.example.flavoury.ui.setting;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,12 +14,11 @@ import android.widget.ImageButton;
 import com.example.flavoury.R;
 import com.example.flavoury.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 public class SettingActivity extends AppCompatActivity {
 
-    ImageButton backbutton;
+    ImageButton backBtn;
     Button logoutBtn,logoutCancel,logoutConfirm;
     Dialog logoutDialog;
     FirebaseAuth auth;
@@ -39,11 +37,10 @@ public class SettingActivity extends AppCompatActivity {
         };
         getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
 
-        auth = FirebaseAuth.getInstance();
         logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
 
         logoutBtn = findViewById(R.id.setting_logoutBtn);
-//        backbutton = findViewById(R.id.setting_backBtn);
+        backBtn = findViewById(R.id.setting_backBtn);
 
         logoutDialog = new Dialog(this);
         logoutDialog.setContentView(R.layout.dialog_box_logout);
@@ -74,7 +71,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        backbutton.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getOnBackPressedDispatcher().onBackPressed();
