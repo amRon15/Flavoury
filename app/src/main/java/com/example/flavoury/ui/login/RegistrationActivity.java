@@ -36,20 +36,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class RegistrationActivity extends AppCompatActivity {
-    ImageButton userIconBtn, backBtn;
-    EditText userNameText;
-    Uri userIcon;
-    TextView userEmailText, editIconText;
 
-    String userName,userId,userEmail,currentUserEmail;
-    private EditText[] editTextFields;
+    ImageButton userIconBtn, backBtn;
+    Uri userIcon;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,78 +60,89 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
 
-        editTextFields = new EditText[]{
-                findViewById(R.id.registration_userName),
-                findViewById(R.id.registration_userEmail),
-                findViewById(R.id.registration_password),
-                findViewById(R.id.registration_confirmPassword)
-        };
         Button signBtn = findViewById(R.id.registration_signUp);
-        signBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUp();
-            }
+
+        signBtn.setOnClickListener(view -> {
+            String username = ((EditText) findViewById(R.id.registration_userName)).getText().toString();
+            String email = ((EditText) findViewById(R.id.registration_userEmail)).getText().toString();
+            String password = ((EditText) findViewById(R.id.registration_password)).getText().toString();
+            String ccpassword = ((EditText) findViewById(R.id.registration_confirmPassword)).getText().toString();
+            performsignUp(username, email, password, ccpassword);
         });
     }
 
-    private void signUp() {
-        String[] fieldValues = new String[editTextFields.length];
+    private void performsignUp(String username, String email, String password, String ccpassword) {
 
-        for (int i = 0; i < editTextFields.length; i++) {
-            fieldValues[i] = editTextFields[i].getText().toString().trim();
-        }
-
-        String username = fieldValues[0];
-        String email = fieldValues[1];
-        String password = fieldValues[2];
-        String confirmPassword = fieldValues[3];
-
-        if (!password.equals(confirmPassword)) {
+        if (!password.equals(ccpassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        try {
-            URL url = new URL("http://localhost/LogSign/signup.php"); // redir needed
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
+        Thread signupThread = new Thread(() -> {
+            HttpURLConnection connection = null;
 
-            String data = "Username=" + username + "&Email=" + email + "&Password=" + password;
+            try {
+                URL url = new URL("http://192.168.0.172/Flavoury/start.php");
 
-            OutputStream out = conn.getOutputStream();
-            out.write(data.getBytes());
-            out.flush();
-            out.close();
+                connection = (HttpURLConnection) url.openConnection();
 
-            Scanner scanner = new Scanner(conn.getInputStream());
-            StringBuilder response = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                response.append(scanner.nextLine());
-            }
-            scanner.close();
+                connection.setRequestMethod("POST");
 
-            String serverResponse = response.toString();
-            if (serverResponse.equals("Sign Up Success")) {
-                Toast.makeText(this, "Sign Up Success", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_SHORT).show();
-                // Display PHP error message if available
-                if (serverResponse.startsWith("Error: ")) {
-                    String phpErrorMessage = serverResponse.substring("Error: ".length());
-                    Toast.makeText(this, "Error: " + phpErrorMessage, Toast.LENGTH_SHORT).show();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+
+                String SignupParams = "Username=" + URLEncoder.encode(username, "UTF-8") +
+                        "&Email=" + URLEncoder.encode(email, "UTF-8") +
+                        "&Password=" + URLEncoder.encode(password, "UTF-8");
+
+                OutputStream outputStream = connection.getOutputStream();
+
+                outputStream.write(SignupParams.getBytes(StandardCharsets.UTF_8));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    runOnUiThread(() -> {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response.toString());
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+
+                            if (status.equals("success")) {
+                                Toast.makeText(RegistrationActivity.this, "Signup Success", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(RegistrationActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(RegistrationActivity.this, "Please try again later", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(RegistrationActivity.this, "HTTP Error: " + responseCode, Toast.LENGTH_SHORT).show());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(RegistrationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Sign Up Failed. Please try again later", Toast.LENGTH_SHORT).show();
-        }
-
+        });
 
 
         //back to prev page callback function
