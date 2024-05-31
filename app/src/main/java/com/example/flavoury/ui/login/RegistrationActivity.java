@@ -78,11 +78,11 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        Thread signupThread = new Thread(() -> {
+        Thread signUpThread = new Thread(() -> {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://192.168.0.172/Flavoury/start.php");
+                URL url = new URL("http://192.168.0.172/Flavoury/signup.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -91,13 +91,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
 
-                String SignupParams = "Username=" + URLEncoder.encode(username, "UTF-8") +
+                String signUpParams = "Username=" + URLEncoder.encode(username, "UTF-8") +
                         "&Email=" + URLEncoder.encode(email, "UTF-8") +
                         "&Password=" + URLEncoder.encode(password, "UTF-8");
 
                 OutputStream outputStream = connection.getOutputStream();
 
-                outputStream.write(SignupParams.getBytes(StandardCharsets.UTF_8));
+                outputStream.write(signUpParams.getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
                 outputStream.close();
 
@@ -112,9 +112,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                     reader.close();
 
+                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+
                     runOnUiThread(() -> {
                         try {
-                            JSONObject jsonResponse = new JSONObject(response.toString());
+                            JSONObject jsonResponse = new JSONObject(jsonResponseString);
                             String status = jsonResponse.getString("status");
                             String message = jsonResponse.getString("message");
 
@@ -128,7 +130,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(RegistrationActivity.this, "Please try again later", Toast.LENGTH_SHORT).show();
+                            runOnUiThread(() -> Toast.makeText(RegistrationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                         }
                     });
                 } else {
@@ -143,6 +145,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+        signUpThread.start();
 
 
         //back to prev page callback function
