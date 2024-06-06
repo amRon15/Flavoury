@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="username"
+        android:text=""
         android:textColor="@color/mainText_color"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -26,12 +27,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    int data;
     TextView signUpBtn;
-
+    private String Uid;
+    private DatabaseHelper databaseHelper;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().hide();
@@ -49,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
             String password = ((EditText) findViewById(R.id.login_password)).getText().toString();
             performlogIn(username, password);
         });
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.onCreate(databaseHelper.getWritableDatabase());
     }
 
     private void performlogIn(String username, String password) {
@@ -56,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://192.168.0.172/Flavoury/start.php");
+                URL url = new URL("http://192.168.0.172/Flavoury/login.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -92,8 +96,11 @@ public class LoginActivity extends AppCompatActivity {
                             String message = jsonResponse.getString("message");
 
                             if (status.equals("success")) {
+                                Uid = jsonResponse.getString("Uid");
                                 Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                                saveUidToDatabase(Uid);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("Uid", Uid);
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -116,7 +123,17 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         loginThread.start();
+    }
+
+    private void saveUidToDatabase(String uid) {
+        databaseHelper.saveUid(uid);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseHelper.close();
+
     }
 }
