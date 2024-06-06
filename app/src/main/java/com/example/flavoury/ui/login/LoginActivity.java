@@ -28,6 +28,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     int data;
     TextView signUpBtn;
+    private String Uid = "";
 
 
     @Override
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://192.168.0.172/Flavoury/start.php");
+                URL url = new URL("http://192.168.0.172/Flavoury/login.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -92,8 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                             String message = jsonResponse.getString("message");
 
                             if (status.equals("success")) {
+                                Uid = jsonResponse.getString("Uid");
                                 Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("Uid", Uid);
                                 startActivity(intent);
                                 finish();
                             } else {
