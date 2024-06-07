@@ -38,11 +38,11 @@ public class ProfileActivity extends AppCompatActivity {
     private void getUid() {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         String Uid = databaseHelper.getUid();
-        Log.d("ProfileActivity", "UID: " + Uid);
+        Log.v("ProfileActivity", "UID: " + Uid);
 
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.0.172/Flavoury/profile.php?Uid=" + Uid);
+                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");

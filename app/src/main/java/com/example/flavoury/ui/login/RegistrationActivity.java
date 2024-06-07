@@ -25,16 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.UserModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,7 +104,7 @@ public class RegistrationActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://192.168.0.172/Flavoury/signup.php");
+                URL url = new URL("http://10.0.2.2/Flavoury/signup.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 

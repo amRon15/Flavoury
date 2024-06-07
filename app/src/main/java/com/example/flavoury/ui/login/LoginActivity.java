@@ -3,6 +3,7 @@ package com.example.flavoury.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://192.168.0.172/Flavoury/login.php");
+                URL url = new URL("http://10.0.2.2/Flavoury/login.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -101,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                                 saveUidToDatabase(Uid);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("Uid", Uid);
+                                Log.v("ProfileActivity", "UID: " + Uid);
                                 startActivity(intent);
                                 finish();
                             } else {
