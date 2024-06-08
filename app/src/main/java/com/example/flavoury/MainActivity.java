@@ -1,8 +1,12 @@
 package com.example.flavoury;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,7 +56,51 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        getUid();
     }
 
+    private void getUid() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        String Uid = databaseHelper.getUid();
+        Log.v("ProfileActivity", "UID: " + Uid);
+
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                JSONObject jsonObject = new JSONObject(response.toString());
+                final String Username = jsonObject.getString("Username");
+
+                if (Username.isEmpty()){
+                    Log.d("cantfind", Username);
+                }
+
+                runOnUiThread(() -> {
+//                    TextView UnameTV = findViewById(R.id.profile_userName);
+//                    UnameTV.setText(Username);
+                });
+
+
+                connection.disconnect();
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+                runOnUiThread(() -> {
+//                    TextView UnameTV = findViewById(R.id.profile_userName);
+//                    UnameTV.setText("Temporary username");
+                });
+            }
+        }).start();
+    }
 
 }

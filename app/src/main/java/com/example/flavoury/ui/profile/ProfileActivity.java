@@ -31,46 +31,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
-
-        getUid();
     }
 
-    private void getUid() {
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        String Uid = databaseHelper.getUid();
-        Log.v("ProfileActivity", "UID: " + Uid);
-
-        new Thread(() -> {
-            try {
-                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-
-                JSONObject jsonObject = new JSONObject(response.toString());
-                final String Username = jsonObject.getString("Username");
-
-                runOnUiThread(() -> {
-                    TextView UnameTV = findViewById(R.id.profile_userName);
-                    UnameTV.setText(Username);
-                });
-
-                connection.disconnect();
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> {
-                    TextView UnameTV = findViewById(R.id.profile_userName);
-                    UnameTV.setText("Temporary username");
-                });
-            }
-        }).start();
-    }
 }

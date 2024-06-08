@@ -81,7 +81,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
         public MyViewHolder(View itemView) {
             super(itemView);
             userIcon = itemView.findViewById(R.id.home_pop_list_userImg);
-            userName = itemView.findViewById(R.id.home_pop_list_userName);
+//            userName = itemView.findViewById(R.id.home_pop_list_userName);
             cookingTime = itemView.findViewById(R.id.home_pop_list_time);
             likes = itemView.findViewById(R.id.home_pop_list_like);
             recipeName = itemView.findViewById(R.id.home_pop_list_recipeName);
@@ -95,7 +95,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
                 userName.setText(recipe.getUserName());
             }
             recipeName.setText(recipe.getRecipeName());
-            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
+//            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
             likes.setText(Integer.toString(recipe.getLike()));
             recipeImg.setOnClickListener(new View.OnClickListener() {
                 @Override

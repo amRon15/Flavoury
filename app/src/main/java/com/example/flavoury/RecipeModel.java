@@ -9,9 +9,11 @@ import javax.annotation.Nullable;
 
 public class RecipeModel implements Serializable {
 
+    //use for get recipe data
     public RecipeModel(){}
 
-    public RecipeModel(String recipeName, String userID, @Nullable String description, int cookingMinutes, ArrayList<String> steps, ArrayList<Ingredients> ingredients, Date createDate) {
+    //use for add / update recipe
+    public RecipeModel(String recipeName, String userID, @Nullable String description, String cookingMinutes, String servingSize, ArrayList<String> steps, ArrayList<Ingredients> ingredients, Date createDate) {
         this.recipeName = recipeName;
         this.userID = userID;
         this.description = description;
@@ -19,14 +21,23 @@ public class RecipeModel implements Serializable {
         this.steps = steps;
         this.ingredients = ingredients;
         this.createDate = createDate;
+        this.servingSize = servingSize;
     }
 
-    private String category, recipeID ,recipeName, userID, recipeImg,userName,userIcon,description;
-    private int cookingMinutes, like;
+    private String category, recipeID ,recipeName, userID, recipeImg,userName,userIcon,description, servingSize, cookingMinutes;
+    private int like;
     private boolean isPublic,isRecipeLike;
     private ArrayList<String> steps;
     private ArrayList<Ingredients> ingredients;
     private Date createDate;
+
+    public String getServingSize() {
+        return servingSize;
+    }
+
+    public void setServingSize(String servingSize) {
+        this.servingSize = servingSize;
+    }
 
     public String getRecipeID() {
         return recipeID;
@@ -120,11 +131,11 @@ public class RecipeModel implements Serializable {
         this.userID = userID;
     }
 
-    public int getCookingMinutes() {
+    public String getCookingMinutes() {
         return cookingMinutes;
     }
 
-    public void setCookingMinutes(int cookingMinutes) {
+    public void setCookingMinutes(String cookingMinutes) {
         this.cookingMinutes = cookingMinutes;
     }
 

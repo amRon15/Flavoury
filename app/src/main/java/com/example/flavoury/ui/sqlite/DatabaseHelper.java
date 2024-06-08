@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import com.example.flavoury.ui.login.LoginActivity;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -20,6 +21,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+    //我push呢個先 聽日搞
 
     @Override
     public void onCreate(SQLiteDatabase db) {

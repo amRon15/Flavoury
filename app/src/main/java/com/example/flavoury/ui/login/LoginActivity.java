@@ -131,11 +131,4 @@ public class LoginActivity extends AppCompatActivity {
     private void saveUidToDatabase(String uid) {
         databaseHelper.saveUid(uid);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        databaseHelper.close();
-
-    }
 }

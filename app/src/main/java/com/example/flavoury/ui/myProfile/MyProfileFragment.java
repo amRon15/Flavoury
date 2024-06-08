@@ -2,6 +2,7 @@ package com.example.flavoury.ui.myProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,16 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserProfileModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.ui.setting.SettingActivity;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class MyProfileFragment extends Fragment {
@@ -34,7 +44,6 @@ public class MyProfileFragment extends Fragment {
 //        myProfileRecipeAdapter = new MyProfileRecipeAdapter();
 //        myProfileRecipeRecyclerView.setAdapter(myProfileRecipeAdapter);
 //        myProfileRecipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-
         return root;
     }
 
@@ -62,6 +71,9 @@ public class MyProfileFragment extends Fragment {
         recipeNum.setText(userData.getRecipeNum()+"");
 
     }
+
+
+
 
 
     private void handleRecipe(List<RecipeModel> recipe) {
