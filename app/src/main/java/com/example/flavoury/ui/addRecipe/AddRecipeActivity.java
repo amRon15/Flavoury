@@ -30,7 +30,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     ImageButton addIngredient, addStep;
     TextView addRecipe, cancelRecipe;
     EditText editRecipeName, editDescription;
-    Spinner durationSpinner, servingSpinner;
+    Spinner durationSpinner, servingSpinner, categorySpinner;
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
     AddRecipeCategoryAdapter addRecipeCategoryAdapter;
@@ -51,7 +51,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         categoryList = getResources().getStringArray(R.array.category);
-        addRecipeCategory = findViewById(R.id.add_recipe_category_list);
 
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -60,6 +59,13 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
+
+        // Category, Minutes, Serving Size dropdown
+        categorySpinner = findViewById(R.id.add_recipe_category);
+        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
 
         durationSpinner = findViewById(R.id.add_recipe_recipeTime);
         ArrayAdapter<CharSequence> durationAdapter = ArrayAdapter.createFromResource(
@@ -75,9 +81,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         servingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servingSpinner.setAdapter(servingAdapter);
 
-        addRecipeCategoryAdapter = new AddRecipeCategoryAdapter(categoryList);
-        addRecipeCategory.setAdapter(addRecipeCategoryAdapter);
-        addRecipeCategory.setLayoutManager(new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT));
+        //back btn
+        cancelRecipe = findViewById(R.id.add_recipe_cancelBtn);
+        cancelRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
     }
 
     private void handleRecyclerView() {
@@ -106,7 +117,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         addIngredient = findViewById(R.id.add_recipe_add_ingredient);
         addStep = findViewById(R.id.add_recipe_add_step);
         addRecipe = findViewById(R.id.add_recipe_saveBtn);
-        cancelRecipe = findViewById(R.id.add_recipe_cancelBtn);
+
 
         addRecipe.setEnabled(true);
 
@@ -162,12 +173,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
             }
         });
-        cancelRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
+
 
 
         editRecipeName.setImeActionLabel("setRecipeName", KeyEvent.KEYCODE_ENTER);

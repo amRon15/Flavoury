@@ -9,11 +9,11 @@
             android:id="@+id/likes_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Likes"
             android:textColor="@color/mainText_color"
-            android:textSize="30dp"
+            android:textSize="32dp"
             android:layout_marginLeft="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

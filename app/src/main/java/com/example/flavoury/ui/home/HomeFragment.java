@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
         searchButton.setOnClickListener(v -> searchDialog.show());
 
         addRecipeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), AddRecipeActivity.class);
+            Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
             startActivity(intent);
         });
 

@@ -26,6 +26,7 @@
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
     <string-array name="category">
+        <item>Select a category</item>
         <item>American</item>
         <item>Dessert</item>
         <item>Chinese</item>
@@ -47,9 +48,8 @@
     <string name="back">Back</string>
     <string name="Recipes">Recipes</string>
     <string name="liked" />
-    <string name="ivy_so">ivy so</string>
-    <string name="pancake">Pancake</string>
     <string-array name="minutes">
+        <item>Select minutes</item>
         <item>5 mins</item>
         <item>10 mins</item>
         <item>15 mins</item>
@@ -66,6 +66,7 @@
         <item>> 120 mins</item>
     </string-array>
     <string-array name="serving_size">
+        <item>Select serving size</item>
         <item>1 Serving</item>
         <item>2 Serving</item>
         <item>3 Serving</item>

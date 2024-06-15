@@ -32,6 +32,10 @@
         <activity android:name=".ui.login.RegistrationActivity" />
         <activity android:name=".ui.setting.SettingActivity" />
         <activity android:name=".ui.addRecipe.AddRecipeActivity" />
+        <activity android:name=".ui.bookmark.BookmarkActivity" />
+        <activity android:name=".ui.search.SearchRecipeActivity"/>
+        <activity android:name=".ui.search.SearchUserActivity" />
+        <activity android:name=".ui.scan.ScanActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

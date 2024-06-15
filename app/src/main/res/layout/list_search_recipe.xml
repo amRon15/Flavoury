@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    android:background="@drawable/rounded_rec_search_post_card"
-    android:padding="10dp"
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="20dp"
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
@@ -29,11 +28,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/inter"
+            android:fontFamily="@font/inter_medium"
             android:lines="1"
             android:text="Recipe Name"
             android:textColor="@color/mainText_color"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,14 +41,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/search_recipeLikes"
+                android:id="@+id/search_recipe_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="100"
-                android:drawableStart="@drawable/baseline_favorite_24"
+                android:text="Category"
                 android:textColor="@color/secondaryText_color"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/search_recipeCookingTime"
@@ -58,10 +56,10 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/inter"
                 android:gravity="center_vertical"
-                android:text=">120 mins"
+                android:text=" >120 mins"
                 android:textColor="@color/secondaryText_color"
                 android:drawableStart="@drawable/baseline_access_time_24"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,8 +83,8 @@
                 android:fontFamily="@font/inter"
                 android:lines="1"
                 android:text="UserName"
-                android:textColor="@color/secondaryText_color"
-                android:textSize="15dp" />
+                android:textColor="@color/mainText_color"
+                android:textSize="14dp" />
 
         </LinearLayout>
 

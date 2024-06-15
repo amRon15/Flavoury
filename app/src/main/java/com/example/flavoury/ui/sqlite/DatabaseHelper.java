@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.flavoury.ui.login.LoginActivity;
 
@@ -46,35 +47,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("Uid", uid);
 
-        db.update("Local", values, null, null);
+        db.insert("Local", null, values);
 
+//        db.update("Local", values, null, null);
         db.close();
     }
 
     public String getUid() {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT " + COLUMN_UID + " FROM " + TABLE_LOCAL;
-        Cursor cursor = null;
-        String Uid = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String uid = null;
 
-        try {
-            cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndex(COLUMN_UID);
-                if (columnIndex != -1) {
-                    Uid = cursor.getString(columnIndex);
-                }
-            }
-        } catch (SQLiteException e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+        String[] columns = {"Uid"};
+        Cursor cursor = db.query("Local", columns, null, null, null, null, null);
 
-            db.close();
+        if (cursor.moveToFirst()) {
+            int index = cursor.getColumnIndex("Uid");
+            if (index != -1) {
+                uid = cursor.getString(index);
+            }
         }
 
-        return Uid;
+
+        cursor.close();
+        db.close();
+
+        return uid;
     }
 }

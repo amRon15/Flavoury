@@ -13,10 +13,10 @@
             android:id="@+id/add_recipe_toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,225 +35,254 @@
                 android:id="@+id/add_recipe_saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter"
+                android:gravity="end"
                 android:text="Save"
                 android:textColor="@color/Secondary_color"
                 android:textSize="20dp" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/add_recipe_recipeImgBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            android:background="@drawable/rounded_rec_recipe_img"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:paddingVertical="100dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_recipe_toolBar">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/add_recipe_recipeImg"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@drawable/frame_recipe_card" />
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/baseline_photo_camera_24" />
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/baseline_insert_photo_24" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter_medium"
                 android:text="Press to add photo"
                 android:textColor="@color/mainText_color"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/inter"
                 android:text="(Please do not upload anything other than food)"
                 android:textColor="@color/secondaryText_color" />
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/add_recipe_recipeInfoBox"
+
+        <TextView
+            android:id="@+id/add_recipe_recipeName_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:background="@drawable/round_rec_recipe_card"
-            android:orientation="vertical"
-            android:layout_marginVertical="10dp"
-            android:paddingVertical="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/baseline_brunch_dining_24"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/mainText_color"
+            android:fontFamily="@font/inter_medium"
+            android:text="Recipe Name"
+            android:textColor="@color/mainText_color"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeImgBox" />
+
+        <EditText
+            android:id="@+id/add_recipe_recipeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/frame_recipe_card"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_light"
+            android:hint="Enter Recipe Name"
+            android:imeActionLabel="setRecipeName"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="30"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/mainText_color"
+            android:textColorHint="@color/secondaryText_color"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeImgBox">
+            app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeName_title" />
 
-            <TextView
-                android:id="@+id/add_recipe_recipeName_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:drawableStart="@drawable/baseline_brunch_dining_24"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/mainText_color"
-                android:fontFamily="@font/inter"
-                android:text="Recipe Name"
-                android:textColor="@color/mainText_color"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeImg" />
 
-            <EditText
-                android:id="@+id/add_recipe_recipeName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/inter_light"
-                android:hint="Enter Recipe Name"
-                android:imeActionLabel="setRecipeName"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="30"
-                android:textColor="@color/mainText_color"
-                android:textColorHint="@color/secondaryText_color"
-                android:textSize="18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeName_title" />
+        <TextView
+            android:id="@+id/add_recipe_description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/baseline_mode_edit_24"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/mainText_color"
+            android:fontFamily="@font/inter_medium"
+            android:text="Description (Optional)"
+            android:textColor="@color/mainText_color"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeName" />
+
+        <EditText
+            android:id="@+id/add_recipe_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/frame_recipe_card"
+            android:fontFamily="@font/inter"
+            android:hint="Enter Description Here"
+            android:imeActionLabel="setDescription"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="5"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/mainText_color"
+            android:textColorHint="@color/secondaryText_color"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_recipe_description_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_recipe_categoryBox"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_recipe_description">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/add_recipe_categoryName"
                 android:text="Category"
-                android:fontFamily="@font/inter"
-                android:textSize="20dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
+                android:textSize="16dp"
                 android:textColor="@color/mainText_color"
+                android:fontFamily="@font/inter_medium"
                 android:drawableStart="@drawable/baseline_category_24"
-                android:drawablePadding="5dp"/>
+                android:drawablePadding="10dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <Spinner
+                android:id="@+id/add_recipe_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/add_recipe_category_list"
-                android:layout_marginHorizontal="20dp"/>
 
-            <TextView
-                android:id="@+id/add_recipe_description_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:drawableStart="@drawable/baseline_mode_edit_24"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/mainText_color"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/frame_recipe_card"
                 android:fontFamily="@font/inter"
-                android:text="Description (Optional)"
-                android:textColor="@color/mainText_color"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_recipe_recipeName" />
+                android:padding="10dp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/mainText_color" />
 
-            <EditText
-                android:id="@+id/add_recipe_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/inter"
-                android:hint="Enter Description Here"
-                android:imeActionLabel="setDescription"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLines="5"
-                android:textColor="@color/mainText_color"
-                android:textColorHint="@color/secondaryText_color"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_recipe_description_title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/add_recipe_detailBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_recipe_categoryBox">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="20dp">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/add_recipe_recipeTime_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:drawableStart="@drawable/baseline_access_time_24"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/mainText_color"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Minutes"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="16dp" />
 
-                    <TextView
-                        android:id="@+id/add_recipe_recipeTime_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:drawableStart="@drawable/baseline_access_time_24"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/mainText_color"
-                        android:fontFamily="@font/inter"
-                        android:text="Minutes"
-                        android:textColor="@color/mainText_color"
-                        android:textSize="20dp" />
-
-                    <Spinner
-                        android:id="@+id/add_recipe_recipeTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter"
-                        android:spinnerMode="dropdown"
-                        android:textColor="@color/mainText_color" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <Spinner
+                    android:id="@+id/add_recipe_recipeTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/add_recipe_recipePortion_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:drawableStart="@drawable/baseline_scale_24"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/mainText_color"
-                        android:fontFamily="@font/inter"
-                        android:text="Serving Size"
-                        android:textColor="@color/mainText_color"
-                        android:textSize="20dp" />
-
-                    <Spinner
-                        android:id="@+id/add_recipe_recipePortion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter"
-                        android:spinnerMode="dropdown"
-                        android:textColor="@color/mainText_color" />
-                </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_recipe_card"
+                    android:fontFamily="@font/inter"
+                    android:padding="10dp"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/mainText_color" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/add_recipe_recipePortion_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_scale_24"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/mainText_color"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Serving Size"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="16dp" />
+
+                <Spinner
+                    android:id="@+id/add_recipe_recipePortion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_recipe_card"
+                    android:fontFamily="@font/inter"
+                    android:padding="10dp"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/mainText_color" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/add_recipe_ingredient_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="20dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_recipe_recipeInfoBox">
+            app:layout_constraintTop_toBottomOf="@id/add_recipe_detailBox">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -262,10 +291,10 @@
                 android:drawableStart="@drawable/baseline_food_bank_24"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/mainText_color"
-                android:fontFamily="@font/inter"
+                android:fontFamily="@font/inter_medium"
                 android:text="Ingredient"
                 android:textColor="@color/mainText_color"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/add_recipe_add_ingredient"
@@ -282,8 +311,8 @@
             android:id="@+id/add_recipe_ingredient_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            android:background="@drawable/round_rec_recipe_card"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_recipe_ingredient_title" />
@@ -292,8 +321,7 @@
             android:id="@+id/add_recipe_step_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="20dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -306,10 +334,10 @@
                 android:drawableStart="@drawable/baseline_assignment_24"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/mainText_color"
-                android:fontFamily="@font/inter"
+                android:fontFamily="@font/inter_medium"
                 android:text="Step"
                 android:textColor="@color/mainText_color"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/add_recipe_add_step"
@@ -326,10 +354,12 @@
             android:id="@+id/add_recipe_step_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_recipe_step_title" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

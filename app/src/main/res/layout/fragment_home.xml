@@ -11,43 +11,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/homeAppName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/italiana"
-            android:text="@string/app_name"
-            android:textColor="@color/primary_color"
-            android:textSize="40dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/homeAddBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/baseline_add_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/mainText_color" />
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/home_toolbar">
+
+            <TextView
+                android:id="@+id/homeAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/italiana"
+                android:text="@string/app_name"
+                android:textColor="@color/primary_color"
+                android:textSize="40dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/homeAddBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_add_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/mainText_color" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/home_search_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rounded_rec_search_card"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/homeAppName">
+            app:layout_constraintTop_toBottomOf="@+id/home_toolbar">
 
             <Button
                 android:id="@+id/home_search_bar"
@@ -63,32 +73,18 @@
                 android:hint="Search For Recipe"
                 android:textColor="@color/mainText_color"
                 android:textColorHint="@color/secondaryText_color"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/home_searchBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/circle_back_btn"
-                android:backgroundTint="@color/primary_color"
+                android:backgroundTint="@color/lightGrey"
                 android:src="@drawable/baseline_search_24"
-                app:tint="@color/white" />
+                app:tint="@color/secondaryText_color" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/home_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_light"
-            android:text="Discover your recipes!"
-            android:textColor="@color/mainText_color"
-            android:textSize="32dp"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_search_box" />
 
         <LinearLayout
             android:id="@+id/home_pop_list_box"
@@ -96,28 +92,28 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center_vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_title">
+            app:layout_constraintTop_toBottomOf="@+id/home_search_box">
 
             <TextView
                 android:id="@+id/home_pop_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter_medium"
                 android:text="Popular Recipes"
                 android:textColor="@color/mainText_color"
                 android:layout_weight="1"
-                android:textSize="24sp" />
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/home_view_pop_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/inter_medium"
+                android:fontFamily="@font/inter"
                 android:text="@string/view_more"
                 android:textColor="@color/Secondary_color"
                 android:textSize="12dp" />
@@ -141,7 +137,7 @@
             android:layout_marginHorizontal="20dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_popList">
@@ -150,11 +146,11 @@
                 android:id="@+id/home_explore_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
-                android:text="Explore Recipes"
+                android:fontFamily="@font/inter_medium"
+                android:text="Fitness Recipes"
                 android:layout_weight="1"
                 android:textColor="@color/mainText_color"
-                android:textSize="24dp"
+                android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_popList" />
 
@@ -163,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/inter_medium"
+                android:fontFamily="@font/inter"
                 android:text="@string/view_more"
                 android:textColor="@color/Secondary_color"
                 android:textSize="12dp"

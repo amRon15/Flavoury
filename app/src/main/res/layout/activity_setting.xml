@@ -9,10 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/setting_toolbar"
-        android:gravity="center_vertical"
-        android:padding="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -42,6 +41,7 @@
     </LinearLayout>
 
     <TableLayout
+        android:id="@+id/setting_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,8 +63,9 @@
                 android:drawableStart="@drawable/baseline_person_24"
                 android:drawablePadding="5dp"
                 android:text="Account"
+                android:fontFamily="@font/inter_medium"
                 android:textColor="@color/mainText_color"
-                android:textSize="28dp" />
+                android:textSize="18dp" />
 
         </TableRow>
 
@@ -73,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:background="@color/secondaryText_color"
+            android:background="@color/lightGrey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Edit profile"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/setting_editProfile_btn"
@@ -116,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Change Password"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/setting_changePw_btn"
@@ -140,8 +141,9 @@
                 android:drawableStart="@drawable/baseline_notifications_24"
                 android:drawablePadding="5dp"
                 android:text="Notifications"
+                android:fontFamily="@font/inter_medium"
                 android:textColor="@color/mainText_color"
-                android:textSize="28dp" />
+                android:textSize="18dp" />
 
         </TableRow>
 
@@ -150,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:background="@color/secondaryText_color"
+            android:background="@color/lightGrey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Notifications"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/setting_noti_swtich"
@@ -193,8 +195,9 @@
                 android:drawableStart="@drawable/baseline_more_24"
                 android:drawablePadding="5dp"
                 android:text="More"
+                android:fontFamily="@font/inter_medium"
                 android:textColor="@color/mainText_color"
-                android:textSize="28dp" />
+                android:textSize="18dp" />
 
         </TableRow>
 
@@ -203,7 +206,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:background="@color/secondaryText_color"
+            android:background="@color/lightGrey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toStartOf="parent"
@@ -222,7 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Dark Mode"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/setting_darkmode_switch"
@@ -245,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Language"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/setting_lang_btn"
@@ -269,7 +272,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Help"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/setting_help_btn"
@@ -293,7 +296,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback"
-                android:textSize="20dp" />
+                android:textSize="16dp" />
 
             <ImageButton
                 android:id="@+id/setting_feedback_btn"
@@ -311,19 +314,17 @@
         android:id="@+id/setting_logoutBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/setting_logout_btn"
-        android:fontFamily="@font/inter_semibold"
-        android:padding="25dp"
+        android:fontFamily="@font/inter_medium"
+        android:padding="20dp"
         android:text="Logout"
-        android:textColor="@color/red"
-        android:textSize="15dp"
-        app:cornerRadius="35dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_table" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

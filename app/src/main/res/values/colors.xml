@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#FF1FCC79</color>
+    <color name="light_primary">#E3FFF8</color>
     <color name="Secondary_color">#FF6464</color>
     <color name="mainText_color">#2E3E5C</color>
     <color name="secondaryText_color">#9FA5C0</color>
@@ -18,6 +19,6 @@
     <color name="searchview_color">#FAFAFA</color>
     <color name="DetailRecipeBack_color">#9C979797</color>
     <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
-    <color name="lightGrey">#e1e1e1</color>
+    <color name="lightGrey">#F7F7F7</color>
     <color name="cardWhite">#F3F3F3</color>
 </resources>

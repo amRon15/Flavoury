@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                                 saveUidToDatabase(Uid);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("Uid", Uid);
-                                Log.v("ProfileActivity", "UID: " + Uid);
+                                Log.v("LoginSaveUid", "UID: " + Uid);
                                 startActivity(intent);
                                 finish();
                             } else {

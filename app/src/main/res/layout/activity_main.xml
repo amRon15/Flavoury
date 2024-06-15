@@ -27,7 +27,7 @@
         android:id="@+id/navigation_scanBtn"
         android:src="@drawable/scan_food_icon72"
         app:maxImageSize="40dp"
-        app:fabCustomSize="80dp"
+        app:fabCustomSize="70dp"
         android:tint="@color/white"
         app:elevation="10dp"
         android:layout_marginBottom="20dp"

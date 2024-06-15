@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/search_user_toolbar"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +40,35 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:id="@+id/search_user_result"
+        android:layout_marginTop="10dp"
+        android:textSize="16dp"
+        android:text="Search: "
+        android:textColor="@color/mainText_color"
+        app:layout_constraintTop_toBottomOf="@+id/search_user_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="20dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/search_user_div"
+        app:dividerColor="@color/lightGrey"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_user_result" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_user_list"
-        app:layout_constraintTop_toBottomOf="@id/search_user_toolbar"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/search_user_div"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
