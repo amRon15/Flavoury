@@ -74,4 +74,5 @@
         <item>5 Serving</item>
         <item>> 5 Serving</item>
     </string-array>
+    <string name="preference_file_key">com.example.flavoury</string>
 </resources>

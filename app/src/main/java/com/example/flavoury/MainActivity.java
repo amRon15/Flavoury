@@ -1,10 +1,14 @@
 package com.example.flavoury;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.flavoury.ui.login.LoginActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

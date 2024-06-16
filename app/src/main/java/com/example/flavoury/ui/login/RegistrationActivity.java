@@ -3,38 +3,18 @@ package com.example.flavoury.ui.login;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
-import com.example.flavoury.UserModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,13 +26,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.util.Scanner;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     ImageButton userIconBtn, backBtn;
     Uri userIcon;
+    private DatabaseHelper databaseHelper;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,8 +78,8 @@ public class RegistrationActivity extends AppCompatActivity {
             String username = ((EditText) findViewById(R.id.registration_userName)).getText().toString();
             String email = ((EditText) findViewById(R.id.registration_userEmail)).getText().toString();
             String password = ((EditText) findViewById(R.id.registration_password)).getText().toString();
-            String ccpassword = ((EditText) findViewById(R.id.registration_confirmPassword)).getText().toString();
-            performSignUp(username, email, password, ccpassword);
+            String ccPassword = ((EditText) findViewById(R.id.registration_confirmPassword)).getText().toString();
+            performSignUp(username, email, password, ccPassword);
         });
     }
 
@@ -153,6 +133,8 @@ public class RegistrationActivity extends AppCompatActivity {
                             String message = jsonResponse.getString("message");
 
                             if (status.equals("success")) {
+                                String Uid = jsonResponse.getString("Uid");
+                                saveUidToDatabase(Uid);
                                 Toast.makeText(RegistrationActivity.this, "Signup Success", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                                 startActivity(intent);
@@ -179,6 +161,10 @@ public class RegistrationActivity extends AppCompatActivity {
         });
         signUpThread.start();
     }
+    private void saveUidToDatabase(String uid) {
+        databaseHelper.saveUid(uid);
+    }
+
 
     @Override
     protected void onDestroy() {
