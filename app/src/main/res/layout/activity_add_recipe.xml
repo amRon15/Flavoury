@@ -117,7 +117,6 @@
             android:hint="Enter Recipe Name"
             android:imeActionLabel="setRecipeName"
             android:imeOptions="actionDone"
-            android:inputType="text"
             android:maxLength="30"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"

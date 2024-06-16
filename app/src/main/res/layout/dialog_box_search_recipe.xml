@@ -10,7 +10,7 @@
     android:layout_marginHorizontal="20dp">
 
     <LinearLayout
-        android:id="@+id/search_recipe_box"
+        android:id="@+id/search_dialog_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -23,7 +23,7 @@
         tools:layout_editor_absoluteY="138dp">
 
         <EditText
-            android:id="@+id/search_recipe_edit"
+            android:id="@+id/search_dialog_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -39,7 +39,7 @@
             android:textSize="20dp" />
 
         <ImageButton
-            android:id="@+id/search_recipe_btn"
+            android:id="@+id/search_dialog_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/search_recipe_box"
+            app:layout_constraintTop_toBottomOf="@+id/search_dialog_box"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_recipe_history_null"
+                android:id="@+id/search_dialog_history_null"
                 android:text="No Search History"
                 android:layout_gravity="center"
                 android:textColorHint="@color/mainText_color"
@@ -108,7 +108,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_recipe_history"
+                android:id="@+id/search_dialog_history"
                 android:layout_margin="10dp"/>
 
         </LinearLayout>

@@ -108,7 +108,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_recipe_history"
+                android:id="@+id/search_dialog_history"
                 android:layout_margin="10dp"/>
 
         </LinearLayout>

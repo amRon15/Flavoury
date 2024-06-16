@@ -15,22 +15,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/my_profile_bookmark"
+            android:id="@+id/my_profile_add_recipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/baseline_bookmarks_24"
+            android:src="@drawable/baseline_add_24"
             app:tint="@color/mainText_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
         <ImageButton
-            android:id="@+id/my_profile_sharingButton"
+            android:id="@+id/my_profile_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/baseline_share_24"
+            android:src="@drawable/baseline_bookmarks_24"
             app:tint="@color/mainText_color"
             app:layout_constraintEnd_toStartOf="@+id/my_profile_setting"
             app:layout_constraintTop_toTopOf="parent"

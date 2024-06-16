@@ -9,11 +9,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.datastore.preferences.core.MutablePreferences;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.preferences.core.PreferencesKeys;
+import androidx.datastore.preferences.rxjava2.RxPreferenceDataStoreBuilder;
+import androidx.datastore.rxjava2.RxDataStore;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
+import com.example.flavoury.UserDataStore;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
 import java.io.BufferedReader;
@@ -23,14 +30,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import io.reactivex.Single;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signUpBtn;
     private String Uid;
     private DatabaseHelper databaseHelper;
+    RxDataStore<Preferences> dataStore = new RxPreferenceDataStoreBuilder(this, "settings").build();
+    UserDataStore userDataStore = new UserDataStore(dataStore);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,11 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
         databaseHelper.onCreate(databaseHelper.getWritableDatabase());
+        if(userDataStore.getBoolValue()){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     private void performlogIn(String username, String password) {
@@ -100,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Uid = jsonResponse.getString("Uid");
                                 Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                 saveUidToDatabase(Uid);
+                                userDataStore.putBoolValue(true);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("Uid", Uid);
                                 Log.v("LoginSaveUid", "UID: " + Uid);
@@ -127,6 +145,26 @@ public class LoginActivity extends AppCompatActivity {
         });
         loginThread.start();
     }
+
+    Preferences pref_error = new Preferences() {
+        @Override
+        public <T> boolean contains(@NonNull Key<T> key) {
+            return false;
+        }
+
+        @Nullable
+        @Override
+        public <T> T get(@NonNull Key<T> key) {
+            return null;
+        }
+
+        @NonNull
+        @Override
+        public Map<Key<?>, Object> asMap() {
+            return null;
+        }
+    };
+
 
     private void saveUidToDatabase(String uid) {
         databaseHelper.saveUid(uid);

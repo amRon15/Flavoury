@@ -75,11 +75,12 @@
                 android:textColorHint="@color/secondaryText_color"
                 android:textSize="16dp" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/home_searchBtn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginRight="20dp"
                 android:backgroundTint="@color/lightGrey"
                 android:src="@drawable/baseline_search_24"
                 app:tint="@color/secondaryText_color" />
