@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -33,6 +34,14 @@ public class LikesFragment extends Fragment {
 
         binding = FragmentLikesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                return;
+            }
+        };
+        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(),onBackPressedCallback);
 
 //        likesRecyclerView = root.findViewById(R.id.likes_postList);
 //        likesPostAdapter = new LikesPostAdapter();

@@ -192,7 +192,7 @@
                 android:id="@+id/add_recipe_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:prompt="@string/category_prompt"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/frame_recipe_card"
                 android:fontFamily="@font/inter"
@@ -216,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -237,6 +238,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/frame_recipe_card"
                     android:fontFamily="@font/inter"
+                    android:prompt="@string/minutes_prompt"
                     android:padding="10dp"
                     android:spinnerMode="dropdown"
                     android:textColor="@color/mainText_color" />
@@ -266,6 +268,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:prompt="@string/serving_prompt"
                     android:background="@drawable/frame_recipe_card"
                     android:fontFamily="@font/inter"
                     android:padding="10dp"

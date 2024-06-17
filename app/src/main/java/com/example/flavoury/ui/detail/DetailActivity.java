@@ -48,12 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
 
         recipe_detail_backBtn = findViewById(R.id.recipe_detail_backBtn);
-        recipe_detail_backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
+        recipe_detail_backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
 //        detailRecipe = (RecipeModel) getIntent().getSerializableExtra("detailRecipe");
 //

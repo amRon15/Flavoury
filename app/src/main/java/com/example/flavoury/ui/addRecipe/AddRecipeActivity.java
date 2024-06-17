@@ -1,11 +1,13 @@
 package com.example.flavoury.ui.addRecipe;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +26,8 @@ import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -33,7 +38,6 @@ public class AddRecipeActivity extends AppCompatActivity {
     Spinner durationSpinner, servingSpinner, categorySpinner;
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
-    AddRecipeCategoryAdapter addRecipeCategoryAdapter;
     ArrayList<Ingredients> ingredients = new ArrayList<>();
     String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
@@ -50,6 +54,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
 
+
         categoryList = getResources().getStringArray(R.array.category);
 
         onBackPressedCallback = new OnBackPressedCallback(true) {
@@ -63,7 +68,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         // Category, Minutes, Serving Size dropdown
         categorySpinner = findViewById(R.id.add_recipe_category);
-        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this, R.array.serving_size, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
 
@@ -74,6 +79,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item
         );
         durationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         durationSpinner.setAdapter(durationAdapter);
 
         servingSpinner = findViewById(R.id.add_recipe_recipePortion);
@@ -89,7 +95,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                 getOnBackPressedDispatcher().onBackPressed();
             }
         });
+
     }
+
+
 
     private void handleRecyclerView() {
         addRecipeIngredient = findViewById(R.id.add_recipe_ingredient_recyclerView);
@@ -118,66 +127,34 @@ public class AddRecipeActivity extends AppCompatActivity {
         addStep = findViewById(R.id.add_recipe_add_step);
         addRecipe = findViewById(R.id.add_recipe_saveBtn);
 
+        recipeName = String.valueOf(editRecipeName.getText());
+        description = String.valueOf(editDescription.getText());
 
-        addRecipe.setEnabled(true);
-
-        editRecipeName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                recipeName = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        editDescription.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                description = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        addIngredient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        addIngredient.setOnClickListener(view -> {
 //                addIngredientList.add(new AddRecipeModel());
-                ingredients.add(new Ingredients());
-                scaleAnim(view);
-                addRecipeIngredientAdapter.notifyItemInserted(ingredients.size() - 1);
-            }
+            ArrayList<Ingredients> newIngredients = ingredients;
+            newIngredients.add(ingredients.size(), new Ingredients());
+            ingredients.clear();
+            ingredients.addAll(newIngredients);
+            addRecipeIngredientAdapter.notifyItemInserted(ingredients.size());
+            Log.d("Ingredients", "Ingredients: " + ingredients + "\nNew Ingredients: " + newIngredients);
+            scaleAnim(view);
+            addRecipeIngredientAdapter.notifyItemInserted(ingredients.size() - 1);
         });
-        addStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        addStep.setOnClickListener(view -> {
 //                addStepList.add(new AddRecipeModel());
-                steps.add("");
-                scaleAnim(view);
-                addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
-            }
+            steps.add("");
+            scaleAnim(view);
+            addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
         });
-
-
 
         editRecipeName.setImeActionLabel("setRecipeName", KeyEvent.KEYCODE_ENTER);
         editDescription.setImeActionLabel("setDescription", KeyEvent.KEYCODE_ENTER);
+
+        addRecipe.setOnClickListener(v -> {
+
+        });
+
     }
 
     private void scaleAnim(View view) {

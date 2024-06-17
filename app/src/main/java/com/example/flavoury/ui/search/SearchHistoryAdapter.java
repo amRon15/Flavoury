@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.MyViewHolder> {
-    String[] myArray;
-    public SearchHistoryAdapter(String[] myArray) {
+    ArrayList<String> myArray;
+    public SearchHistoryAdapter(ArrayList<String > myArray) {
         this.myArray = myArray;
     }
 
@@ -25,12 +28,12 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull SearchHistoryAdapter.MyViewHolder holder, int position) {
-        holder.historyBtn.setText(myArray[position]);
+//        holder.historyBtn.setText(myArray[position]);
     }
 
     @Override
     public int getItemCount() {
-        return myArray.length;
+        return 0;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

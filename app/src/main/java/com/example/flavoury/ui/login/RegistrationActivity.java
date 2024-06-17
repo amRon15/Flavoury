@@ -3,12 +3,17 @@ package com.example.flavoury.ui.login;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,10 +35,9 @@ import java.nio.charset.StandardCharsets;
 public class RegistrationActivity extends AppCompatActivity {
 
     ImageButton userIconBtn, backBtn;
+    TextView editIconBtn;
     Uri userIcon;
     private DatabaseHelper databaseHelper;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,30 +53,35 @@ public class RegistrationActivity extends AppCompatActivity {
                 finish();
             }
         };
-        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
         backBtn = findViewById(R.id.registration_backBtn);
-        backBtn.setOnClickListener(view -> onBackPressedCallback.handleOnBackPressed());
+        backBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        });
 
         userIconBtn = findViewById(R.id.registration_userIcon);
-//        // callback for photo picker
-//        ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
-//            if(uri != null){
+        editIconBtn = findViewById(R.id.registration_editIcon);
+        // callback for photo picker
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
+            if(uri != null){
 //                Log.d("PhotoPicker", "Selected uri " + uri);
-//                userIconBtn.setImageURI(uri);
-//                userIcon = uri;
-//            }else {
-//                Log.d("PhotoPicker","no media selected");
-//            }
-//        });
-//
-//        // click to launch photo picker
-//        userIconBtn.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
-//                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-//                .build()));
-//
-//        editIconText.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
-//                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-//                .build()));
+                userIconBtn.setImageURI(uri);
+                userIcon = uri;
+            }else {
+                Log.d("PhotoPicker","no media selected");
+            }
+        });
+
+        // click to launch photo picker
+        userIconBtn.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
+
+        editIconBtn.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
 
         signBtn.setOnClickListener(view -> {
             String username = ((EditText) findViewById(R.id.registration_userName)).getText().toString();

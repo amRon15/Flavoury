@@ -25,6 +25,7 @@
     <string name="cat_italian">Italian</string>
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
+    <string name="category_prompt">Select a category</string>
     <string-array name="category">
         <item>Select a category</item>
         <item>American</item>
@@ -48,6 +49,7 @@
     <string name="back">Back</string>
     <string name="Recipes">Recipes</string>
     <string name="liked" />
+    <string name="minutes_prompt">Select minutes</string>
     <string-array name="minutes">
         <item>Select minutes</item>
         <item>5 mins</item>
@@ -65,6 +67,7 @@
         <item>120 mins</item>
         <item>> 120 mins</item>
     </string-array>
+    <string name="serving_prompt">Select serving size</string>
     <string-array name="serving_size">
         <item>Select serving size</item>
         <item>1 Serving</item>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -51,6 +52,7 @@ public class MyProfileFragment extends Fragment {
         settingBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SettingActivity.class);
             startActivity(intent);
+            getActivity().finish();
         });
 
         bookmarkBtn.setOnClickListener(v -> {
@@ -64,6 +66,14 @@ public class MyProfileFragment extends Fragment {
         });
 
         getUid();
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                return;
+            }
+        };
+        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(),onBackPressedCallback);
 
 //        myProfileRecipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
 //        myProfileRecipeAdapter = new MyProfileRecipeAdapter();

@@ -1,8 +1,11 @@
 package com.example.flavoury.ui.home;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +13,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
+import com.example.flavoury.UserSharePref;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
+import com.example.flavoury.ui.search.SearchHistoryAdapter;
 import com.example.flavoury.ui.search.SearchRecipeActivity;
 import com.example.flavoury.ui.search.SearchUserActivity;
 import com.google.android.material.divider.MaterialDivider;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
@@ -27,19 +37,28 @@ public class HomeFragment extends Fragment {
     Button searchBoxBtn;
     ImageButton addRecipeBtn, cancelSearchBtn, searchBtn;
     Dialog searchDialog;
-    Button popMore, fitMore, recipeBtn, userBtn;;
+    Button popMore, fitMore, recipeBtn, userBtn;
+    ;
     MaterialDivider recipeDiv, userDiv;
     EditText searchEditText;
+    Set<String> recipeHistorySet, userHistorySet;
+    ArrayList<String> recipeHistoryList, userHistoryList;
+    private UserSharePref userSharePref;
+    private SharedPreferences sharePref;
     private String searchType = "recipe";
     private boolean isRecipeDivVisible = true;
 
-    RecyclerView popRecyclerView, fitRecyclerView;
+    RecyclerView popRecyclerView, fitRecyclerView, historyRecyclerView;
     RecipeListAdapter popularAdapter, fitnessAdapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        sharePref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        userSharePref = new UserSharePref(sharePref);
 
         searchBoxBtn = root.findViewById(R.id.home_search_bar);
         addRecipeBtn = root.findViewById(R.id.homeAddBtn);
@@ -47,15 +66,25 @@ public class HomeFragment extends Fragment {
         //search dialog pop up
         searchView(root);
 
+        //get history from share preference
+//        getAllHistory();
+
         addRecipeBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
             startActivity(intent);
         });
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                return;
+            }
+        };
+        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(), onBackPressedCallback);
 
         return root;
     }
 
-    public void searchView(View root){
+    public void searchView(View root) {
         searchDialog = new Dialog(getContext());
         searchDialog.setContentView(R.layout.dialog_box_search);
         searchDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -70,6 +99,8 @@ public class HomeFragment extends Fragment {
         userBtn = searchDialog.findViewById(R.id.search_dialog_user);
         searchEditText = searchDialog.findViewById(R.id.search_dialog_edit);
         searchBtn = searchDialog.findViewById(R.id.search_dialog_btn);
+        historyRecyclerView = searchDialog.findViewById(R.id.search_recipeRecyclerView);
+
 
         //both change search type
         recipeBtn.setOnClickListener(v -> {
@@ -80,6 +111,9 @@ public class HomeFragment extends Fragment {
             recipeBtn.setTextColor(getResources().getColor(R.color.primary_color));
             userBtn.setTextColor(getResources().getColor(R.color.secondaryText_color));
             searchEditText.setHint("Search Recipe");
+
+            //history recyclerView
+//            historyRecyclerView(recipeHistoryList);
         });
 
         userBtn.setOnClickListener(v -> {
@@ -89,7 +123,9 @@ public class HomeFragment extends Fragment {
             userDiv.setVisibility(!isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
             recipeBtn.setTextColor(getResources().getColor(R.color.secondaryText_color));
             userBtn.setTextColor(getResources().getColor(R.color.primary_color));
-            searchEditText.setHint("Search User");
+            searchEditText.setHint("Search User");//history recyclerView
+
+//            historyRecyclerView(userHistoryList);
         });
 
         searchBoxBtn.setOnClickListener(v -> searchDialog.show());
@@ -99,10 +135,31 @@ public class HomeFragment extends Fragment {
         searchBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(),
                     searchType == "recipe" ? SearchRecipeActivity.class : SearchUserActivity.class);
-            intent.putExtra("searchText",searchEditText.getText());
+            intent.putExtra("searchText", searchEditText.getText());
+
+            //save history when press search btn
+//            if (searchType == "recipe") {
+//                recipeHistoryList.add(String.valueOf(searchEditText.getText()));
+//                recipeHistorySet = (Set<String>) recipeHistoryList;
+//                userSharePref.setRecipeHistory(recipeHistorySet);
+//            } else {
+//                userHistoryList.add(String.valueOf(searchEditText.getText()));
+//                userHistorySet = (Set<String>) userHistoryList;
+//                userSharePref.setUserHistory(userHistorySet);
+//            }
 //            startActivity(intent);
         });
+    }
 
+    private void historyRecyclerView(ArrayList<String> arrayList) {
+        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(arrayList);
+        historyRecyclerView.setAdapter(searchHistoryAdapter);
+        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+    }
+
+    private void getAllHistory() {
+        recipeHistoryList = (ArrayList<String>) userSharePref.getRecipeHistory();
+        userHistoryList = (ArrayList<String>) userSharePref.getUserHistory();
     }
 
     @Override

@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.UserSharePref;
 import com.example.flavoury.ui.login.LoginActivity;
+import com.example.flavoury.ui.myProfile.MyProfileFragment;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -58,8 +60,9 @@ public class SettingActivity extends AppCompatActivity {
 
         logoutConfirm.setOnClickListener(view -> {
             userSharePref.setLoginStatus(false);
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         });
 
         backBtn.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());

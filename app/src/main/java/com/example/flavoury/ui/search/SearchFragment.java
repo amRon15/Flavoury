@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,6 +55,15 @@ public class SearchFragment extends Fragment {
         recipeRecyclerView = root.findViewById(R.id.search_recipeRecyclerView);
 
         searchView(root);
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                return;
+            }
+        };
+        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(),onBackPressedCallback);
+
+
 //        searchRecipeAdapter = new SearchRecipeAdapter();
 //        recipeRecyclerView.setAdapter(searchRecipeAdapter);
 //        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

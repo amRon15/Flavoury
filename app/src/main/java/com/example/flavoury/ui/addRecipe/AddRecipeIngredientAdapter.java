@@ -33,6 +33,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
     public void onBindViewHolder(@NonNull AddRecipeIngredientAdapter.MyViewHolder holder, int position) {
         Ingredients ingredient = ingredients.get(position);
         holder.bindData(ingredient,position);
+
     }
 
     @Override
@@ -91,10 +92,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
                 @Override
                 public void onClick(View view) {
                     ingredients.remove(position);
-                    editIngredient.setText("");
-                    editPortion.setText("");
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
                 }
             });
         }
