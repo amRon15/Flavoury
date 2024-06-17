@@ -43,6 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
+        
 
         Button signBtn = findViewById(R.id.registration_signUp);
 
@@ -50,6 +51,8 @@ public class RegistrationActivity extends AppCompatActivity {
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);;
                 finish();
             }
         };
@@ -59,6 +62,7 @@ public class RegistrationActivity extends AppCompatActivity {
         backBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         });
 
         userIconBtn = findViewById(R.id.registration_userIcon);

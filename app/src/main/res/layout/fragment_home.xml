@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:scrollbars="none"
     tools:context=".ui.home.HomeFragment">
 
@@ -12,25 +13,25 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/home_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginHorizontal="20dp"
-            android:id="@+id/home_toolbar">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/homeAppName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/italiana"
                 android:text="@string/app_name"
                 android:textColor="@color/primary_color"
                 android:textSize="40dp"
-                android:layout_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,9 +68,9 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
                 android:background="@color/fui_transparent"
                 android:fontFamily="@font/inter"
+                android:gravity="center_vertical"
                 android:hint="Search For Recipe"
                 android:textColor="@color/mainText_color"
                 android:textColorHint="@color/secondaryText_color"
@@ -92,10 +93,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:orientation="horizontal"
             android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_search_box">
 
@@ -103,10 +104,10 @@
                 android:id="@+id/home_pop_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_medium"
                 android:text="Popular Recipes"
                 android:textColor="@color/mainText_color"
-                android:layout_weight="1"
                 android:textSize="18dp" />
 
             <Button
@@ -121,42 +122,73 @@
 
         </LinearLayout>
 
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_pop_list_shimmer_box"
+            android:layout_marginStart="20dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_pop_list_box">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/home_pop_list_shimmer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_home_recipe" />
+
+                    <include layout="@layout/shimmer_home_recipe" />
+
+                    <include layout="@layout/shimmer_home_recipe" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </HorizontalScrollView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_popList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.053"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_pop_list_box" />
 
         <LinearLayout
-            android:id="@+id/home_explore_list_box"
+            android:id="@+id/home_fitness_list_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
             android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_popList">
+            app:layout_constraintTop_toBottomOf="@+id/home_pop_list_shimmer_box">
 
             <TextView
-                android:id="@+id/home_explore_title"
+                android:id="@+id/home_fitness_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_medium"
                 android:text="Fitness Recipes"
-                android:layout_weight="1"
                 android:textColor="@color/mainText_color"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_popList" />
 
             <Button
-                android:id="@+id/home_view_explore_btn"
+                android:id="@+id/home_view_fitness_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -166,21 +198,53 @@
                 android:textSize="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.881"
-                app:layout_constraintStart_toEndOf="@+id/home_explore_title"
+                app:layout_constraintStart_toEndOf="@+id/home_fitness_title"
                 app:layout_constraintTop_toBottomOf="@+id/home_popList" />
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_exploreList"
+
+        <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingRight="30dp"
+            android:scrollbars="none"
             android:layout_marginTop="10dp"
-            android:paddingBottom="80dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.053"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_explore_list_box" />
+            app:layout_constraintTop_toBottomOf="@id/home_fitness_list_box">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/home_explore_list_shimmer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_home_recipe" />
+
+                    <include layout="@layout/shimmer_home_recipe" />
+
+                    <include layout="@layout/shimmer_home_recipe" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/home_fitnessList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingBottom="80dp" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </HorizontalScrollView>
+
         <!--        <LinearLayout-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="wrap_content"-->

@@ -1,38 +1,33 @@
 package com.example.flavoury.ui.addRecipe;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
-    RecyclerView addRecipeIngredient, addRecipeStep, addRecipeCategory;
-    ImageButton addIngredient, addStep;
+    RecyclerView ingredientRecyclerView, stepRecyclerView;
+    ImageButton addIngredient, addStep, recipeImg;
     TextView addRecipe, cancelRecipe;
     EditText editRecipeName, editDescription;
     Spinner durationSpinner, servingSpinner, categorySpinner;
@@ -41,7 +36,6 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<Ingredients> ingredients = new ArrayList<>();
     String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
-    boolean isRecipeReady;
     String recipeName, description, duration;
     int cookingMinutes;
     OnBackPressedCallback onBackPressedCallback;
@@ -54,6 +48,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
 
+        ingredients.add(new Ingredients());
+        steps.add("");
 
         categoryList = getResources().getStringArray(R.array.category);
 
@@ -96,30 +92,41 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
 
+        //recipe img -> open photo picker
+        recipeImg = findViewById(R.id.add_recipe_recipeImg);
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
+            if(uri != null){
+//                Log.d("PhotoPicker", "Selected uri " + uri);
+                recipeImg.setImageURI(uri);
+            }else {
+                Log.d("PhotoPicker","no media selected");
+            }
+        });
+        // click to launch photo picker
+        recipeImg.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
+
+        addRecipeIngredientAdapter = new AddRecipeIngredientAdapter(ingredients);
+        ingredientRecyclerView = findViewById(R.id.add_recipe_ingredient_recyclerView);
+        ingredientRecyclerView.setAdapter(addRecipeIngredientAdapter);
+        ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        addRecipeStepAdapter = new AddRecipeStepAdapter(steps);
+        stepRecyclerView = findViewById(R.id.add_recipe_step_recyclerView);
+        stepRecyclerView.setAdapter(addRecipeStepAdapter);
+        stepRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        setView();
     }
-
-
 
     private void handleRecyclerView() {
-        addRecipeIngredient = findViewById(R.id.add_recipe_ingredient_recyclerView);
-        addRecipeStep = findViewById(R.id.add_recipe_step_recyclerView);
-
-        addRecipeStepAdapter = new AddRecipeStepAdapter();
-        addRecipeIngredientAdapter = new AddRecipeIngredientAdapter();
-
-        addRecipeIngredient.setAdapter(addRecipeIngredientAdapter);
-        addRecipeIngredient.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        addRecipeIngredientAdapter.setAddRecipeIngredientAdapter(ingredients);
-
-        addRecipeStep.setAdapter(addRecipeStepAdapter);
-        addRecipeStep.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        addRecipeStepAdapter.setAddRecipeStepAdapter(steps);
-
-
     }
 
-    private void setView(String userID) {
-        Log.d("USer", userID);
+    private void setView( ) {
+        final DatabaseHelper db = new DatabaseHelper(this);
+        final String userID = db.getUid();
+        Log.d("User", userID);
         editRecipeName = findViewById(R.id.add_recipe_recipeName);
         editDescription = findViewById(R.id.add_recipe_description);
 
@@ -131,21 +138,16 @@ public class AddRecipeActivity extends AppCompatActivity {
         description = String.valueOf(editDescription.getText());
 
         addIngredient.setOnClickListener(view -> {
-//                addIngredientList.add(new AddRecipeModel());
-            ArrayList<Ingredients> newIngredients = ingredients;
-            newIngredients.add(ingredients.size(), new Ingredients());
-            ingredients.clear();
-            ingredients.addAll(newIngredients);
-            addRecipeIngredientAdapter.notifyItemInserted(ingredients.size());
-            Log.d("Ingredients", "Ingredients: " + ingredients + "\nNew Ingredients: " + newIngredients);
+            ingredients.add(new Ingredients());
+            Log.d("AddAdapter", "Data: " + ingredients.get(ingredients.size()-1).getIngredient());
+            addRecipeIngredientAdapter.notifyItemInserted(ingredients.size()-1);
             scaleAnim(view);
-            addRecipeIngredientAdapter.notifyItemInserted(ingredients.size() - 1);
         });
         addStep.setOnClickListener(view -> {
 //                addStepList.add(new AddRecipeModel());
             steps.add("");
-            scaleAnim(view);
             addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
+            scaleAnim(view);
         });
 
         editRecipeName.setImeActionLabel("setRecipeName", KeyEvent.KEYCODE_ENTER);

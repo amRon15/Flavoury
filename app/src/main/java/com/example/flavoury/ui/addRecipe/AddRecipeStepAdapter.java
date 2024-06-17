@@ -22,7 +22,7 @@ import java.util.BitSet;
 public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdapter.MyViewHolder> {
     ArrayList<String> steps;
 
-    public void setAddRecipeStepAdapter(ArrayList<String> steps) {
+    public AddRecipeStepAdapter(ArrayList<String> steps) {
         this.steps = steps;
     }
 
@@ -36,7 +36,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String recipeStep = steps.get(position);
-        holder.bindData(recipeStep,position);
+        holder.bindData(recipeStep);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
             removeBtn = itemView.findViewById(R.id.add_recipe_step_remove);
         }
 
-        void bindData(String recipeStep, int position) {
-            this.stepNum.setText("Step " + (position + 1));
+        void bindData(String recipeStep) {
+            this.stepNum.setText(String.valueOf(getAdapterPosition() + 1));
             this.step.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -66,7 +66,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    steps.set(position,charSequence.toString());
+                    steps.set(getAdapterPosition(),charSequence.toString());
                 }
 
                 @Override
@@ -75,17 +75,22 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
                 }
             });
 
-            if (position == 0) {
+            if (getAdapterPosition() == 0) {
                 removeBtn.setVisibility(View.INVISIBLE);
             }
 
-            removeBtn.setOnClickListener(new View.OnClickListener() {
+            removeBtn.setOnClickListener(view -> {
+                steps.remove(getAdapterPosition());
+                notifyItemRangeChanged(getAdapterPosition(), steps.size());
+                scaleAnim(view);
+            });
+        }
+
+        private void scaleAnim(View view) {
+            view.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(new Runnable() {
                 @Override
-                public void onClick(View view) {
-                    steps.remove(position);
-                    step.setText("");
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position,getItemCount());
+                public void run() {
+                    view.animate().scaleX(1).scaleY(1).setDuration(100);
                 }
             });
         }

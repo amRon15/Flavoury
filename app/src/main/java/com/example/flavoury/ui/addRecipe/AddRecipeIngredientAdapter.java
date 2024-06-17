@@ -2,6 +2,7 @@ package com.example.flavoury.ui.addRecipe;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,8 @@ import java.util.ArrayList;
 
 public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIngredientAdapter.MyViewHolder> {
     ArrayList<Ingredients> ingredients;
-    public void setAddRecipeIngredientAdapter(ArrayList<Ingredients> ingredients){
+
+    public AddRecipeIngredientAdapter(ArrayList<Ingredients> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -32,7 +34,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
     @Override
     public void onBindViewHolder(@NonNull AddRecipeIngredientAdapter.MyViewHolder holder, int position) {
         Ingredients ingredient = ingredients.get(position);
-        holder.bindData(ingredient,position);
+        holder.bindData(ingredient);
 
     }
 
@@ -42,7 +44,6 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-
         EditText editIngredient, editPortion;
         ImageButton removeBtn;
         public MyViewHolder(@NonNull View itemView) {
@@ -52,7 +53,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
             removeBtn = itemView.findViewById(R.id.add_recipe_ingredient_remove);
         }
 
-        void bindData(Ingredients ingredient, int position){
+        void bindData(Ingredients ingredient){
             editIngredient.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -85,15 +86,15 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
                 }
             });
-            if(position==0){
+            if(getLayoutPosition()==0){
                 removeBtn.setVisibility(View.INVISIBLE);
+                removeBtn.setEnabled(false);
             }
-            removeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ingredients.remove(position);
-                    notifyItemRemoved(position);
-                }
+            removeBtn.setOnClickListener(view -> {
+                Log.d("AddAdapter", "Data: " + ingredients.get(getAdapterPosition()).getIngredient());
+                ingredients.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
+
             });
         }
     }

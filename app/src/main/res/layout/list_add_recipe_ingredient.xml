@@ -9,7 +9,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingVertical="5dp"
-        android:layout_marginHorizontal="25dp"
         >
 
         <EditText
@@ -42,7 +41,7 @@
             android:imeOptions="actionDone"
             android:background="@drawable/frame_recipe_card"
             android:paddingVertical="10dp"
-            android:paddingHorizontal="20dp"
+            android:paddingEnd="20dp"
             android:layout_marginHorizontal="10dp"
             android:inputType="text"
             android:longClickable="false"

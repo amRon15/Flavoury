@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentSearchBinding;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.divider.MaterialDivider;
 
 import java.util.ArrayList;
@@ -38,12 +39,10 @@ public class SearchFragment extends Fragment {
     EditText searchEditText;
     List<RecipeModel> recipes = new ArrayList<RecipeModel>();
     List<RecipeModel> searchRecipes = new ArrayList<RecipeModel>();
-
+    ShimmerFrameLayout shimmerFrameLayout;
     SearchRecipeAdapter searchRecipeAdapter;
     SearchViewModel searchViewModel;
     boolean isRecipeDivVisible = true;
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -62,6 +61,9 @@ public class SearchFragment extends Fragment {
             }
         };
         getActivity().getOnBackPressedDispatcher().addCallback(getActivity(),onBackPressedCallback);
+
+        shimmerFrameLayout = root.findViewById(R.id.search_shimmer);
+        shimmerFrameLayout.startShimmer();
 
 
 //        searchRecipeAdapter = new SearchRecipeAdapter();

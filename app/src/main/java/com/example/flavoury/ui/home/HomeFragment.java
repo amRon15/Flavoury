@@ -5,13 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toolbar;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.search.SearchHistoryAdapter;
 import com.example.flavoury.ui.search.SearchRecipeActivity;
 import com.example.flavoury.ui.search.SearchUserActivity;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.divider.MaterialDivider;
 
 import java.util.ArrayList;
@@ -38,11 +41,11 @@ public class HomeFragment extends Fragment {
     ImageButton addRecipeBtn, cancelSearchBtn, searchBtn;
     Dialog searchDialog;
     Button popMore, fitMore, recipeBtn, userBtn;
-    ;
     MaterialDivider recipeDiv, userDiv;
     EditText searchEditText;
     Set<String> recipeHistorySet, userHistorySet;
     ArrayList<String> recipeHistoryList, userHistoryList;
+    ShimmerFrameLayout popListShimmer, fitListShimmer;
     private UserSharePref userSharePref;
     private SharedPreferences sharePref;
     private String searchType = "recipe";
@@ -62,6 +65,12 @@ public class HomeFragment extends Fragment {
 
         searchBoxBtn = root.findViewById(R.id.home_search_bar);
         addRecipeBtn = root.findViewById(R.id.homeAddBtn);
+
+        popListShimmer = root.findViewById(R.id.home_pop_list_shimmer);
+        popListShimmer.startShimmer();
+
+        fitListShimmer = root.findViewById(R.id.home_explore_list_shimmer);
+        fitListShimmer.startShimmer();
 
         //search dialog pop up
         searchView(root);
@@ -161,7 +170,6 @@ public class HomeFragment extends Fragment {
         recipeHistoryList = (ArrayList<String>) userSharePref.getRecipeHistory();
         userHistoryList = (ArrayList<String>) userSharePref.getUserHistory();
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
