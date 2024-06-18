@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private String Uid;
     private DatabaseHelper databaseHelper;
     private UserSharePref userSharePref;
+    OnBackPressedCallback onBackPressedCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,14 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
+        //back to mobile home screen back swipe back / back btn
+        onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                finish();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);

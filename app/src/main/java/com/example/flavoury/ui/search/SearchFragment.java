@@ -139,9 +139,9 @@ public class SearchFragment extends Fragment {
     public void onSearchRecipe(String text, List<RecipeModel> recipes) {
         searchRecipes.clear();
         for (RecipeModel recipe : recipes) {
-            if (recipe.getRecipeName().toLowerCase().contains(text.toLowerCase())) {
-                searchRecipes.add(recipe);
-            }
+//            if (recipe.getRecipeName().toLowerCase().contains(text.toLowerCase())) {
+//                searchRecipes.add(recipe);
+//            }
         }
         handleRecyclerView(searchRecipes);
     }

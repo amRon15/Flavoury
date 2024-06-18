@@ -1,6 +1,5 @@
 package com.example.flavoury.ui.detail;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
-import com.example.flavoury.RecipeModel;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.MyViewHolder> {
 

@@ -32,6 +32,7 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         getSupportActionBar().hide();
 
+
         final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         userSharePref = new UserSharePref(shareRef);
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {

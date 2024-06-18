@@ -11,11 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
-import com.example.flavoury.RecipeModel;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
-    RecipeModel detailRecipe;
+//    RecipeModel detailRecipe;
     RecyclerView detailStepRecyclerView, detail_ingredients_recyclerview;
     DetailStepAdapter detailStepAdapter;
     DetailIngredientsAdapter detailIngredientsAdapter;
@@ -56,38 +55,38 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void setView(RecipeModel recipe, DetailViewModel detailViewModel) {
-        ImageView recipeImg = findViewById(R.id.recipe_detail_recipeImg);
-        TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
-        TextView recipeCookingTime = findViewById(R.id.recipe_detail_cookingMins);
-        TextView recipeLike = findViewById(R.id.recipe_detail_likeNum);
-        TextView recipeDescription = findViewById(R.id.recipe_detail_description);
-        TextView userName = findViewById(R.id.recipe_detail_userName);
-        TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
-        ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
-
-        if (recipe.getRecipeImg()!=null) {
-            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
-        }
-        recipeCals.setText("");
-        recipeName.setText(recipe.getRecipeName());
-        recipeCookingTime.setText("~" + recipe.getCookingMinutes() + " Mins");
-        recipeLike.setText(recipe.getLikes() + " Like");
-        if (recipe.getDescription()!=null){
-            recipeDescription.setText(recipe.getDescription());
-        }else {
-            recipeDescription.setText("This is a recipe of " + recipe.getRecipeName());
-        }
-        userName.setText(recipe.getUserName());
-        recipeLikeToggle.setChecked(recipe.getIsRecipeLike());
-
-    }
-
-    private void handleRecyclerView(RecipeModel recipe) {
-        detailIngredientsAdapter.setDetailIngredientsAdapter(recipe.getIngredients(), recipe.getIngredients().size());
-        detailStepAdapter.setDetailStepAdapter(recipe.getSteps(), recipe.getSteps().size());
-
-        detailIngredientsAdapter.notifyDataSetChanged();
-        detailStepAdapter.notifyDataSetChanged();
-    }
+//    private void setView(RecipeModel recipe, DetailViewModel detailViewModel) {
+//        ImageView recipeImg = findViewById(R.id.recipe_detail_recipeImg);
+//        TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
+//        TextView recipeCookingTime = findViewById(R.id.recipe_detail_cookingMins);
+//        TextView recipeLike = findViewById(R.id.recipe_detail_likeNum);
+//        TextView recipeDescription = findViewById(R.id.recipe_detail_description);
+//        TextView userName = findViewById(R.id.recipe_detail_userName);
+//        TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
+//        ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
+//
+//        if (recipe.getRecipeImg()!=null) {
+//            Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().into(recipeImg);
+//        }
+//        recipeCals.setText("");
+//        recipeName.setText(recipe.getRecipeName());
+//        recipeCookingTime.setText("~" + recipe.getCookingMinutes() + " Mins");
+//        recipeLike.setText(recipe.getLikes() + " Like");
+//        if (recipe.getDescription()!=null){
+//            recipeDescription.setText(recipe.getDescription());
+//        }else {
+//            recipeDescription.setText("This is a recipe of " + recipe.getRecipeName());
+//        }
+//        userName.setText(recipe.getUserName());
+//        recipeLikeToggle.setChecked(recipe.getIsRecipeLike());
+//
+//    }
+//
+//    private void handleRecyclerView(RecipeModel recipe) {
+//        detailIngredientsAdapter.setDetailIngredientsAdapter(recipe.getIngredients(), recipe.getIngredients().size());
+//        detailStepAdapter.setDetailStepAdapter(recipe.getSteps(), recipe.getSteps().size());
+//
+//        detailIngredientsAdapter.notifyDataSetChanged();
+//        detailStepAdapter.notifyDataSetChanged();
+//    }
 }

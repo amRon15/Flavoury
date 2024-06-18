@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.flavoury.R;
-import com.example.flavoury.RecipeModel;
 import com.example.flavoury.UserProfileModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
@@ -52,7 +51,6 @@ public class MyProfileFragment extends Fragment {
         settingBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SettingActivity.class);
             startActivity(intent);
-            getActivity().finish();
         });
 
         bookmarkBtn.setOnClickListener(v -> {
@@ -146,14 +144,6 @@ public class MyProfileFragment extends Fragment {
         TextView userName = root.findViewById(R.id.my_profile_userName);
         userName.setText(userData.getUserName());
         recipeNum.setText(userData.getRecipeNum()+"");
-
-    }
-
-
-
-
-
-    private void handleRecipe(List<RecipeModel> recipe) {
 
     }
 

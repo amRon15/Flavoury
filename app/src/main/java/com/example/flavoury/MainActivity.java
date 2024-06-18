@@ -1,7 +1,11 @@
 package com.example.flavoury;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.flavoury.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -20,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     FloatingActionButton scanBtn;
     OnBackPressedCallback onBackPressedCallback;
-
+    private UserSharePref userSharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        final SharedPreferences sharePref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        userSharePref = new UserSharePref(sharePref);
+
+        if (!userSharePref.getLoginStatus()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         //nav bar scan btn
         scanBtn = findViewById(R.id.navigation_scanBtn);
 
@@ -44,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!userSharePref.getLoginStatus()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.addRecipe;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,6 +15,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,17 +23,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.RoundCornerTransform;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
-
-import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class AddRecipeActivity extends AppCompatActivity {
-
     RecyclerView ingredientRecyclerView, stepRecyclerView;
     ImageButton addIngredient, addStep, recipeImg;
     TextView addRecipe, cancelRecipe;
@@ -42,16 +45,20 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<Ingredients> ingredients = new ArrayList<>();
     String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
-    String recipeName, description, duration, cookingMinutes;
+    String recipeName, description, imgId, cookingMinutes;
+    Uri imgUri;
     OnBackPressedCallback onBackPressedCallback;
-    AddRecipeModel  recipe;
-    AddRecipeViewModel addRecipeViewModel;
+    RecipeModel recipe;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("recipe");
+    UploadTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
+
+
 
         ingredients.add(new Ingredients());
         steps.add("");
@@ -103,7 +110,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 //                Log.d("PhotoPicker", "Selected uri " + uri);
                 Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
                 recipeImg.setElevation(100);
-
+                imgUri = uri;
             }else {
                 Log.d("PhotoPicker","no media selected");
             }
@@ -140,8 +147,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         addStep = findViewById(R.id.add_recipe_add_step);
         addRecipe = findViewById(R.id.add_recipe_saveBtn);
 
-
-
         addIngredient.setOnClickListener(view -> {
             ingredients.add(new Ingredients());
             addRecipeIngredientAdapter.ingredients = ingredients;
@@ -160,14 +165,30 @@ public class AddRecipeActivity extends AppCompatActivity {
         editDescription.setImeActionLabel("setDescription", KeyEvent.KEYCODE_ENTER);
 
         addRecipe.setOnClickListener(v -> {
-            recipeName = String.valueOf(editRecipeName.getText());
-            description = String.valueOf(editDescription.getText());
-            cookingMinutes = (String) durationSpinner.getSelectedItem();
-            String category = (String) categorySpinner.getSelectedItem();
-            String serving = (String) servingSpinner.getSelectedItem();
+//            recipeName = String.valueOf(editRecipeName.getText());
+//            description = String.valueOf(editDescription.getText());
+//            cookingMinutes = (String) durationSpinner.getSelectedItem();
+//            String category = (String) categorySpinner.getSelectedItem();
+//            String serving = (String) servingSpinner.getSelectedItem();
 
+            imgId = UUID.randomUUID().toString();
+            StorageReference imgRef = storageRef.child(imgId);
+            uploadTask = imgRef.putFile(imgUri);
+            Log.d("FirebaseStorage", storageRef.getPath());
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d("FirebaseStorage", taskSnapshot.getMetadata()+"");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("FirebaseStorage", "Failed to upload image");
+                }
+            });
+
+//            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId);
         });
-
     }
 
     private void scaleAnim(View view) {

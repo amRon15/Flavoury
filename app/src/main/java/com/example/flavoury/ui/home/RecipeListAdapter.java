@@ -78,26 +78,26 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
         }
 
         void bindData(RecipeModel recipe) {
-            Log.d("Recipe","RecipeName:" + recipe.getRecipeName() + ", RecipeIMG: "+recipe.getRecipeImg());
-            if (recipe.getUserName() != null) {
-                userName.setText(recipe.getUserName());
-            }
-            recipeName.setText(recipe.getRecipeName());
-//            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
-            likes.setText(Integer.toString(recipe.getLikes()));
-            recipeImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
-                    detail_recipe_intent.putExtra("detailRecipe", recipe);
-
-                    homeFragment.startActivity(detail_recipe_intent);
-                }
-            });
-
-            if (recipe.getRecipeImg()!=null) {
-                Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
-            }
+//            Log.d("Recipe","RecipeName:" + recipe.getRecipeName() + ", RecipeIMG: "+recipe.getRecipeImg());
+//            if (recipe.getUserName() != null) {
+//                userName.setText(recipe.getUserName());
+//            }
+//            recipeName.setText(recipe.getRecipeName());
+////            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
+//            likes.setText(Integer.toString(recipe.getLikes()));
+//            recipeImg.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
+//                    detail_recipe_intent.putExtra("detailRecipe", recipe);
+//
+//                    homeFragment.startActivity(detail_recipe_intent);
+//                }
+//            });
+//
+//            if (recipe.getRecipeImg()!=null) {
+//                Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
+//            }
         }
     }
 }

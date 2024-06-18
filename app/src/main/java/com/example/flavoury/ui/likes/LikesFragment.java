@@ -4,23 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentLikesBinding;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LikesFragment extends Fragment {
 

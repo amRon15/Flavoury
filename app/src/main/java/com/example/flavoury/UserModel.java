@@ -2,9 +2,10 @@ package com.example.flavoury;
 
 import android.net.Uri;
 
+import androidx.annotation.Nullable;
+
 import java.sql.Timestamp;
 
-import javax.annotation.Nullable;
 
 public class UserModel {
     private String userName,password, email;

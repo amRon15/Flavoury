@@ -1,167 +1,115 @@
 package com.example.flavoury;
 
-import java.io.Serializable;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
-import java.util.Date;
 
-import javax.annotation.Nullable;
 
-public class RecipeModel implements Serializable {
+public class RecipeModel {
 
-    //use for get recipe data
     public RecipeModel(){}
+    String RName, Description, Uid, Serving, CookTime, Category, Imgid;
+    int Likes;
+    ArrayList<Ingredient> ingredients;
+    ArrayList<Step> steps;
 
-    //use for add / update recipe
-    public RecipeModel(String recipeName, String userID, @Nullable String description, String category ,String cookingMinutes, String servingSize, ArrayList<String> steps, ArrayList<Ingredients> ingredients, Date createDate, @Nullable int likes) {
-        this.recipeName = recipeName;
-        this.userID = userID;
-        this.description = description;
-        this.cookingMinutes = cookingMinutes;
-        this.steps = steps;
-        this.ingredients = ingredients;
-        this.createDate = createDate;
-        this.servingSize = servingSize;
-        this.category = category;
-        this.likes = likes;
+    public RecipeModel(String Uid, String RName, String Category, String CookTime, String Description, int Likes, String Serving, @Nullable String Imgid) {
+        this.Uid = Uid;
+        this.RName = RName;
+        this.Category = Category;
+        this.CookTime = CookTime;
+        this.Description = Description;
+        this.Likes = Likes;
+        this.Serving = Serving;
+        this.Imgid = Imgid;
     }
 
-    private String category, recipeID ,recipeName, userID, recipeImg,userName,userIcon,description, servingSize, cookingMinutes;
-    private int likes;
-    private boolean isPublic,isRecipeLike;
-    private ArrayList<String> steps;
-    private ArrayList<Ingredients> ingredients;
-    private Date createDate;
-
-    public String getServingSize() {
-        return servingSize;
+    public String getImgid() {
+        return Imgid;
     }
 
-    public void setServingSize(String servingSize) {
-        this.servingSize = servingSize;
+    public void setImgid(String imgid) {
+        Imgid = imgid;
     }
 
-    public String getRecipeID() {
-        return recipeID;
+    public String getUid() {
+        return Uid;
     }
 
-    public void setRecipeID(String recipeID) {
-        this.recipeID = recipeID;
+    public void setUid(String uid) {
+        this.Uid = uid;
     }
 
-    public boolean isRecipeLike() {
-        return isRecipeLike;
+    public String getCookTime() {
+        return CookTime;
     }
 
-    public ArrayList<String> getSteps() {
-        return steps;
+    public void setCookTime(String cookTime) {
+        this.CookTime = cookTime;
     }
 
-    public void setSteps(ArrayList<String> steps) {
-        this.steps = steps;
-    }
-
-    public ArrayList<Ingredients> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredients> ingredients) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public boolean getIsRecipeLike() {
-        return isRecipeLike;
+    public ArrayList<Step> getSteps() {
+        return steps;
     }
 
-    public void setRecipeLike(boolean recipeLike) {
-        isRecipeLike = recipeLike;
+    public void setSteps(ArrayList<Step> steps) {
+        this.steps = steps;
+    }
+
+    public String getRName() {
+        return RName;
+    }
+
+    public void setRName(String RName) {
+        this.RName = RName;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.Description = description;
     }
 
-    public String getUserName() {
-        return userName;
+    static class Ingredient{
+        public Ingredient(){}
+        String ingredient, portion;
+
+        public String getIngredient() {
+            return ingredient;
+        }
+
+        public void setIngredient(String ingredient) {
+            this.ingredient = ingredient;
+        }
+
+        public String getPortion() {
+            return portion;
+        }
+
+        public void setPortion(String portion) {
+            this.portion = portion;
+        }
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    static class Step{
+        String step;
 
-    public String getUserIcon() {
-        return userIcon;
-    }
+        public String getStep() {
+            return step;
+        }
 
-    public void setUserIcon(String userIcon) {
-        this.userIcon = userIcon;
-    }
-
-    public String getRecipeImg() {
-        return recipeImg;
-    }
-
-    public void setRecipeImg(String recipeImg) {
-        this.recipeImg = recipeImg;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getRecipeName() {
-        return recipeName;
-    }
-
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getCookingMinutes() {
-        return cookingMinutes;
-    }
-
-    public void setCookingMinutes(String cookingMinutes) {
-        this.cookingMinutes = cookingMinutes;
-    }
-
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
-    }
-
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        public void setStep(String step) {
+            this.step = step;
+        }
     }
 }
