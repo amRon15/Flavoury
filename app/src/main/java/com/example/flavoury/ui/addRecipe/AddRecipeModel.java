@@ -8,30 +8,21 @@ import javax.annotation.Nullable;
 public class AddRecipeModel {
 
     public AddRecipeModel(){}
-
-
-    String recipeName, description, userID;
-    int cookingMinutes;
+    String recipeName, description, userID, servingSize, cookingMinutes, category;
+    int likes;
     ArrayList<Ingredient> ingredients;
     ArrayList<Step> steps;
-    Date createDate;
 
-    public AddRecipeModel(String recipeName,@Nullable String description, String userID, int cookingMinutes, ArrayList<Ingredient> ingredients, ArrayList<Step> steps, Date createDate) {
+    public AddRecipeModel(String recipeName,@Nullable String description, String userID, String cookingMinutes, ArrayList<Ingredient> ingredients, ArrayList<Step> steps, String servingSize ,@Nullable int likes, String category) {
         this.recipeName = recipeName;
         this.description = description;
         this.userID = userID;
         this.cookingMinutes = cookingMinutes;
         this.ingredients = ingredients;
         this.steps = steps;
-        this.createDate = createDate;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        this.likes = likes;
+        this.servingSize = servingSize;
+        this.category = category;
     }
 
     public String getUserID() {
@@ -42,11 +33,11 @@ public class AddRecipeModel {
         this.userID = userID;
     }
 
-    public int getCookingMinutes() {
+    public String getCookingMinutes() {
         return cookingMinutes;
     }
 
-    public void setCookingMinutes(int cookingMinutes) {
+    public void setCookingMinutes(String cookingMinutes) {
         this.cookingMinutes = cookingMinutes;
     }
 

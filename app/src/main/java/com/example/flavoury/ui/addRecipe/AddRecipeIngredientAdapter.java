@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIngredientAdapter.MyViewHolder> {
@@ -27,7 +28,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
     @NonNull
     @Override
     public AddRecipeIngredientAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_add_recipe_ingredient,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_add_recipe_ingredient, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -35,7 +36,6 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
     public void onBindViewHolder(@NonNull AddRecipeIngredientAdapter.MyViewHolder holder, int position) {
         Ingredients ingredient = ingredients.get(position);
         holder.bindData(ingredient);
-
     }
 
     @Override
@@ -43,9 +43,10 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
         return ingredients.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         EditText editIngredient, editPortion;
         ImageButton removeBtn;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             editIngredient = itemView.findViewById(R.id.add_recipe_ingredient);
@@ -53,7 +54,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
             removeBtn = itemView.findViewById(R.id.add_recipe_ingredient_remove);
         }
 
-        void bindData(Ingredients ingredient){
+        void bindData(Ingredients ingredient) {
             editIngredient.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -86,16 +87,29 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
                 }
             });
-            if(getLayoutPosition()==0){
+            if (getLayoutPosition() == 0) {
                 removeBtn.setVisibility(View.INVISIBLE);
                 removeBtn.setEnabled(false);
             }
             removeBtn.setOnClickListener(view -> {
-                Log.d("AddAdapter", "Data: " + ingredients.get(getAdapterPosition()).getIngredient());
+                scaleAnim(view);
+                editIngredient.setText("");
+                editPortion.setText("");
                 ingredients.remove(getAdapterPosition());
                 notifyItemRemoved(getAdapterPosition());
+                notifyItemRangeChanged(getAdapterPosition(), ingredients.size());
 
+            });
+        }
+
+        private void scaleAnim(View view) {
+            view.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    view.animate().scaleX(1).scaleY(1).setDuration(100);
+                }
             });
         }
     }
 }
+

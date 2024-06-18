@@ -1,7 +1,6 @@
 package com.example.flavoury;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,7 +12,7 @@ public class RecipeModel implements Serializable {
     public RecipeModel(){}
 
     //use for add / update recipe
-    public RecipeModel(String recipeName, String userID, @Nullable String description, String cookingMinutes, String servingSize, ArrayList<String> steps, ArrayList<Ingredients> ingredients, Date createDate) {
+    public RecipeModel(String recipeName, String userID, @Nullable String description, String category ,String cookingMinutes, String servingSize, ArrayList<String> steps, ArrayList<Ingredients> ingredients, Date createDate, @Nullable int likes) {
         this.recipeName = recipeName;
         this.userID = userID;
         this.description = description;
@@ -22,10 +21,12 @@ public class RecipeModel implements Serializable {
         this.ingredients = ingredients;
         this.createDate = createDate;
         this.servingSize = servingSize;
+        this.category = category;
+        this.likes = likes;
     }
 
     private String category, recipeID ,recipeName, userID, recipeImg,userName,userIcon,description, servingSize, cookingMinutes;
-    private int like;
+    private int likes;
     private boolean isPublic,isRecipeLike;
     private ArrayList<String> steps;
     private ArrayList<Ingredients> ingredients;
@@ -140,12 +141,12 @@ public class RecipeModel implements Serializable {
     }
 
 
-    public int getLike() {
-        return like;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setLike(int like) {
-        this.like = like;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public boolean isPublic() {

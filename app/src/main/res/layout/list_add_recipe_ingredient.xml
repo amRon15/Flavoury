@@ -41,7 +41,7 @@
             android:imeOptions="actionDone"
             android:background="@drawable/frame_recipe_card"
             android:paddingVertical="10dp"
-            android:paddingEnd="20dp"
+            android:paddingHorizontal="20dp"
             android:layout_marginHorizontal="10dp"
             android:inputType="text"
             android:longClickable="false"

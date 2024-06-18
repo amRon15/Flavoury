@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/inter_semibold"
+        android:fontFamily="@font/inter_semi_bold"
         android:text="Toby"
         android:textColor="@color/mainText_color"
         android:textSize="24dp"
@@ -83,7 +83,8 @@
                 android:id="@+id/my_profile_recipeNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="18dp"
                 android:text="0"
                 android:textColor="@color/mainText_color" />
 
@@ -91,9 +92,9 @@
                 android:id="@+id/my_profile_recipeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/secondaryText_color"
                 android:text="Recipes"
-                android:textColor="@color/mainText_color"
                 android:textSize="12dp" />
 
         </LinearLayout>
@@ -109,7 +110,8 @@
                 android:id="@+id/profile_followerNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="18dp"
                 android:text="0"
                 android:textColor="@color/mainText_color" />
 
@@ -117,9 +119,9 @@
                 android:id="@+id/profile_follower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/secondaryText_color"
                 android:text="Followers"
-                android:textColor="@color/mainText_color"
                 android:textSize="12dp" />
 
         </LinearLayout>
@@ -135,7 +137,8 @@
                 android:id="@+id/profile_followingNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="18dp"
                 android:text="0"
                 android:textColor="@color/mainText_color" />
 
@@ -143,9 +146,9 @@
                 android:id="@+id/profile_following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_semibold"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/secondaryText_color"
                 android:text="Followings"
-                android:textColor="@color/mainText_color"
                 android:textSize="12dp" />
 
         </LinearLayout>

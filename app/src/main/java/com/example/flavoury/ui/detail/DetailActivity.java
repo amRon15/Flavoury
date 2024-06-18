@@ -1,11 +1,6 @@
 package com.example.flavoury.ui.detail;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,17 +8,11 @@ import android.widget.ToggleButton;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.RoundCornerTransform;
 import com.squareup.picasso.Picasso;
-
-import java.io.Serializable;
 
 public class DetailActivity extends AppCompatActivity {
     RecipeModel detailRecipe;
@@ -83,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
         recipeCals.setText("");
         recipeName.setText(recipe.getRecipeName());
         recipeCookingTime.setText("~" + recipe.getCookingMinutes() + " Mins");
-        recipeLike.setText(recipe.getLike() + " Like");
+        recipeLike.setText(recipe.getLikes() + " Like");
         if (recipe.getDescription()!=null){
             recipeDescription.setText(recipe.getDescription());
         }else {

@@ -80,6 +80,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
             }
 
             removeBtn.setOnClickListener(view -> {
+                step.setText("");
                 steps.remove(getAdapterPosition());
                 notifyItemRangeChanged(getAdapterPosition(), steps.size());
                 scaleAnim(view);

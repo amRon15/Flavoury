@@ -1,35 +1,23 @@
 package com.example.flavoury.ui.home;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.shapes.RoundRectShape;
-import android.os.Build;
-import android.os.Bundle;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.RoundCornerTransform;
-import com.example.flavoury.UserModel;
 import com.example.flavoury.ui.detail.DetailActivity;
-import com.google.android.material.shape.RoundedCornerTreatment;
 import com.squareup.picasso.Picasso;
 
 
@@ -96,7 +84,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             }
             recipeName.setText(recipe.getRecipeName());
 //            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
-            likes.setText(Integer.toString(recipe.getLike()));
+            likes.setText(Integer.toString(recipe.getLikes()));
             recipeImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

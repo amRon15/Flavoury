@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:fontFamily="@font/inter_semibold"
+        android:fontFamily="@font/inter_semi_bold"
         android:lines="1"
         android:text="Salad"
         android:textSize="16dp"

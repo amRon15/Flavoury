@@ -20,9 +20,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
+import com.example.flavoury.RecipeModel;
+import com.example.flavoury.RoundCornerTransform;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -36,10 +42,9 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<Ingredients> ingredients = new ArrayList<>();
     String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
-    String recipeName, description, duration;
-    int cookingMinutes;
+    String recipeName, description, duration, cookingMinutes;
     OnBackPressedCallback onBackPressedCallback;
-
+    AddRecipeModel  recipe;
     AddRecipeViewModel addRecipeViewModel;
 
     @Override
@@ -75,7 +80,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item
         );
         durationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         durationSpinner.setAdapter(durationAdapter);
 
         servingSpinner = findViewById(R.id.add_recipe_recipePortion);
@@ -97,7 +101,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
             if(uri != null){
 //                Log.d("PhotoPicker", "Selected uri " + uri);
-                recipeImg.setImageURI(uri);
+                Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
+                recipeImg.setElevation(100);
+
             }else {
                 Log.d("PhotoPicker","no media selected");
             }
@@ -134,18 +140,18 @@ public class AddRecipeActivity extends AppCompatActivity {
         addStep = findViewById(R.id.add_recipe_add_step);
         addRecipe = findViewById(R.id.add_recipe_saveBtn);
 
-        recipeName = String.valueOf(editRecipeName.getText());
-        description = String.valueOf(editDescription.getText());
+
 
         addIngredient.setOnClickListener(view -> {
             ingredients.add(new Ingredients());
+            addRecipeIngredientAdapter.ingredients = ingredients;
             Log.d("AddAdapter", "Data: " + ingredients.get(ingredients.size()-1).getIngredient());
             addRecipeIngredientAdapter.notifyItemInserted(ingredients.size()-1);
             scaleAnim(view);
         });
         addStep.setOnClickListener(view -> {
-//                addStepList.add(new AddRecipeModel());
             steps.add("");
+            addRecipeStepAdapter.steps = steps;
             addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
             scaleAnim(view);
         });
@@ -154,6 +160,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         editDescription.setImeActionLabel("setDescription", KeyEvent.KEYCODE_ENTER);
 
         addRecipe.setOnClickListener(v -> {
+            recipeName = String.valueOf(editRecipeName.getText());
+            description = String.valueOf(editDescription.getText());
+            cookingMinutes = (String) durationSpinner.getSelectedItem();
+            String category = (String) categorySpinner.getSelectedItem();
+            String serving = (String) servingSpinner.getSelectedItem();
 
         });
 
