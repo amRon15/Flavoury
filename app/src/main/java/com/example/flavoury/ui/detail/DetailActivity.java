@@ -1,6 +1,7 @@
 package com.example.flavoury.ui.detail;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
@@ -19,7 +21,8 @@ public class DetailActivity extends AppCompatActivity {
     DetailStepAdapter detailStepAdapter;
     DetailIngredientsAdapter detailIngredientsAdapter;
     ImageButton recipe_detail_backBtn;
-
+    DatabaseHelper db;
+    String myUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_detail);
         getSupportActionBar().hide();
 
+        myUserId = db.getUid();
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

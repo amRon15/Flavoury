@@ -1,6 +1,8 @@
 package com.example.flavoury.ui.login;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,7 +74,8 @@ public class RegistrationActivity extends AppCompatActivity {
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
             if(uri != null){
 //                Log.d("PhotoPicker", "Selected uri " + uri);
-                userIconBtn.setImageURI(uri);
+                Picasso.get().load(uri).placeholder(R.drawable.circle_user_icon).centerCrop().into(userIconBtn);
+                userIconBtn.setElevation(100);
                 userIcon = uri;
             }else {
                 Log.d("PhotoPicker","no media selected");

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,6 +32,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -172,23 +181,88 @@ public class AddRecipeActivity extends AppCompatActivity {
 //            String serving = (String) servingSpinner.getSelectedItem();
 
             imgId = UUID.randomUUID().toString();
-            StorageReference imgRef = storageRef.child(imgId);
+            StorageReference imgRef = storageRef.child(imgId+".jpg");
             uploadTask = imgRef.putFile(imgUri);
-            Log.d("FirebaseStorage", storageRef.getPath());
+            Log.d("FirebaseStorage", imgRef.getPath());
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d("FirebaseStorage", taskSnapshot.getMetadata()+"");
+//                    Log.d("FirebaseStorage", taskSnapshot.getMetadata()+"");
+                    Toast.makeText(getApplicationContext(), "Upload image successful", Toast.LENGTH_LONG).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("FirebaseStorage", "Failed to upload image");
+                    Toast.makeText(getApplicationContext(), "Failed to upload image", Toast.LENGTH_LONG).show();
                 }
             });
 
 //            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId);
         });
+    }
+
+    private void sendRecipe(RecipeModel recipe){
+        Thread addRecipeThread = new Thread(() -> {
+            HttpURLConnection connection = null;
+
+            try {
+                URL url = new URL("http://10.0.0.2/Favoury/recipe.php");
+
+                connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+
+                //param
+
+                OutputStream outputStream = connection.getOutputStream();
+
+                //write put param
+//                outputStream.write();
+                outputStream.flush();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK){
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null){
+                        response.append(line);
+                    }
+                    bufferedReader.close();
+
+                    runOnUiThread(() -> {
+                        try{
+                            JSONObject jsonObject = new JSONObject(response.toString());
+                            String status = jsonObject.getString("status");
+                            String message = jsonObject.getString("message");
+
+                            if (status.equals("success")){
+
+                            }else {
+                                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(this, "HTTP Error: "+ responseCode, Toast.LENGTH_LONG).show());
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            } finally {
+                if (connection != null){
+                    connection.disconnect();
+                }
+            }
+        });
+        addRecipeThread.start();
     }
 
     private void scaleAnim(View view) {
