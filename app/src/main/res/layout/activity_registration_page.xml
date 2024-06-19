@@ -60,7 +60,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             app:shapeAppearanceOverlay="@style/circleImageView"
             android:scaleType="centerCrop"
-            android:background="@drawable/circle_user_icon"
+            android:background="@color/fui_transparent"
             android:id="@+id/registration_userIcon"
             android:layout_width="100dp"
             android:layout_height="100dp" />

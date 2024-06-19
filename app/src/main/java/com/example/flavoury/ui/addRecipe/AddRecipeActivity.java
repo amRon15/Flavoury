@@ -35,10 +35,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -61,7 +64,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<Ingredient> ingredients = new ArrayList<>();
     String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
-    String uId, recipeName, description, imgId, cookingMinutes;
+    String uId, recipeName, description, imgId, cookingMinutes , result;
     Uri imgUri;
     OnBackPressedCallback onBackPressedCallback;
     RecipeModel recipe;
@@ -192,44 +195,37 @@ public class AddRecipeActivity extends AppCompatActivity {
 
             imgId = UUID.randomUUID().toString();
 
-            ArrayList<String> encodeStep = new ArrayList<>();
-            for(int i=0;i<steps.size();i++){
-                try {
-                    encodeStep.add(URLEncoder.encode(steps.get(i), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
+            JSONArray jsonIngredient = new JSONArray();
+            try {
+            for (int i=0;i<ingredients.size();i++){
+                Ingredient ingredient = ingredients.get(i);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("ingredient", ingredient.getIngredient());
+                jsonObject.put("portion", ingredient.getPortion());
+                jsonIngredient.put(jsonObject);
+            }
+            }catch (Exception e){
+                Log.d("AddRecipeActivitySend", "Ingredient loop error: "+e.getMessage());
             }
 
-            ArrayList<Ingredient> encodeIngredients = new ArrayList<>();
-            for(int i=0;i<ingredients.size();i++){
-                try{
-                    String encodeIngredient = URLEncoder.encode(ingredients.get(i).getIngredient(), "UTF-8");
-                    String encodePortion = URLEncoder.encode(ingredients.get(i).getPortion(), "UTF-8");
-                    Ingredient encodeObject = new Ingredient(encodeIngredient, encodePortion);
-                    encodeIngredients.add(encodeObject);
-                }catch (UnsupportedEncodingException e){
-                    throw new RuntimeException(e);
-                }
+            JSONArray jsonStep = new JSONArray();
+            for(int i=0; i< steps.size();i++){
+                String step = steps.get(i);
+                jsonStep.put(step);
             }
-            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId, encodeIngredients, encodeStep);
-            sendRecipe(recipe);
+
+            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId, ingredients, steps);
+//            Log.d("AddRecipeActivitySend", userID + recipeName+ category+ cookingMinutes+ description+ serving+ imgId+ encodeIngredients.get(0).getIngredient()+ encodeStep.get(0));
+            sendRecipe(recipe, jsonIngredient, jsonStep);
         });
 
     }
 
-    private void sendRecipe(RecipeModel recipe){
+    private void sendRecipe(RecipeModel recipe, JSONArray jsonIngredient, JSONArray jsonStep){
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
-            Log.d("AddRecipeActivitySend", "Start Thread");
             try {
-                URL url = new URL("http://10.0.0.2/Favoury/app_create_recipe.php");
-
-                connection = (HttpURLConnection) url.openConnection();
-
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
+                URL url = new URL("http://10.0.2.2/Flavoury/app_create_recipe.php");
 
                 //param
                 String recipeParam = "Uid=" + URLEncoder.encode(uId, "UTF-8") +
@@ -239,21 +235,29 @@ public class AddRecipeActivity extends AppCompatActivity {
                         "&Description=" + URLEncoder.encode(recipe.getDescription(), "UTF-8") +
                         "&Serving=" + URLEncoder.encode(recipe.getServing(), "UTF-8") +
                         "&Imgid=" + URLEncoder.encode(recipe.getImgid(), "UTF-8") +
-                        "&Step=" + recipe.getSteps() +
-                        "&Ingredient=" + recipe.getIngredients();
+                        "&Step=" + jsonStep +
+                        "&Ingredient=" + jsonIngredient;
 
-                OutputStream outputStream = connection.getOutputStream();
+                connection = (HttpURLConnection) url.openConnection();
 
-                outputStream.write(recipeParam.getBytes(StandardCharsets.UTF_8));
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+
+                DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+
+                outputStream.writeBytes(recipeParam);
                 outputStream.flush();
                 outputStream.close();
 
                 int responseCode = connection.getResponseCode();
+                InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
 
                 if (responseCode == HttpURLConnection.HTTP_OK){
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     StringBuilder response = new StringBuilder();
                     String line;
+                    Log.d("AddRecipeActivitySend", "HTTP OK");
                     while ((line = bufferedReader.readLine()) != null){
                         response.append(line);
                     }
@@ -266,7 +270,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(jsonResponseString);
                             String status = jsonObject.getString("status");
                             String message = jsonObject.getString("message");
-
+                            Log.d("AddRecipeActivitySend", jsonObject.toString());
                             if (status.equals("success")){
                                 saveRecipeImgToStorage();
                                 Toast.makeText(this, "Upload recipe successful", Toast.LENGTH_LONG).show();
@@ -285,8 +289,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("AddRecipeActivitySend", "Exception: " + e.getMessage());
+//                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("AddRecipeActivitySend", "Exception: " + e.toString());
 
             } finally {
                 if (connection != null){
@@ -296,6 +300,45 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
         addRecipeThread.start();
     }
+
+    private Runnable mutilThread = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                URL url = new URL("http://10.0.0.2/Favoury/app_create_recipe.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setUseCaches(false);
+                connection.connect();
+
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK){
+                    InputStream inputStream = connection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+
+                    String box = "";
+                    String line = null;
+                    while ((line = bufferedReader.readLine()) !=null){
+                        box += line+"\n";
+                    }
+                    inputStream.close();
+                    result = box;
+                }
+            }catch (Exception e){
+                Log.d("AddRecipeActivity", e.getMessage());
+            }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("AddRecipeActivity", "Successful");
+                }
+            });
+        }
+    };
 
     private void saveRecipeImgToStorage(){
         StorageReference imgRef = storageRef.child(imgId+".jpg");
