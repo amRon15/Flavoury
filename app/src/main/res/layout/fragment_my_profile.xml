@@ -49,16 +49,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/my_profile_userIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/circle_user_icon"
-        android:contentDescription="@string/description"
-        android:src="@drawable/baseline_person_24"
-        app:tint="@color/disable_grey"
-        app:circularflow_defaultRadius="10dp"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_person_24_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_profile_toolbar" />

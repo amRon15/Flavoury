@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().hide();
 
-        final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+    final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         userSharePref = new UserSharePref(shareRef);
 
         if (userSharePref.getLoginStatus()){
@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
         databaseHelper.onCreate(databaseHelper.getWritableDatabase());
+
     }
 
     private void performLogIn(String username, String password) {

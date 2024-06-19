@@ -17,6 +17,7 @@ import com.example.flavoury.R;
 import com.example.flavoury.UserSharePref;
 import com.example.flavoury.ui.login.LoginActivity;
 import com.example.flavoury.ui.myProfile.MyProfileFragment;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class SettingActivity extends AppCompatActivity {
     Button logoutBtn,logoutCancel,logoutConfirm;
     Dialog logoutDialog;
     private UserSharePref userSharePref;
+    DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         getSupportActionBar().hide();
 
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
         final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         userSharePref = new UserSharePref(shareRef);
@@ -49,8 +53,8 @@ public class SettingActivity extends AppCompatActivity {
 
         logoutDialog = new Dialog(this);
         logoutDialog.setContentView(R.layout.dialog_box_logout);
-        logoutDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        logoutDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.logout_dialog_box));
+        logoutDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        logoutDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background_inset));
         logoutDialog.setCancelable(true);
         logoutCancel = logoutDialog.findViewById(R.id.logout_dialog_cancel);
         logoutConfirm = logoutDialog.findViewById(R.id.logout_dialog_confirm);
@@ -61,6 +65,7 @@ public class SettingActivity extends AppCompatActivity {
 
         logoutConfirm.setOnClickListener(view -> {
             userSharePref.setLoginStatus(false);
+            databaseHelper.deleteUid();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();

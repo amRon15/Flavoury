@@ -1,8 +1,8 @@
 package com.example.flavoury.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,13 +16,21 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.LongDef;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
+import com.example.flavoury.UserSharePref;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
-import com.squareup.picasso.Picasso;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,19 +42,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    ImageButton userIconBtn, backBtn;
+    ImageButton backBtn;
+    ShapeableImageView userIconBtn;
     TextView editIconBtn;
-    Uri userIcon;
+    Uri userIconUri = null;
+    private UserSharePref userSharePref;
+
     private DatabaseHelper databaseHelper;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("user");
+    UploadTask uploadTask;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
-        
+
+        final SharedPreferences sharePref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        userSharePref = new UserSharePref(sharePref);
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
         Button signBtn = findViewById(R.id.registration_signUp);
 
@@ -74,9 +93,10 @@ public class RegistrationActivity extends AppCompatActivity {
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
             if(uri != null){
 //                Log.d("PhotoPicker", "Selected uri " + uri);
-                Picasso.get().load(uri).placeholder(R.drawable.circle_user_icon).centerCrop().into(userIconBtn);
+                userIconBtn.setBackgroundColor(getColor(com.firebase.ui.auth.R.color.fui_transparent));
+                userIconBtn.setImageURI(uri);
                 userIconBtn.setElevation(100);
-                userIcon = uri;
+                userIconUri = uri;
             }else {
                 Log.d("PhotoPicker","no media selected");
             }
@@ -96,11 +116,12 @@ public class RegistrationActivity extends AppCompatActivity {
             String email = ((EditText) findViewById(R.id.registration_userEmail)).getText().toString();
             String password = ((EditText) findViewById(R.id.registration_password)).getText().toString();
             String ccPassword = ((EditText) findViewById(R.id.registration_confirmPassword)).getText().toString();
-            performSignUp(username, email, password, ccPassword);
+            String iconid = UUID.randomUUID().toString();
+            performSignUp(username, email, password, ccPassword, iconid);
         });
     }
 
-    private void performSignUp(String username, String email, String password, String ccpassword) {
+    private void performSignUp(String username, String email, String password, String ccpassword, String iconid) {
 
         if (!password.equals(ccpassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -122,7 +143,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 String signUpParams = "Username=" + URLEncoder.encode(username, "UTF-8") +
                         "&Email=" + URLEncoder.encode(email, "UTF-8") +
-                        "&Password=" + URLEncoder.encode(password, "UTF-8");
+                        "&Password=" + URLEncoder.encode(password, "UTF-8") +
+                        "&Iconid=" + URLEncoder.encode(iconid , "UTF-8");
 
                 OutputStream outputStream = connection.getOutputStream();
 
@@ -142,16 +164,19 @@ public class RegistrationActivity extends AppCompatActivity {
                     reader.close();
 
                     String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-
                     runOnUiThread(() -> {
                         try {
                             JSONObject jsonResponse = new JSONObject(jsonResponseString);
                             String status = jsonResponse.getString("status");
                             String message = jsonResponse.getString("message");
+                            if (userIconUri != null) {
+                                saveUserIconToStorage(iconid);
+                            }
 
                             if (status.equals("success")) {
                                 String Uid = jsonResponse.getString("Uid");
                                 saveUidToDatabase(Uid);
+                                userSharePref.setLoginStatus(true);
                                 Toast.makeText(RegistrationActivity.this, "Signup Success", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                                 startActivity(intent);
@@ -169,7 +194,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(RegistrationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() ->
+                        Toast.makeText(RegistrationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -182,6 +208,21 @@ public class RegistrationActivity extends AppCompatActivity {
         databaseHelper.saveUid(uid);
     }
 
+    private void saveUserIconToStorage(String userImgId){
+        StorageReference imgRef = storageRef.child(userImgId + ".jpg");
+        uploadTask = imgRef.putFile(userIconUri);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Toast.makeText(getApplicationContext(), "Upload image successful", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(getApplicationContext(), "Failed to upload image", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {

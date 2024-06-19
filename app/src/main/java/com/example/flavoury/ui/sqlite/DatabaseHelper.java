@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT name FROM sqlite_master WHERE type='table' AND name='Local'";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.getCount() == 0) {
-            String createTableQuery = "CREATE TABLE Local (Uid TEXT PRIMARY KEY)";
+            String createTableQuery = "CREATE TABLE Local (Uid TEXT primary key)";
             db.execSQL(createTableQuery);
         }
         cursor.close();
@@ -40,6 +40,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void deleteUid() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_LOCAL, null, null);
+    }
+
     public void saveUid(String uid) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -47,9 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("Uid", uid);
 
         db.insert("Local", null, values);
-
-//        db.update("Local", values, null, null);
         db.close();
+
     }
 
     public String getUid() {

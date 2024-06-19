@@ -57,11 +57,13 @@
         app:layout_constraintTop_toBottomOf="@id/registration_logo_caption">
 
 
-        <ImageButton
+        <com.google.android.material.imageview.ShapeableImageView
+            app:shapeAppearanceOverlay="@style/circleImageView"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_user_icon"
             android:id="@+id/registration_userIcon"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/circle_user_icon" />
+            android:layout_height="100dp" />
 
         <TextView
             android:layout_width="wrap_content"

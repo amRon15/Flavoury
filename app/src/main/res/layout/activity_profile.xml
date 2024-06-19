@@ -36,13 +36,13 @@
 
     </LinearLayout>
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_userIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/circle_user_icon"
-        android:contentDescription="@string/description"
+        app:shapeAppearanceOverlay="@style/circleImageView"
         android:scaleType="centerCrop"
         app:circularflow_defaultRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"

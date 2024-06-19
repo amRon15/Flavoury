@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,12 +26,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
+    ShapeableImageView userIcon;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
+
+        userIcon = findViewById(R.id.profile_userIcon);
+
     }
 
 }

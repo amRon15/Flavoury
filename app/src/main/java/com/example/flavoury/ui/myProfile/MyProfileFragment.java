@@ -1,6 +1,7 @@
 package com.example.flavoury.ui.myProfile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -20,6 +22,13 @@ import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.bookmark.BookmarkActivity;
 import com.example.flavoury.ui.setting.SettingActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,13 +38,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 public class MyProfileFragment extends Fragment {
 
     private FragmentMyProfileBinding binding;
     ImageButton bookmarkBtn, settingBtn, addRecipeBtn;
+    ShapeableImageView userIcon;
     TextView userName;
+    StorageReference storageRefUser = FirebaseStorage.getInstance().getReference().child("user");
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +56,7 @@ public class MyProfileFragment extends Fragment {
         settingBtn = root.findViewById(R.id.my_profile_setting);
         bookmarkBtn = root.findViewById(R.id.my_profile_bookmark);
         addRecipeBtn = root.findViewById(R.id.my_profile_add_recipe);
+        userIcon = root.findViewById(R.id.my_profile_userIcon);
 
         userName = root.findViewById(R.id.my_profile_userName);
 
@@ -63,7 +75,7 @@ public class MyProfileFragment extends Fragment {
             startActivity(intent);
         });
 
-        getUid();
+        getUInfo();
 
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
             @Override
@@ -80,10 +92,11 @@ public class MyProfileFragment extends Fragment {
         return root;
     }
 
-    private void getUid() {
+    private void getUInfo() {
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         String Uid = databaseHelper.getUid();
-        Log.v("ProfileActivity", "UID: " + Uid);
+        Log.v("LoginSaveUid", "UID: " + Uid);
+
 
         new Thread(() -> {
             try {
@@ -99,9 +112,17 @@ public class MyProfileFragment extends Fragment {
                     response.append(line);
                 }
                 reader.close();
+                Log.d("UsernameFromDB", Uid );
+                Log.d("UsernameFromDB", response.toString());
 
-                JSONObject jsonObject = new JSONObject(response.toString());
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                JSONObject jsonObject = new JSONObject(jsonResponseString);
                 final String Username = jsonObject.getString("Username");
+                final String UserIconId = jsonObject.getString("Iconid");
+                setUserIcon(UserIconId);
+
+                Log.d("UsernameFromDB", jsonObject.toString());
 
                 if (Username.isEmpty()){
                     Log.d("canfind", Username);
@@ -116,6 +137,7 @@ public class MyProfileFragment extends Fragment {
                 connection.disconnect();
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
+                Log.d("UsernameFromDB", e.getMessage());
                 getActivity().runOnUiThread(() -> {
                     userName.setText("Undefined");
                 });
@@ -145,6 +167,21 @@ public class MyProfileFragment extends Fragment {
         userName.setText(userData.getUserName());
         recipeNum.setText(userData.getRecipeNum()+"");
 
+    }
+
+    private void setUserIcon(String imgId){
+        StorageReference imgRef = storageRefUser.child(imgId+".jpg");
+        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).centerCrop().fit().into(userIcon);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Failed to load img", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

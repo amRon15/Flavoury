@@ -2,7 +2,6 @@ package com.example.flavoury.ui.addRecipe;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,16 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredient;
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIngredientAdapter.MyViewHolder> {
-    ArrayList<Ingredients> ingredients;
+    ArrayList<Ingredient> ingredients;
 
-    public AddRecipeIngredientAdapter(ArrayList<Ingredients> ingredients) {
+    public AddRecipeIngredientAdapter(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -34,7 +33,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
     @Override
     public void onBindViewHolder(@NonNull AddRecipeIngredientAdapter.MyViewHolder holder, int position) {
-        Ingredients ingredient = ingredients.get(position);
+        Ingredient ingredient = ingredients.get(position);
         holder.bindData(ingredient);
     }
 
@@ -54,7 +53,7 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
             removeBtn = itemView.findViewById(R.id.add_recipe_ingredient_remove);
         }
 
-        void bindData(Ingredients ingredient) {
+        void bindData(Ingredient ingredient) {
             editIngredient.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

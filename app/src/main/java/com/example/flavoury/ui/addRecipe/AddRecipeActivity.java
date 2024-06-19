@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.addRecipe;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,12 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredient;
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,38 +41,45 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class AddRecipeActivity extends AppCompatActivity {
     RecyclerView ingredientRecyclerView, stepRecyclerView;
-    ImageButton addIngredient, addStep, recipeImg;
+    ImageButton addIngredient, addStep;
+    ShapeableImageView recipeImg;
     TextView addRecipe, cancelRecipe;
     EditText editRecipeName, editDescription;
     Spinner durationSpinner, servingSpinner, categorySpinner;
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
-    ArrayList<Ingredients> ingredients = new ArrayList<>();
+    ArrayList<Ingredient> ingredients = new ArrayList<>();
     String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
-    String recipeName, description, imgId, cookingMinutes;
+    String uId, recipeName, description, imgId, cookingMinutes;
     Uri imgUri;
     OnBackPressedCallback onBackPressedCallback;
     RecipeModel recipe;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("recipe");
     UploadTask uploadTask;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
+        db = new DatabaseHelper(this);
+        db.onCreate(db.getWritableDatabase());
 
+        uId = db.getUid();
 
-
-        ingredients.add(new Ingredients());
+        ingredients.add(new Ingredient());
         steps.add("");
 
         categoryList = getResources().getStringArray(R.array.category);
@@ -85,7 +95,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         // Category, Minutes, Serving Size dropdown
         categorySpinner = findViewById(R.id.add_recipe_category);
-        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this, R.array.serving_size, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
 
@@ -117,7 +127,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
             if(uri != null){
 //                Log.d("PhotoPicker", "Selected uri " + uri);
-                Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
+                recipeImg.setImageURI(uri);
                 recipeImg.setElevation(100);
                 imgUri = uri;
             }else {
@@ -157,7 +167,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         addRecipe = findViewById(R.id.add_recipe_saveBtn);
 
         addIngredient.setOnClickListener(view -> {
-            ingredients.add(new Ingredients());
+            ingredients.add(new Ingredient());
             addRecipeIngredientAdapter.ingredients = ingredients;
             Log.d("AddAdapter", "Data: " + ingredients.get(ingredients.size()-1).getIngredient());
             addRecipeIngredientAdapter.notifyItemInserted(ingredients.size()-1);
@@ -174,39 +184,46 @@ public class AddRecipeActivity extends AppCompatActivity {
         editDescription.setImeActionLabel("setDescription", KeyEvent.KEYCODE_ENTER);
 
         addRecipe.setOnClickListener(v -> {
-//            recipeName = String.valueOf(editRecipeName.getText());
-//            description = String.valueOf(editDescription.getText());
-//            cookingMinutes = (String) durationSpinner.getSelectedItem();
-//            String category = (String) categorySpinner.getSelectedItem();
-//            String serving = (String) servingSpinner.getSelectedItem();
+            recipeName = String.valueOf(editRecipeName.getText());
+            description = String.valueOf(editDescription.getText());
+            cookingMinutes = (String) durationSpinner.getSelectedItem();
+            String category = (String) categorySpinner.getSelectedItem();
+            String serving = (String) servingSpinner.getSelectedItem();
 
             imgId = UUID.randomUUID().toString();
-            StorageReference imgRef = storageRef.child(imgId+".jpg");
-            uploadTask = imgRef.putFile(imgUri);
-            Log.d("FirebaseStorage", imgRef.getPath());
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Log.d("FirebaseStorage", taskSnapshot.getMetadata()+"");
-                    Toast.makeText(getApplicationContext(), "Upload image successful", Toast.LENGTH_LONG).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "Failed to upload image", Toast.LENGTH_LONG).show();
-                }
-            });
 
-//            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId);
+            ArrayList<String> encodeStep = new ArrayList<>();
+            for(int i=0;i<steps.size();i++){
+                try {
+                    encodeStep.add(URLEncoder.encode(steps.get(i), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            ArrayList<Ingredient> encodeIngredients = new ArrayList<>();
+            for(int i=0;i<ingredients.size();i++){
+                try{
+                    String encodeIngredient = URLEncoder.encode(ingredients.get(i).getIngredient(), "UTF-8");
+                    String encodePortion = URLEncoder.encode(ingredients.get(i).getPortion(), "UTF-8");
+                    Ingredient encodeObject = new Ingredient(encodeIngredient, encodePortion);
+                    encodeIngredients.add(encodeObject);
+                }catch (UnsupportedEncodingException e){
+                    throw new RuntimeException(e);
+                }
+            }
+            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId, encodeIngredients, encodeStep);
+            sendRecipe(recipe);
         });
+
     }
 
     private void sendRecipe(RecipeModel recipe){
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
-
+            Log.d("AddRecipeActivitySend", "Start Thread");
             try {
-                URL url = new URL("http://10.0.0.2/Favoury/recipe.php");
+                URL url = new URL("http://10.0.0.2/Favoury/app_create_recipe.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -215,11 +232,19 @@ public class AddRecipeActivity extends AppCompatActivity {
                 connection.setDoOutput(true);
 
                 //param
+                String recipeParam = "Uid=" + URLEncoder.encode(uId, "UTF-8") +
+                        "&RName=" + URLEncoder.encode(recipe.getRName(), "UTF-8") +
+                        "&Category=" + URLEncoder.encode(recipe.getCategory(), "UTF-8") +
+                        "&CookTime=" + URLEncoder.encode(recipe.getCookTime(), "UTF-8") +
+                        "&Description=" + URLEncoder.encode(recipe.getDescription(), "UTF-8") +
+                        "&Serving=" + URLEncoder.encode(recipe.getServing(), "UTF-8") +
+                        "&Imgid=" + URLEncoder.encode(recipe.getImgid(), "UTF-8") +
+                        "&Step=" + recipe.getSteps() +
+                        "&Ingredient=" + recipe.getIngredients();
 
                 OutputStream outputStream = connection.getOutputStream();
 
-                //write put param
-//                outputStream.write();
+                outputStream.write(recipeParam.getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
                 outputStream.close();
 
@@ -234,19 +259,24 @@ public class AddRecipeActivity extends AppCompatActivity {
                     }
                     bufferedReader.close();
 
+                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                    Log.d("AddRecipeActivitySend", jsonResponseString);
                     runOnUiThread(() -> {
                         try{
-                            JSONObject jsonObject = new JSONObject(response.toString());
+                            JSONObject jsonObject = new JSONObject(jsonResponseString);
                             String status = jsonObject.getString("status");
                             String message = jsonObject.getString("message");
 
                             if (status.equals("success")){
-
+                                saveRecipeImgToStorage();
+                                Toast.makeText(this, "Upload recipe successful", Toast.LENGTH_LONG).show();
+                                getOnBackPressedDispatcher().onBackPressed();
                             }else {
                                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
+                            Log.d("AddRecipeActivitySend", "JSON Error: "+e.getMessage());
                             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
@@ -256,6 +286,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace();
                 Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("AddRecipeActivitySend", "Exception: " + e.getMessage());
+
             } finally {
                 if (connection != null){
                     connection.disconnect();
@@ -263,6 +295,24 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
         addRecipeThread.start();
+    }
+
+    private void saveRecipeImgToStorage(){
+        StorageReference imgRef = storageRef.child(imgId+".jpg");
+        uploadTask = imgRef.putFile(imgUri);
+        Log.d("FirebaseStorage", imgRef.getPath());
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Log.d("FirebaseStorage", taskSnapshot.getMetadata()+"");
+                Toast.makeText(getApplicationContext(), "Upload image successful", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Failed to upload image", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void scaleAnim(View view) {

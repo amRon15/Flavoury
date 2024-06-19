@@ -11,9 +11,9 @@ public class RecipeModel {
     String RName, Description, Uid, Serving, CookTime, Category, Imgid;
     int Likes;
     ArrayList<Ingredient> ingredients;
-    ArrayList<Step> steps;
+    ArrayList<String> steps;
 
-    public RecipeModel(String Uid, String RName, String Category, String CookTime, String Description, int Likes, String Serving, @Nullable String Imgid) {
+    public RecipeModel(String Uid, String RName, String Category, String CookTime, String Description, int Likes, String Serving, @Nullable String Imgid, ArrayList<Ingredient> ingredients, ArrayList<String> steps) {
         this.Uid = Uid;
         this.RName = RName;
         this.Category = Category;
@@ -22,6 +22,8 @@ public class RecipeModel {
         this.Likes = Likes;
         this.Serving = Serving;
         this.Imgid = Imgid;
+        this.ingredients = ingredients;
+        this.steps = steps;
     }
 
     public String getImgid() {
@@ -56,14 +58,6 @@ public class RecipeModel {
         this.ingredients = ingredients;
     }
 
-    public ArrayList<Step> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(ArrayList<Step> steps) {
-        this.steps = steps;
-    }
-
     public String getRName() {
         return RName;
     }
@@ -80,36 +74,35 @@ public class RecipeModel {
         this.Description = description;
     }
 
-    static class Ingredient{
-        public Ingredient(){}
-        String ingredient, portion;
-
-        public String getIngredient() {
-            return ingredient;
-        }
-
-        public void setIngredient(String ingredient) {
-            this.ingredient = ingredient;
-        }
-
-        public String getPortion() {
-            return portion;
-        }
-
-        public void setPortion(String portion) {
-            this.portion = portion;
-        }
+    public ArrayList<String> getSteps() {
+        return steps;
     }
 
-    static class Step{
-        String step;
+    public void setSteps(ArrayList<String> steps) {
+        this.steps = steps;
+    }
 
-        public String getStep() {
-            return step;
-        }
+    public String getServing() {
+        return Serving;
+    }
 
-        public void setStep(String step) {
-            this.step = step;
-        }
+    public void setServing(String serving) {
+        Serving = serving;
+    }
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    public int getLikes() {
+        return Likes;
+    }
+
+    public void setLikes(int likes) {
+        Likes = likes;
     }
 }
