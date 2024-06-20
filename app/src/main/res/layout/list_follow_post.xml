@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/follow_post_userIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle_user_icon"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_person_24_grey"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/follow_post_username"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:text="Username"
+        android:textColor="@color/mainText_color"
+        android:textSize="12dp"
+        app:layout_constraintStart_toEndOf="@+id/follow_post_userIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"/>
+
+    <ImageButton
+        android:id="@+id/follow_post_optionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/fui_transparent"
+        android:src="@drawable/baseline_more_vert_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"/>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/follow_post_recipeImg"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/rounded_rec_recipe_img"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_userIcon"
+        app:shapeAppearanceOverlay="@style/roundImageView" />
+
+    <TextView
+        android:id="@+id/follow_post_recipeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="Recipe Name"
+        android:textColor="@color/mainText_color"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_recipeImg" />
+
+    <TextView
+        android:id="@+id/follow_post_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter"
+        android:lines="2"
+        android:text="Your recipe has been uploaded.You can see it on your profile. Click the image can to see more about the recipe.  "
+        android:textColor="@color/secondaryText_color"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_recipeName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,24 +1,52 @@
 package com.example.flavoury.ui.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
+import com.example.flavoury.UserModel;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class SearchUserActivity extends AppCompatActivity {
     ImageButton backBtn;
+    ArrayList<UserModel> userModelArrayList = new ArrayList<>();
+    RecyclerView userRecyclerView;
+    SearchUserAdapter searchUserAdapter;
+    TextView searchResult;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         getSupportActionBar().hide();
 
+        Intent searchIntent = getIntent();
+        String searchText = searchIntent.getStringExtra("searchText");
+        searchUser(searchText);
+
         backBtn = findViewById(R.id.search_user_backBtn);
+        userRecyclerView = findViewById(R.id.search_user_list);
+        searchResult = findViewById(R.id.search_user_result);
+
+        searchResult.setText("Search: " + searchText);
 
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -29,5 +57,43 @@ public class SearchUserActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
 
         backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+        searchUserAdapter = new SearchUserAdapter(userModelArrayList);
+        userRecyclerView.setAdapter(searchUserAdapter);
+        userRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
+    }
+
+    private void searchUser(String UName) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_search_user.php?UName=" + UName);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null){
+                    response.append(line);
+
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                Log.d("SearchUserActivityServer", jsonResponseString);
+                if (!jsonResponseString.isEmpty()){
+                    JSONArray jsonArray = new JSONArray(jsonResponseString);
+                    for (int i = 0; i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        UserModel userModel = new UserModel(jsonObject);
+                        userModelArrayList.add(userModel);
+                    }
+                }
+                connection.disconnect();
+            } catch (Exception e) {
+                Log.d("SearchUserActivityServer", e.toString());
+            }
+        }).start();
     }
 }

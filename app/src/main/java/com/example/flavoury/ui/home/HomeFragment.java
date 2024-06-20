@@ -1,10 +1,12 @@
 package com.example.flavoury.ui.home;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,15 +15,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toolbar;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.example.flavoury.R;
+import com.example.flavoury.UserModel;
 import com.example.flavoury.UserSharePref;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
@@ -31,6 +36,13 @@ import com.example.flavoury.ui.search.SearchUserActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.divider.MaterialDivider;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -45,7 +57,7 @@ public class HomeFragment extends Fragment {
     EditText searchEditText;
     Set<String> recipeHistorySet, userHistorySet;
     ArrayList<String> recipeHistoryList, userHistoryList;
-    ShimmerFrameLayout popListShimmer, fitListShimmer;
+    ShimmerFrameLayout popListShimmer, fitListShimmer, followPost;
     private UserSharePref userSharePref;
     private SharedPreferences sharePref;
     private String searchType = "recipe";
@@ -53,12 +65,13 @@ public class HomeFragment extends Fragment {
 
     RecyclerView popRecyclerView, fitRecyclerView, historyRecyclerView;
     RecipeListAdapter popularAdapter, fitnessAdapter;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         sharePref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         userSharePref = new UserSharePref(sharePref);
@@ -71,6 +84,9 @@ public class HomeFragment extends Fragment {
 
         fitListShimmer = root.findViewById(R.id.home_explore_list_shimmer);
         fitListShimmer.startShimmer();
+
+        followPost = root.findViewById(R.id.home_shimmer_follow_post);
+        followPost.startShimmer();
 
         //search dialog pop up
         searchView(root);
@@ -143,22 +159,17 @@ public class HomeFragment extends Fragment {
         //intent to SearchRecipe / User activity include editText
         searchBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(),
-                    searchType == "recipe" ? SearchRecipeActivity.class : SearchUserActivity.class);
-            intent.putExtra("searchText", searchEditText.getText());
+                    searchType.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
+            intent.putExtra("searchText", String.valueOf(searchEditText.getText()));
+            searchDialog.cancel();
 
             //save history when press search btn
-//            if (searchType == "recipe") {
-//                recipeHistoryList.add(String.valueOf(searchEditText.getText()));
-//                recipeHistorySet = (Set<String>) recipeHistoryList;
-//                userSharePref.setRecipeHistory(recipeHistorySet);
-//            } else {
-//                userHistoryList.add(String.valueOf(searchEditText.getText()));
-//                userHistorySet = (Set<String>) userHistoryList;
-//                userSharePref.setUserHistory(userHistorySet);
-//            }
-//            startActivity(intent);
+
+            startActivity(intent);
         });
     }
+
+
 
     private void historyRecyclerView(ArrayList<String> arrayList) {
         SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(arrayList);
@@ -170,6 +181,7 @@ public class HomeFragment extends Fragment {
         recipeHistoryList = (ArrayList<String>) userSharePref.getRecipeHistory();
         userHistoryList = (ArrayList<String>) userSharePref.getUserHistory();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

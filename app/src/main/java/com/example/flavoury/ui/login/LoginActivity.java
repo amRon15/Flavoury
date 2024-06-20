@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private UserSharePref userSharePref;
     OnBackPressedCallback onBackPressedCallback;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().hide();
 
-    final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         userSharePref = new UserSharePref(shareRef);
 
-        if (userSharePref.getLoginStatus()){
+        if (userSharePref.getLoginStatus()) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
 

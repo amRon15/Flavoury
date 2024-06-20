@@ -108,7 +108,7 @@
                 android:fontFamily="@font/inter"
                 android:textColor="@color/secondaryText_color"
                 android:text="Recipes"
-                android:textSize="12dp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -135,7 +135,7 @@
                 android:fontFamily="@font/inter"
                 android:textColor="@color/secondaryText_color"
                 android:text="Followers"
-                android:textSize="12dp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -162,7 +162,7 @@
                 android:text="Followings"
                 android:fontFamily="@font/inter"
                 android:textColor="@color/secondaryText_color"
-                android:textSize="12dp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 

@@ -4,10 +4,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageButton
+    <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:id="@+id/list_post_img" />
+        android:id="@+id/list_post_img"
+        app:shapeAppearanceOverlay="@style/roundImageView"
+        android:layout_marginStart="2.5dp"
+        android:scaleType="centerCrop" />
 
 
 </FrameLayout>

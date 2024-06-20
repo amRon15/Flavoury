@@ -51,7 +51,7 @@
         <ImageView
             android:id="@+id/recipe_detail_recipeImg"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="350dp"
             android:background="@drawable/rounded_rec_recipe_img"
             android:hapticFeedbackEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,18 +90,40 @@
                 android:paddingVertical="10dp"
                 android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/recipe_detail_cookingMins"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableStart="@drawable/baseline_access_time_24"
-                    android:drawablePadding="5dp"
-                    android:fontFamily="@font/inter_light"
-                    android:textSize="16dp"
-                    android:text=">120 mins"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/secondaryText_color" />
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recipe_detail_category"
+                        android:textSize="16dp"
+                        android:text="Category"
+                        android:fontFamily="@font/inter_light"
+                        android:textColor="@color/secondaryText_color" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_brightness_1_16"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="10dp"/>
+
+
+                    <TextView
+                        android:id="@+id/recipe_detail_cookingMins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_light"
+                        android:textSize="16dp"
+                        android:text=">120 mins"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/secondaryText_color" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/recipe_detail_calsNum"
@@ -124,10 +146,13 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp">
 
-                <ImageButton
-                    android:id="@+id/my_profile_userIcon"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/recipe_detail_userIcon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    app:shapeAppearanceOverlay="@style/circleImageView"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baseline_person_24_grey"
                     android:background="@drawable/circle_user_icon" />
 
                 <TextView
@@ -136,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
                     android:text="Username"
-                    android:paddingLeft="5dp"
+                    android:paddingLeft="10dp"
                     android:textColor="@color/mainText_color"
                     android:textSize="16dp"
                     android:layout_weight="1"/>
@@ -165,116 +190,43 @@
 
         </LinearLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            app:dividerColor="@color/lightGrey"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipe_detail_infoBox"
-            android:id="@+id/recipe_detail_div1" />
-
-        <TextView
-            android:id="@+id/recipe_detail_description_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_medium"
-            android:text="Description"
-            android:textColor="@color/mainText_color"
-            android:textSize="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_div1" />
-
-        <TextView
-            android:id="@+id/recipe_detail_description"
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:fontFamily="@font/inter_light"
-            android:text="Your recipe has been uploaded, you can see it on your profile."
-            android:textColor="@color/secondaryText_color"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/recipe_detail_tablayout"
+            app:tabSelectedTextColor="@color/primary_color"
+            app:tabIndicatorFullWidth="false"
+            app:tabTextAppearance="@style/tab_title"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_infoBox"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_description_title" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/recipe_detail_line1"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Description" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Ingredient"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Step" />
+
+        </com.google.android.material.tabs.TabLayout>
+        
+        <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            app:dividerColor="@color/lightGrey"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:id="@+id/recipe_detail_viewPager"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_tablayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_description" />
-
-
-        <TextView
-            android:id="@+id/recipe_detail_ingredients_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:fontFamily="@font/inter_medium"
-            android:text="Ingredients"
-            android:textColor="@color/mainText_color"
-            android:textSize="16dp"
-            app:layout_constraintHorizontal_bias="0.082"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_line1" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipe_detail_ingredients_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="35dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_ingredients_title" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/recipe_detail_line3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            app:dividerColor="@color/lightGrey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_ingredients_recyclerView" />
-
-        <TextView
-            android:id="@+id/recipe_detail_step_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:fontFamily="@font/inter_medium"
-            android:text="Steps"
-            android:textColor="@color/mainText_color"
-            android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_line3" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipe_detail_step_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_detail_step_title" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

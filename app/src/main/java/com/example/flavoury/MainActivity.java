@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
 import com.example.flavoury.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //Hide Action Bar
         getSupportActionBar().hide();
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         final SharedPreferences sharePref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);

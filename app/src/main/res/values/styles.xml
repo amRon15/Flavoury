@@ -8,4 +8,16 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
     </style>
+
+    <style name="AppTheme.PopUpOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="TitleTextSize" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">40sp</item>
+        <item name="android:fontFamily">@font/italiana</item>
+    </style>
+
+    <style name="tab_title" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/secondaryText_color</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

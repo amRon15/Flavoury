@@ -14,9 +14,11 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
-import com.example.flavoury.UserProfileModel;
+import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.bookmark.BookmarkActivity;
@@ -27,9 +29,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,14 +40,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MyProfileFragment extends Fragment {
 
     private FragmentMyProfileBinding binding;
     ImageButton bookmarkBtn, settingBtn, addRecipeBtn;
     ShapeableImageView userIcon;
-    TextView userName;
-    StorageReference storageRefUser = FirebaseStorage.getInstance().getReference().child("user");
+    TextView userName, recipeNum;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    String Uid;
+    ArrayList<RecipeModel> recipeModelArrayList = new ArrayList<>();
+    MyProfileRecipeAdapter myProfileRecipeAdapter;
+    RecyclerView recipeRecyclerView;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,10 +60,15 @@ public class MyProfileFragment extends Fragment {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        Uid = databaseHelper.getUid();
+
         settingBtn = root.findViewById(R.id.my_profile_setting);
         bookmarkBtn = root.findViewById(R.id.my_profile_bookmark);
         addRecipeBtn = root.findViewById(R.id.my_profile_add_recipe);
         userIcon = root.findViewById(R.id.my_profile_userIcon);
+        recipeNum = root.findViewById(R.id.my_profile_recipeNum);
+        recipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
 
         userName = root.findViewById(R.id.my_profile_userName);
 
@@ -75,7 +87,8 @@ public class MyProfileFragment extends Fragment {
             startActivity(intent);
         });
 
-        getUInfo();
+        getUserInfo();
+        getRecipe();
 
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
             @Override
@@ -83,21 +96,16 @@ public class MyProfileFragment extends Fragment {
                 return;
             }
         };
-        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(),onBackPressedCallback);
+        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(), onBackPressedCallback);
 
-//        myProfileRecipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
-//        myProfileRecipeAdapter = new MyProfileRecipeAdapter();
-//        myProfileRecipeRecyclerView.setAdapter(myProfileRecipeAdapter);
-//        myProfileRecipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        myProfileRecipeAdapter = new MyProfileRecipeAdapter(recipeModelArrayList);
+        recipeRecyclerView.setAdapter(myProfileRecipeAdapter);
+        recipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
         return root;
     }
 
-    private void getUInfo() {
-        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-        String Uid = databaseHelper.getUid();
-        Log.v("LoginSaveUid", "UID: " + Uid);
-
-
+    private void getUserInfo() {
         new Thread(() -> {
             try {
                 URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
@@ -112,7 +120,7 @@ public class MyProfileFragment extends Fragment {
                     response.append(line);
                 }
                 reader.close();
-                Log.d("UsernameFromDB", Uid );
+                Log.d("UsernameFromDB", Uid);
                 Log.d("UsernameFromDB", response.toString());
 
 
@@ -124,7 +132,7 @@ public class MyProfileFragment extends Fragment {
 
                 Log.d("UsernameFromDB", jsonObject.toString());
 
-                if (Username.isEmpty()){
+                if (Username.isEmpty()) {
                     Log.d("canfind", Username);
                     userName.setText("Undefined");
                 }
@@ -132,7 +140,6 @@ public class MyProfileFragment extends Fragment {
                 getActivity().runOnUiThread(() -> {
                     userName.setText(Username);
                 });
-
 
                 connection.disconnect();
             } catch (IOException | JSONException e) {
@@ -145,33 +152,43 @@ public class MyProfileFragment extends Fragment {
         }).start();
     }
 
-    private void setView(View root, UserProfileModel userData) {
-        TextView recipeNum = root.findViewById(R.id.my_profile_recipeNum);
-        TextView followingNum = root.findViewById(R.id.my_profile_followingNum);
-        TextView followerNum = root.findViewById(R.id.my_profile_followerNum);
+    private void getRecipe() {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_my_user_recipe.php?Uid=" + Uid);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
 
-        settingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        v.animate().scaleX(1).scaleY(1).setDuration(100);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                JSONArray jsonArray = new JSONArray(jsonResponseString);
+                if (!jsonResponseString.isEmpty()){
+                    for (int i = 0; i < jsonArray.length(); i ++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        RecipeModel recipeModel = new RecipeModel(jsonObject);
+                        recipeModelArrayList.add(recipeModel);
                     }
-                });
-                Intent intent = new Intent(requireActivity(), SettingActivity.class);
-                startActivity(intent);
+               }
+                recipeNum.setText(String.valueOf(recipeModelArrayList.size()));
+                connection.disconnect();
+            } catch (Exception e) {
+                Log.d("MyProfileGetRecipe", "Catch error :"+e.toString());
             }
-        });
-        TextView userName = root.findViewById(R.id.my_profile_userName);
-        userName.setText(userData.getUserName());
-        recipeNum.setText(userData.getRecipeNum()+"");
-
+        }).start();
     }
 
-    private void setUserIcon(String imgId){
-        StorageReference imgRef = storageRefUser.child(imgId+".jpg");
-        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+
+    private void setUserIcon(String imgId) {
+        StorageReference userRef = storageRef.child("user").child(imgId + ".jpg");
+        userRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).centerCrop().fit().into(userIcon);
