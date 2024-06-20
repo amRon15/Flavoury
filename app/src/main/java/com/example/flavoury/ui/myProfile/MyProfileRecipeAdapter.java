@@ -72,6 +72,7 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
             recipeImg.setOnClickListener(v->{
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra("Recipe", (Serializable) recipeModel);
+                String Uid = recipeModel.getUid();
                 itemView.getContext().startActivity(intent);
             });
         }

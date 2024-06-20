@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.activity.OnBackPressedCallback;
@@ -17,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.ui.login.LoginActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -29,6 +32,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -44,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
     DetailStepAdapter detailStepAdapter;
     DetailIngredientsAdapter detailIngredientsAdapter;
     ImageButton recipe_detail_backBtn, bookmarkBtn, editBtn;
+    ToggleButton like_toggle;
     ShapeableImageView userIcon;
     ImageView recipeImg;
     DatabaseHelper db = new DatabaseHelper(this);
@@ -181,4 +186,19 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private  void setLike_toggle(){
+                final DatabaseHelper db = new DatabaseHelper(this);
+                final String userID = db.getUid();
+                final String recipeID = db.getRid();
+                Log.d("Like", userID);
+                Log.d("Like", recipeID);
+
+                like_toggle.setOnClickListener(v -> {
+                    likeRecipe(userID, recipeID);
+                });
+            }
+
+    private  void likeRecipe(UserID, recipeID)
+
 }

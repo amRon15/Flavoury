@@ -76,4 +76,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return uid;
     }
+
+    public String getRid() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String Rid = null;
+
+        String[] columns = {"Rid"};
+        Cursor cursor = db.query("Local", columns, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int index = cursor.getColumnIndex("Rid");
+            if (index != -1) {
+                Rid = cursor.getString(index);
+            }
+        }
+
+        cursor.close();
+        db.close();
+
+        return Rid;
+    }
 }

@@ -128,7 +128,9 @@ public class MyProfileFragment extends Fragment {
                 JSONObject jsonObject = new JSONObject(jsonResponseString);
                 final String Username = jsonObject.getString("Username");
                 final String UserIconId = jsonObject.getString("Iconid");
-                setUserIcon(UserIconId);
+                if (!UserIconId.isEmpty()){
+                    setUserIcon(UserIconId);
+                }
 
                 Log.d("UsernameFromDB", jsonObject.toString());
 
@@ -192,11 +194,6 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).centerCrop().fit().into(userIcon);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Failed to load img", Toast.LENGTH_LONG).show();
             }
         });
     }
