@@ -50,9 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
     ShapeableImageView userIconBtn;
     TextView editIconBtn;
     Uri userIconUri = null;
-    private UserSharePref userSharePref;
-
-    private DatabaseHelper databaseHelper;
+    final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("user");
     UploadTask uploadTask;
     @Override
@@ -61,10 +59,6 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
 
-        final SharedPreferences sharePref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        userSharePref = new UserSharePref(sharePref);
-
-        databaseHelper = new DatabaseHelper(this);
         databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
         Button signBtn = findViewById(R.id.registration_signUp);
@@ -176,7 +170,6 @@ public class RegistrationActivity extends AppCompatActivity {
                             if (status.equals("success")) {
                                 String Uid = jsonResponse.getString("Uid");
                                 saveUidToDatabase(Uid);
-                                userSharePref.setLoginStatus(true);
                                 Toast.makeText(RegistrationActivity.this, "Signup Success", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                                 startActivity(intent);

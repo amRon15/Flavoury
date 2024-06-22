@@ -18,6 +18,9 @@ import java.util.ArrayList;
 public class FragmentStep extends Fragment {
     ArrayList<String> stepArrayList = new ArrayList<>();
 
+    public FragmentStep(ArrayList<String> stepArrayList){
+        this.stepArrayList = stepArrayList;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,9 +29,9 @@ public class FragmentStep extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        RecyclerView stepRecyclerView = view.findViewById(R.id.recipe_detail_step_recyclerView);
-//        DetailStepAdapter detailStepAdapter = new DetailStepAdapter();
-//        stepRecyclerView.setAdapter(detailStepAdapter);
-//        stepRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        RecyclerView stepRecyclerView = view.findViewById(R.id.recipe_detail_step_recyclerView);
+        DetailStepAdapter detailStepAdapter = new DetailStepAdapter(stepArrayList);
+        stepRecyclerView.setAdapter(detailStepAdapter);
+        stepRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 }

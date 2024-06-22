@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.UserModel;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,7 +45,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     ShapeableImageView userIcon;
-    TextView userName;
+    TextView userName, recipeNum, followingNum, followerNum;
     ToggleButton followBtn;
     ImageButton backBtn;
     ArrayList<RecipeModel> recipeModelArrayList = new ArrayList<>();
@@ -54,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
     boolean isUserFollowed;
     DatabaseHelper db = new DatabaseHelper(this);
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    UserModel userInfo = new UserModel();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,14 +69,20 @@ public class ProfileActivity extends AppCompatActivity {
         Intent uIdIntent = getIntent();
         otherUid = uIdIntent.getStringExtra("otherUid");
 
-        getUserInfo(otherUid);
-        getRecipe(otherUid);
         if (!uId.isEmpty() & !otherUid.isEmpty()){
             isUserFollowed();
+        }
+        if (!otherUid.isEmpty()){
+            getUserInfo();
+            getUserNum();
+            getRecipe();
         }
 
         userIcon = findViewById(R.id.profile_userIcon);
         userName = findViewById(R.id.profile_userName);
+        recipeNum = findViewById(R.id.profile_recipeNum);
+        followingNum = findViewById(R.id.profile_followingNum);
+        followerNum = findViewById(R.id.profile_followerNum);
         followBtn = findViewById(R.id.profile_followBtn);
         backBtn = findViewById(R.id.profile_backBtn);
         recipeRecyclerView = findViewById(R.id.profile_recipe_recyclerView);
@@ -99,10 +107,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private void getUserInfo(String Uid) {
+    private void getUserInfo() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
+                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + otherUid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -114,7 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
                     response.append(line);
                 }
                 reader.close();
-                Log.d("UsernameFromDB", Uid);
+                Log.d("UsernameFromDB", otherUid);
                 Log.d("UsernameFromDB", response.toString());
 
 
@@ -146,10 +154,43 @@ public class ProfileActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void getRecipe(String Uid) {
+    private void getUserNum(){
+        new Thread(()->{
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_profile_info.php?Uid="+ otherUid);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line=reader.readLine())!=null){
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                if (!jsonResponseString.isEmpty()){
+                    JSONObject jsonObject = new JSONObject(jsonResponseString);
+                    userInfo.UserInfoModel(jsonObject);
+                }
+
+                runOnUiThread(()->{
+                    recipeNum.setText(String.valueOf(userInfo.getRecipeNum()));
+                    followingNum.setText(String.valueOf(userInfo.getFollowingNum()));
+                    followerNum.setText(String.valueOf(userInfo.getFollowerNum()));
+                });
+
+            }catch (Exception e){
+                Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());
+            }
+        }).start();
+    }
+
+    private void getRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_my_user_recipe.php?Uid=" + Uid);
+                URL url = new URL("http://10.0.2.2/Flavoury/app_my_user_recipe.php?Uid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -201,9 +242,9 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 if (jsonObject.getString("status")=="success"){
-                    isUserFollowed = true;
-                }else {
                     isUserFollowed = false;
+                }else {
+                    isUserFollowed = true;
                 }
 
                 runOnUiThread(()->{

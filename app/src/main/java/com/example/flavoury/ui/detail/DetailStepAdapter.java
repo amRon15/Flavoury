@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.detail;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,10 @@ import java.util.ArrayList;
 
 public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.MyViewHolder> {
 
-    ArrayList<String> steps;
-    int stepSize;
+    ArrayList<String> steps = new ArrayList<>();
 
-
-    public void setDetailStepAdapter(ArrayList<String> steps,int stepSize) {
+    public DetailStepAdapter(ArrayList<String> steps) {
         this.steps = steps;
-        this.stepSize = stepSize;
     }
 
     @NonNull
@@ -32,14 +30,18 @@ public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.step.setText("Step "+(position+1));
+        holder.step.setText(String.valueOf(position+1));
         holder.detailStep.setText(steps.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return stepSize;
+        if (steps== null){
+            return 0;
+        }else {
+            return steps.size();
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -50,6 +52,7 @@ public class DetailStepAdapter extends RecyclerView.Adapter<DetailStepAdapter.My
             super(itemView);
             step = itemView.findViewById(R.id.detail_step_stepNum);
             detailStep = itemView.findViewById(R.id.detail_step_stepDetail);
+            Log.d("DetailActivityFetch", steps.size()+"");
         }
     }
 }

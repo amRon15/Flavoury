@@ -8,8 +8,10 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <ImageButton
-        android:id="@+id/search_recipeIcon"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/search_recipe_img"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/roundImageView"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:background="@drawable/rounded_rec_recipe_img"
@@ -24,7 +26,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/search_recipeName"
+            android:id="@+id/search_recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -50,7 +52,7 @@
                 android:textSize="14dp" />
 
             <TextView
-                android:id="@+id/search_recipeCookingTime"
+                android:id="@+id/search_recipe_cookingTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -68,15 +70,17 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/search_userIcon"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/search_recipe_userIcon"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@drawable/circle_user_icon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/circle_user_icon" />
 
             <TextView
-                android:id="@+id/search_userName"
+                android:id="@+id/search_recipe_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

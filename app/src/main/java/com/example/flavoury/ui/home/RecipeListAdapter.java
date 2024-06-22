@@ -2,7 +2,6 @@ package com.example.flavoury.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.RoundCornerTransform;
-import com.example.flavoury.ui.detail.DetailActivity;
-import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;

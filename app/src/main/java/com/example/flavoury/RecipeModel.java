@@ -3,6 +3,7 @@ package com.example.flavoury;
 import android.util.Log;
 
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ public class RecipeModel implements Serializable {
 
     public RecipeModel(){}
 
-    String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid;
+    String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid, Username, Iconid;
     int Likes;
     ArrayList<Ingredient> ingredients;
     ArrayList<String> steps;
@@ -45,6 +46,65 @@ public class RecipeModel implements Serializable {
         }catch (Exception e){
             Log.d("RecipeModel", "Failed to set recipeModel: " + e.toString());
         }
+    }
+
+    public void setRecipeInList(JSONObject jsonObject){
+        try {
+            this.Rid = jsonObject.getString("Rid");
+            this.Uid = jsonObject.getString("Uid");
+            this.RName = jsonObject.getString("RName");
+            this.Category = jsonObject.getString("Category");
+            this.CookTime = jsonObject.getString("CookTime");
+            this.Description = jsonObject.getString("Description");
+            this.Likes = jsonObject.getInt("Likes");
+            this.Serving = jsonObject.getString("Serving");
+            this.Imgid = jsonObject.getString("Imgid");
+            this.Username = jsonObject.getString("Username");
+            this.Iconid = jsonObject.getString("Iconid");
+        }catch (Exception e){
+            Log.d("RecipeModel", "Failed to set recipeModel: " + e.toString());
+        }
+    }
+
+    public void StepAndIngredient(JSONArray stepJson, JSONArray ingredientJson){
+        try{
+            ArrayList<String> stepList = new ArrayList<>();
+            for (int i = 0; i < stepJson.length(); i++) {
+                JSONObject stepJSONObject = stepJson.getJSONObject(i);
+                String step = stepJSONObject.getString("Step");
+                stepList.add(step);
+            }
+
+            ArrayList<Ingredient> ingredientList = new ArrayList<>();
+            for (int i = 0; i < ingredientJson.length(); i++) {
+                JSONObject ingredientJSONObject = ingredientJson.getJSONObject(i);
+                String ingredient = ingredientJSONObject.getString("Ingredient");
+                String portion = ingredientJSONObject.getString("Portion");
+                Ingredient ingredientModel = new Ingredient(ingredient, portion);
+                ingredientList.add(ingredientModel);
+            }
+
+            this.ingredients = ingredientList;
+            this.steps = stepList;
+        }catch (Exception e){
+            Log.d("RecipeModel", e.toString());
+        }
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public String getIconid() {
+        return Iconid;
+    }
+
+    public void setIconid(String iconid) {
+        Iconid = iconid;
     }
 
     public String getRid() {

@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 public class FragmentIngredient extends Fragment {
     ArrayList<Ingredient> ingredientArrayList = new ArrayList<>();
+    public FragmentIngredient(ArrayList<Ingredient> ingredientArrayList){
+        this.ingredientArrayList = ingredientArrayList;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,9 +29,9 @@ public class FragmentIngredient extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        RecyclerView ingredientRecyclerView = view.findViewById(R.id.recipe_detail_ingredients_recyclerView);
-//        DetailIngredientsAdapter detailIngredientsAdapter = new DetailIngredientsAdapter();
-//        ingredientRecyclerView.setAdapter(detailIngredientsAdapter);
-//        ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        RecyclerView ingredientRecyclerView = view.findViewById(R.id.recipe_detail_ingredients_recyclerView);
+        DetailIngredientsAdapter detailIngredientsAdapter = new DetailIngredientsAdapter(ingredientArrayList);
+        ingredientRecyclerView.setAdapter(detailIngredientsAdapter);
+        ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 }

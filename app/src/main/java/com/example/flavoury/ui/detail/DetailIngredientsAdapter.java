@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.Ingredient;
 import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
@@ -15,12 +16,11 @@ import java.util.ArrayList;
 
 public class DetailIngredientsAdapter extends RecyclerView.Adapter<DetailIngredientsAdapter.MyviewHolder> {
 
-    ArrayList<Ingredients> ingredients;
-    int ingredientSize;
-    public void setDetailIngredientsAdapter(ArrayList<Ingredients> ingredients, int ingredientSize) {
-        this.ingredients = ingredients;
-        this.ingredientSize = ingredientSize;
-        }
+    ArrayList<Ingredient> ingredientArrayList = new ArrayList<>();
+
+    public DetailIngredientsAdapter(ArrayList<Ingredient> ingredientArrayList){
+        this.ingredientArrayList = ingredientArrayList;
+    }
 
     @NonNull
     @Override
@@ -31,13 +31,17 @@ public class DetailIngredientsAdapter extends RecyclerView.Adapter<DetailIngredi
 
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder holder, int position){
-        Ingredients ingredient = ingredients.get(position);
+        Ingredient ingredient = ingredientArrayList.get(position);
         holder.food.setText(ingredient.getPortion() + " "+ingredient.getIngredient());
     }
 
     @Override
     public int getItemCount() {
-        return ingredientSize;
+        if (ingredientArrayList == null){
+            return 0;
+        }else {
+            return ingredientArrayList.size();
+        }
     }
 
     public class MyviewHolder extends RecyclerView.ViewHolder{

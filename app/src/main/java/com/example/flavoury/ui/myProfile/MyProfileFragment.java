@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.UserModel;
 import com.example.flavoury.databinding.FragmentMyProfileBinding;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.bookmark.BookmarkActivity;
@@ -48,12 +49,14 @@ public class MyProfileFragment extends Fragment {
     private FragmentMyProfileBinding binding;
     ImageButton bookmarkBtn, settingBtn, addRecipeBtn;
     ShapeableImageView userIcon;
-    TextView userName, recipeNum;
+    TextView userName, recipeNum, followerNum, followingNum;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     String Uid;
     ArrayList<RecipeModel> recipeModelArrayList = new ArrayList<>();
     MyProfileRecipeAdapter myProfileRecipeAdapter;
     RecyclerView recipeRecyclerView;
+    UserModel userInfo = new UserModel();
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,6 +71,8 @@ public class MyProfileFragment extends Fragment {
         bookmarkBtn = root.findViewById(R.id.my_profile_bookmark);
         addRecipeBtn = root.findViewById(R.id.my_profile_add_recipe);
         userIcon = root.findViewById(R.id.my_profile_userIcon);
+        followerNum = root.findViewById(R.id.my_profile_followerNum);
+        followingNum = root.findViewById(R.id.my_profile_followingNum);
         recipeNum = root.findViewById(R.id.my_profile_recipeNum);
         recipeRecyclerView = root.findViewById(R.id.my_profile_recipe_recyclerView);
 
@@ -90,6 +95,7 @@ public class MyProfileFragment extends Fragment {
 
         getUserInfo();
         getRecipe();
+        getUserNum();
 
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
             @Override
@@ -163,6 +169,7 @@ public class MyProfileFragment extends Fragment {
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
+                Log.d("MyProfileGetRecipe", jsonResponseString );
                 if (!jsonResponseString.isEmpty()) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -177,6 +184,39 @@ public class MyProfileFragment extends Fragment {
         }).start();
     }
 
+    private void getUserNum(){
+        new Thread(()->{
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_profile_info.php?Uid="+Uid);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line=reader.readLine())!=null){
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                if (!jsonResponseString.isEmpty()){
+                    JSONObject jsonObject = new JSONObject(jsonResponseString);
+                    userInfo.UserInfoModel(jsonObject);
+                }
+
+                getActivity().runOnUiThread(()->{
+                    recipeNum.setText(String.valueOf(userInfo.getRecipeNum()));
+                    followingNum.setText(String.valueOf(userInfo.getFollowingNum()));
+                    followerNum.setText(String.valueOf(userInfo.getFollowerNum()));
+                });
+
+                connection.disconnect();
+            }catch (Exception e){
+                Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());
+            }
+        }).start();
+    }
 
     private void setUserIcon(String imgId) {
         StorageReference userRef = storageRef.child("user").child(imgId + ".jpg");

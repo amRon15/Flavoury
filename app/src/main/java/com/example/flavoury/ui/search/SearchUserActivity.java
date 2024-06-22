@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.UserModel;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,15 +33,18 @@ public class SearchUserActivity extends AppCompatActivity {
     RecyclerView userRecyclerView;
     SearchUserAdapter searchUserAdapter;
     TextView searchResult;
+    String searchText, Uid;
+    DatabaseHelper db = new DatabaseHelper(this);
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         getSupportActionBar().hide();
 
-        Intent searchIntent = getIntent();
-        String searchText = searchIntent.getStringExtra("searchText");
-        searchUser(searchText);
+        Uid = db.getUid();
+
+        searchText = getIntent().getStringExtra("searchText");
+        searchUser();
 
         backBtn = findViewById(R.id.search_user_backBtn);
         userRecyclerView = findViewById(R.id.search_user_list);
@@ -62,10 +66,10 @@ public class SearchUserActivity extends AppCompatActivity {
 
     }
 
-    private void searchUser(String UName) {
+    private void searchUser() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_search_user.php?UName=" + UName);
+                URL url = new URL("http://10.0.2.2/Flavoury/app_search_user.php?UName=" + searchText + "&Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -90,7 +94,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 }
 
                 runOnUiThread(()->{
-                    searchUserAdapter = new SearchUserAdapter(userModelArrayList);
+                    searchUserAdapter = new SearchUserAdapter(userModelArrayList, Uid);
                     userRecyclerView.setAdapter(searchUserAdapter);
                     userRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
                 });

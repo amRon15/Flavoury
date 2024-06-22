@@ -74,6 +74,8 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
                 intent.putExtra("Recipe", (Serializable) recipeModel);
                 String Uid = recipeModel.getUid();
                 itemView.getContext().startActivity(intent);
+                Log.d("MyProfileGetRecipe", "Recipe Img: " + recipeModel.getImgid());
+
             });
         }
 

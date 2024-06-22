@@ -16,10 +16,13 @@
     <color name="red">#FF0000</color>
     <color name="cal_color">#FF7B7B</color>
     <color name="disable_grey">#CCCCCC</color>
+    <color name="circle_btn">#4DFFFFFF</color>
+    <color name="following_grey">#AEAEAE</color>
     <color name="searchview_color">#FAFAFA</color>
     <color name="DetailRecipeBack_color">#9C979797</color>
     <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
     <color name="lightGrey">#F7F7F7</color>
     <color name="cardWhite">#F3F3F3</color>
     <color name="shimmer_color">#979797</color>
+    <color name="searchBar">#FAFAFA</color>
 </resources>

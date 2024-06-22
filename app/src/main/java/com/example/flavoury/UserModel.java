@@ -1,13 +1,8 @@
 package com.example.flavoury;
 
-import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import org.json.JSONObject;
-
-import java.sql.Timestamp;
 
 
 public class UserModel {
@@ -18,11 +13,29 @@ public class UserModel {
             this.Username = jsonObject.getString("Username");
             this.Iconid = jsonObject.getString("Iconid");
         }catch (Exception e){
-            Log.d("UserModel", "Failed to set recipeModel: " + e.toString());
+            Log.d("UserModel", "Failed to set userModel: " + e.toString());
+        }
+    }
+
+    public void UserInfoModel(JSONObject jsonObject){
+        try{
+            this.recipeNum = jsonObject.getInt("recipeNum");
+            this.followerNum = jsonObject.getInt("followerNum");
+            this.followingNum = jsonObject.getInt("followingNum");
+        }catch (Exception e){
+            Log.d("UserModel", "Failed to set userModel: " + e.toString());
         }
     }
     String Uid, Username, Email, Iconid;
-    int followingNum, followerNum;
+    int recipeNum, followingNum, followerNum;
+
+    public int getRecipeNum() {
+        return recipeNum;
+    }
+
+    public void setRecipeNum(int recipeNum) {
+        this.recipeNum = recipeNum;
+    }
 
     public String getUid() {
         return Uid;

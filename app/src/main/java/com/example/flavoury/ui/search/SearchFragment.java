@@ -32,7 +32,6 @@ public class SearchFragment extends Fragment {
     Button searchBoxBtn;
     ImageButton cancelBtn, searchBtn;
     RecyclerView historyRecyclerView, recipeRecyclerView;
-    SearchView searchView;
     MaterialDivider recipeDiv, userDiv;
     Button recipeBtn, userBtn;
     Dialog searchDialog;
@@ -40,9 +39,9 @@ public class SearchFragment extends Fragment {
     List<RecipeModel> recipes = new ArrayList<RecipeModel>();
     List<RecipeModel> searchRecipes = new ArrayList<RecipeModel>();
     ShimmerFrameLayout shimmerFrameLayout;
-    SearchRecipeAdapter searchRecipeAdapter;
     SearchViewModel searchViewModel;
     boolean isRecipeDivVisible = true;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,28 +59,15 @@ public class SearchFragment extends Fragment {
                 return;
             }
         };
-        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(),onBackPressedCallback);
+        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(), onBackPressedCallback);
 
         shimmerFrameLayout = root.findViewById(R.id.search_shimmer);
         shimmerFrameLayout.startShimmer();
 
-
-//        searchRecipeAdapter = new SearchRecipeAdapter();
-//        recipeRecyclerView.setAdapter(searchRecipeAdapter);
-//        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-        //dynamically show the recipes according to the text in searchView
-
-//        historyRecyclerView = root.findViewById(R.id.search_historyList);
-//        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(myArray);
-//        historyRecyclerView.setAdapter(searchHistoryAdapter);
-//        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-//        historyRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
-
         return root;
     }
 
-    public void searchView(View root){
+    public void searchView(View root) {
         searchDialog = new Dialog(getContext());
         searchDialog.setContentView(R.layout.dialog_box_search);
         searchDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -123,32 +109,21 @@ public class SearchFragment extends Fragment {
 
         //intent to SearchRecipe / User activity include editText
         searchBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(),
-                    searchType == "recipe" ? SearchRecipeActivity.class : SearchUserActivity.class);
-            intent.putExtra("searchText",searchEditText.getText());
-//            startActivity(intent);
+            if (!searchEditText.getText().toString().isEmpty()) {
+                Intent intent = new Intent(getActivity(),
+                        searchType.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
+                intent.putExtra("searchText", String.valueOf(searchEditText.getText()));
+                searchDialog.cancel();
+                searchEditText.setText("");
+                startActivity(intent);
+
+            }
         });
     }
 
     //get all recipes return from SearchViewModel
     public List<RecipeModel> getRecipes(List<RecipeModel> recipes) {
         return this.recipes = recipes;
-    }
-
-    //get the recipes that the name contains searchView's text & send it to handleRecyclerView()
-    public void onSearchRecipe(String text, List<RecipeModel> recipes) {
-        searchRecipes.clear();
-        for (RecipeModel recipe : recipes) {
-//            if (recipe.getRecipeName().toLowerCase().contains(text.toLowerCase())) {
-//                searchRecipes.add(recipe);
-//            }
-        }
-        handleRecyclerView(searchRecipes);
-    }
-
-    //send the list to adapter & show the recipes in recyclerView
-    public void handleRecyclerView(List<RecipeModel> recipes) {
-
     }
 
     @Override

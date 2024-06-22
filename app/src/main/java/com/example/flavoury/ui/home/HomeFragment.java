@@ -50,8 +50,8 @@ import java.util.Set;
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     HomeViewModel homeViewModel;
-    Button searchBoxBtn;
-    ImageButton addRecipeBtn, cancelSearchBtn, searchBtn, searchBarBtn;
+    Button searchBar;
+    ImageButton addRecipeBtn, cancelSearchBtn, searchBtn;
     Dialog searchDialog;
     Button popMore, fitMore, recipeBtn, userBtn;
     MaterialDivider recipeDiv, userDiv;
@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment {
     ArrayList<String> recipeHistoryList, userHistoryList;
     ShimmerFrameLayout popListShimmer, fitListShimmer, followPost;
 
-    private UserSharePref userSharePref;
     private SharedPreferences sharePref;
     private String searchType = "recipe";
     private boolean isRecipeDivVisible = true;
@@ -75,11 +74,7 @@ public class HomeFragment extends Fragment {
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        sharePref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        userSharePref = new UserSharePref(sharePref);
-
-        searchBoxBtn = root.findViewById(R.id.home_search_bar);
-        searchBarBtn = root.findViewById(R.id.home_searchBtn);
+        searchBar = root.findViewById(R.id.home_search_bar);
         addRecipeBtn = root.findViewById(R.id.homeAddBtn);
 
         popListShimmer = root.findViewById(R.id.home_pop_list_shimmer);
@@ -158,19 +153,24 @@ public class HomeFragment extends Fragment {
 //            historyRecyclerView(userHistoryList);
         });
 
-        searchBoxBtn.setOnClickListener(v -> searchDialog.show());
-        cancelSearchBtn.setOnClickListener(v -> searchDialog.dismiss());
+        searchBar.setOnClickListener(v -> searchDialog.show());
+        cancelSearchBtn.setOnClickListener(v -> {
+            searchDialog.dismiss();
+            searchEditText.setText("");
+        });
 
         //intent to SearchRecipe / User activity include editText
         searchBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(),
-                    searchType.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
-            intent.putExtra("searchText", String.valueOf(searchEditText.getText()));
-            searchDialog.cancel();
+            if (!searchEditText.getText().toString().isEmpty()) {
+                Intent intent = new Intent(getActivity(),
+                        searchType.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
+                intent.putExtra("searchText", String.valueOf(searchEditText.getText()));
+                searchDialog.cancel();
+                searchEditText.setText("");
+                //save history when press search btn
 
-            //save history when press search btn
-
-            startActivity(intent);
+                startActivity(intent);
+            }
         });
     }
 
@@ -180,11 +180,6 @@ public class HomeFragment extends Fragment {
         SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(arrayList);
         historyRecyclerView.setAdapter(searchHistoryAdapter);
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-    }
-
-    private void getAllHistory() {
-        recipeHistoryList = (ArrayList<String>) userSharePref.getRecipeHistory();
-        userHistoryList = (ArrayList<String>) userSharePref.getUserHistory();
     }
 
     @Override

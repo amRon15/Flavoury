@@ -19,8 +19,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, RecipeModel recipe){
         super(fragmentActivity);
         this.description = recipe.getDescription();
-//        this.stepArrayList = recipe.getSteps();
-//        this.ingredientArrayList = recipe.getIngredients();
+        this.stepArrayList = recipe.getSteps();
+        this.ingredientArrayList = recipe.getIngredients();
     }
 
     @NonNull
@@ -29,9 +29,9 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         if (position==0){
             return new FragmentDescription(description);
         }else if (position==1) {
-            return new FragmentIngredient();
+            return new FragmentIngredient(ingredientArrayList);
         } else {
-            return new FragmentStep();
+            return new FragmentStep(stepArrayList);
         }
     }
 

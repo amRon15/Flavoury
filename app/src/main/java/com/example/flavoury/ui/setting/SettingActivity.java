@@ -25,8 +25,7 @@ public class SettingActivity extends AppCompatActivity {
     ImageButton backBtn;
     Button logoutBtn,logoutCancel,logoutConfirm;
     Dialog logoutDialog;
-    private UserSharePref userSharePref;
-    DatabaseHelper databaseHelper;
+    final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +33,8 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         getSupportActionBar().hide();
 
-        databaseHelper = new DatabaseHelper(this);
         databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
-        final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        userSharePref = new UserSharePref(shareRef);
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -64,7 +60,6 @@ public class SettingActivity extends AppCompatActivity {
         logoutCancel.setOnClickListener(view -> logoutDialog.dismiss());
 
         logoutConfirm.setOnClickListener(view -> {
-            userSharePref.setLoginStatus(false);
             databaseHelper.deleteUid();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

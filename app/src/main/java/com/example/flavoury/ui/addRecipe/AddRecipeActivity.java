@@ -118,25 +118,21 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         //back btn
         cancelRecipe = findViewById(R.id.add_recipe_cancelBtn);
-        cancelRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
+        cancelRecipe.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
 
         //recipe img -> open photo picker
         recipeImg = findViewById(R.id.add_recipe_recipeImg);
         ActivityResultLauncher<PickVisualMediaRequest> pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri ->{
             if(uri != null){
-//                Log.d("PhotoPicker", "Selected uri " + uri);
                 recipeImg.setImageURI(uri);
                 recipeImg.setElevation(100);
                 imgUri = uri;
+                imgId = UUID.randomUUID().toString();
             }else {
                 Log.d("PhotoPicker","no media selected");
             }
         });
+
         // click to launch photo picker
         recipeImg.setOnClickListener(view -> pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
@@ -193,7 +189,6 @@ public class AddRecipeActivity extends AppCompatActivity {
             String category = (String) categorySpinner.getSelectedItem();
             String serving = (String) servingSpinner.getSelectedItem();
 
-            imgId = UUID.randomUUID().toString();
 
             JSONArray jsonIngredient = new JSONArray();
             try {
@@ -257,7 +252,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                     StringBuilder response = new StringBuilder();
                     String line;
-                    Log.d("AddRecipeActivitySend", "HTTP OK");
                     while ((line = bufferedReader.readLine()) != null){
                         response.append(line);
                     }
@@ -270,7 +264,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(jsonResponseString);
                             String status = jsonObject.getString("status");
                             String message = jsonObject.getString("message");
-                            Log.d("AddRecipeActivitySend", jsonObject.toString());
                             if (status.equals("success")){
                                 saveRecipeImgToStorage();
                                 Toast.makeText(this, "Upload recipe successful", Toast.LENGTH_LONG).show();
@@ -289,7 +282,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-//                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("AddRecipeActivitySend", "Exception: " + e.toString());
 
             } finally {
@@ -300,45 +292,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
         addRecipeThread.start();
     }
-
-    private Runnable mutilThread = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                URL url = new URL("http://10.0.0.2/Favoury/app_create_recipe.php");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setUseCaches(false);
-                connection.connect();
-
-                int responseCode = connection.getResponseCode();
-
-                if (responseCode == HttpURLConnection.HTTP_OK){
-                    InputStream inputStream = connection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-
-                    String box = "";
-                    String line = null;
-                    while ((line = bufferedReader.readLine()) !=null){
-                        box += line+"\n";
-                    }
-                    inputStream.close();
-                    result = box;
-                }
-            }catch (Exception e){
-                Log.d("AddRecipeActivity", e.getMessage());
-            }
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("AddRecipeActivity", "Successful");
-                }
-            });
-        }
-    };
 
     private void saveRecipeImgToStorage(){
         StorageReference imgRef = storageRef.child(imgId+".jpg");

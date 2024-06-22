@@ -95,7 +95,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/my_profile_recipeNum"
+                android:id="@+id/profile_recipeNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
@@ -104,7 +104,7 @@
                 android:textColor="@color/mainText_color" />
 
             <TextView
-                android:id="@+id/my_profile_recipeTitle"
+                android:id="@+id/profile_recipeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"

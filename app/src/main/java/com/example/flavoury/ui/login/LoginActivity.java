@@ -34,8 +34,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     TextView signUpBtn;
     private String Uid;
-    private DatabaseHelper databaseHelper;
-    private UserSharePref userSharePref;
+    final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
     OnBackPressedCallback onBackPressedCallback;
     Toolbar toolbar;
 
@@ -45,10 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().hide();
 
-        final SharedPreferences shareRef = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        userSharePref = new UserSharePref(shareRef);
+        databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
-        if (userSharePref.getLoginStatus()) {
+        if (databaseHelper.getUid() != null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -80,8 +78,6 @@ public class LoginActivity extends AppCompatActivity {
             performLogIn(username, password);
         });
 
-        databaseHelper = new DatabaseHelper(this);
-        databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
     }
 
@@ -129,10 +125,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Uid = jsonResponse.getString("Uid");
                                 Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                                 saveUidToDatabase(Uid);
-                                userSharePref.setLoginStatus(true);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("Uid", Uid);
-                                Log.v("LoginSaveUid", "UID: " + Uid);
                                 startActivity(intent);
                                 finish();
                             } else {
