@@ -195,10 +195,10 @@ public class DetailActivity extends AppCompatActivity {
                 Log.d("Like", recipeID);
 
                 like_toggle.setOnClickListener(v -> {
-                    likeRecipe(userID, recipeID);
+//                    likeRecipe(userID, recipeID);
                 });
             }
 
-    private  void likeRecipe(UserID, recipeID)
+
 
 }

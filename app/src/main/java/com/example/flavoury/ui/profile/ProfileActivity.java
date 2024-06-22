@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -34,20 +35,23 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     ShapeableImageView userIcon;
     TextView userName;
-    Button followBtn;
+    ToggleButton followBtn;
     ImageButton backBtn;
     ArrayList<RecipeModel> recipeModelArrayList = new ArrayList<>();
     RecyclerView recipeRecyclerView;
     ProfileRecipeAdapter profileRecipeAdapter;
     String uId, otherUid;
+    boolean isUserFollowed;
     DatabaseHelper db = new DatabaseHelper(this);
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -65,6 +69,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         getUserInfo(otherUid);
         getRecipe(otherUid);
+        if (!uId.isEmpty() & !otherUid.isEmpty()){
+            isUserFollowed();
+        }
 
         userIcon = findViewById(R.id.profile_userIcon);
         userName = findViewById(R.id.profile_userName);
@@ -78,13 +85,16 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         };
-        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        followBtn.setOnClickListener(v -> followUser());
+
 
         profileRecipeAdapter = new ProfileRecipeAdapter(recipeModelArrayList);
         recipeRecyclerView.setAdapter(profileRecipeAdapter);
-        recipeRecyclerView.setLayoutManager(new GridLayoutManager(this, 3) );
+        recipeRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
 
 
     }
@@ -153,8 +163,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
-                if (!jsonResponseString.isEmpty()){
-                    for (int i = 0; i < jsonArray.length(); i ++){
+                if (!jsonResponseString.isEmpty()) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         RecipeModel recipeModel = new RecipeModel(jsonObject);
                         recipeModelArrayList.add(recipeModel);
@@ -162,12 +172,112 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 connection.disconnect();
             } catch (Exception e) {
-                Log.d("MyProfileGetRecipe", "Catch error :"+e.toString());
+                Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());
             }
         }).start();
     }
-    private void followUser(String Uid, String OtherUid){
 
+    private void isUserFollowed(){
+        new Thread(()->{
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_is_user_followed.php?Uid="+uId+"&Followid="+otherUid);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+
+                while ((line=reader.readLine()) != null){
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                Log.d("ProfileFetchData", jsonResponseString);
+                JSONObject jsonObject = null;
+                if (!jsonResponseString.isEmpty()){
+                    jsonObject = new JSONObject(jsonResponseString);
+                }
+
+                if (jsonObject.getString("status")=="success"){
+                    isUserFollowed = true;
+                }else {
+                    isUserFollowed = false;
+                }
+
+                runOnUiThread(()->{
+                    followBtn.setChecked(isUserFollowed);
+                });
+
+            }catch (Exception e){
+                Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());
+            }
+        }).start();
+    }
+
+    private void followUser() {
+        new Thread(() -> {
+            HttpURLConnection connection = null;
+            try {
+                URL url;
+                if (isUserFollowed){
+                    url = new URL("http://10.0.2.2/Flavoury/app_follow_user.php");
+                }else {
+                    url = new URL("http://10.0.2.2/Flavoury/app_delete_follow.php");
+                }
+                connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+
+                String followUserParams = "Uid=" + URLEncoder.encode(uId, "UTF-8") +
+                        "&Followid=" + URLEncoder.encode(otherUid, "UTF-8");
+
+                OutputStream outputStream = connection.getOutputStream();
+
+                outputStream.write(followUserParams.getBytes());
+                outputStream.flush();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    Log.d("ProfileFetchData", "HTTP OK");
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                    Log.d("ProfileFetchData", jsonResponseString);
+                    runOnUiThread(() -> {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(jsonResponseString);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+                            if (status.equals("success")) {
+                                Log.d("ProfileFetchData", message);
+                            } else {
+                                Log.d("ProfileFetchData", message);
+                            }
+                        } catch (JSONException e) {
+                            Log.d("ProfileFetchData", e.toString());
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                Log.d("ProfileFetchData", e.toString());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        }).start();
     }
 
     private void setUserIcon(String imgId) {

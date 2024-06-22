@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     HomeViewModel homeViewModel;
     Button searchBoxBtn;
-    ImageButton addRecipeBtn, cancelSearchBtn, searchBtn;
+    ImageButton addRecipeBtn, cancelSearchBtn, searchBtn, searchBarBtn;
     Dialog searchDialog;
     Button popMore, fitMore, recipeBtn, userBtn;
     MaterialDivider recipeDiv, userDiv;
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment {
     Set<String> recipeHistorySet, userHistorySet;
     ArrayList<String> recipeHistoryList, userHistoryList;
     ShimmerFrameLayout popListShimmer, fitListShimmer, followPost;
+
     private UserSharePref userSharePref;
     private SharedPreferences sharePref;
     private String searchType = "recipe";
@@ -77,6 +79,7 @@ public class HomeFragment extends Fragment {
         userSharePref = new UserSharePref(sharePref);
 
         searchBoxBtn = root.findViewById(R.id.home_search_bar);
+        searchBarBtn = root.findViewById(R.id.home_searchBtn);
         addRecipeBtn = root.findViewById(R.id.homeAddBtn);
 
         popListShimmer = root.findViewById(R.id.home_pop_list_shimmer);
@@ -87,6 +90,8 @@ public class HomeFragment extends Fragment {
 
         followPost = root.findViewById(R.id.home_shimmer_follow_post);
         followPost.startShimmer();
+
+
 
         //search dialog pop up
         searchView(root);
@@ -117,6 +122,7 @@ public class HomeFragment extends Fragment {
         searchDialog.setCancelable(true);
         searchDialog.setCanceledOnTouchOutside(true);
 
+
         cancelSearchBtn = searchDialog.findViewById(R.id.search_dialog_cancelBtn);
         recipeDiv = searchDialog.findViewById(R.id.search_dialog_recipeDiv);
         userDiv = searchDialog.findViewById(R.id.search_dialog_userDiv);
@@ -125,7 +131,6 @@ public class HomeFragment extends Fragment {
         searchEditText = searchDialog.findViewById(R.id.search_dialog_edit);
         searchBtn = searchDialog.findViewById(R.id.search_dialog_btn);
         historyRecyclerView = searchDialog.findViewById(R.id.search_recipeRecyclerView);
-
 
         //both change search type
         recipeBtn.setOnClickListener(v -> {

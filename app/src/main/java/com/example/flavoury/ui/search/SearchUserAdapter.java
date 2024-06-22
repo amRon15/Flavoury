@@ -2,6 +2,7 @@ package com.example.flavoury.ui.search;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.My
 
     @Override
     public int getItemCount() {
-        if (userModelArrayList.isEmpty()){
-            return 0;
-        }else {
             return userModelArrayList.size();
-        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -65,6 +62,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.My
         void bindData(UserModel userModel){
             username.setText(userModel.getUsername());
             setUserIcon(userModel.getIconid());
+            Log.d("SearchUserActivityServer", userModel.getUid() + ", " + userModel.getUsername());
 
             itemView.setOnClickListener(v->{
                 Intent intent = new Intent(itemView.getContext(), ProfileActivity.class);

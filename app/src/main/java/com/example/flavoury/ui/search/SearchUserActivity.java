@@ -58,9 +58,7 @@ public class SearchUserActivity extends AppCompatActivity {
 
         backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
-        searchUserAdapter = new SearchUserAdapter(userModelArrayList);
-        userRecyclerView.setAdapter(searchUserAdapter);
-        userRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
 
     }
 
@@ -90,6 +88,12 @@ public class SearchUserActivity extends AppCompatActivity {
                         userModelArrayList.add(userModel);
                     }
                 }
+
+                runOnUiThread(()->{
+                    searchUserAdapter = new SearchUserAdapter(userModelArrayList);
+                    userRecyclerView.setAdapter(searchUserAdapter);
+                    userRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+                });
                 connection.disconnect();
             } catch (Exception e) {
                 Log.d("SearchUserActivityServer", e.toString());

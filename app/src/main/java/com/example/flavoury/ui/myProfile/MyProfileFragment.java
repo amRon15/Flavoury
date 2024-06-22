@@ -24,6 +24,7 @@ import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.bookmark.BookmarkActivity;
 import com.example.flavoury.ui.setting.SettingActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -120,22 +121,14 @@ public class MyProfileFragment extends Fragment {
                     response.append(line);
                 }
                 reader.close();
-                Log.d("UsernameFromDB", Uid);
-                Log.d("UsernameFromDB", response.toString());
-
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 JSONObject jsonObject = new JSONObject(jsonResponseString);
                 final String Username = jsonObject.getString("Username");
                 final String UserIconId = jsonObject.getString("Iconid");
-                if (!UserIconId.isEmpty()){
-                    setUserIcon(UserIconId);
-                }
 
-                Log.d("UsernameFromDB", jsonObject.toString());
-
+                setUserIcon(UserIconId);
                 if (Username.isEmpty()) {
-                    Log.d("canfind", Username);
                     userName.setText("Undefined");
                 }
 
@@ -145,11 +138,10 @@ public class MyProfileFragment extends Fragment {
 
                 connection.disconnect();
             } catch (IOException | JSONException e) {
-                e.printStackTrace();
-                Log.d("UsernameFromDB", e.getMessage());
-                getActivity().runOnUiThread(() -> {
-                    userName.setText("Undefined");
-                });
+                    e.printStackTrace();
+                    getActivity().runOnUiThread(() -> {
+                        userName.setText("Undefined");
+                    });
             }
         }).start();
     }
@@ -157,7 +149,7 @@ public class MyProfileFragment extends Fragment {
     private void getRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_my_user_recipe.php?Uid=" + Uid);
+                URL url = new URL("http://10.0.2.2/Flavoury/app_user_recipe.php?Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -171,21 +163,19 @@ public class MyProfileFragment extends Fragment {
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
-                if (!jsonResponseString.isEmpty()){
-                    for (int i = 0; i < jsonArray.length(); i ++){
+                if (!jsonResponseString.isEmpty()) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         RecipeModel recipeModel = new RecipeModel(jsonObject);
                         recipeModelArrayList.add(recipeModel);
                     }
-               }
-                recipeNum.setText(String.valueOf(recipeModelArrayList.size()));
+                }
                 connection.disconnect();
             } catch (Exception e) {
-                Log.d("MyProfileGetRecipe", "Catch error :"+e.toString());
+                Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());
             }
         }).start();
     }
-
 
 
     private void setUserIcon(String imgId) {
