@@ -28,22 +28,16 @@
     <string name="category_prompt">Select a category</string>
     <string-array name="category">
         <item>Select a category</item>
-        <item>American</item>
         <item>Dessert</item>
         <item>Chinese</item>
         <item>European</item>
         <item>Fitness</item>
-        <item>Fusion</item>
         <item>French</item>
         <item>Italian</item>
         <item>Japanese</item>
         <item>Korean</item>
-        <item>Mexican</item>
         <item>Vegan</item>
-        <item>Spanish</item>
         <item>Southeast Asia</item>
-        <item>Thai</item>
-        <item>Vietnamese</item>
         <item>Other</item>
     </string-array>
     <string name="back">Back</string>

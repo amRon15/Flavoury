@@ -39,7 +39,7 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation ("com.firebaseui:firebase-ui-auth:7.2.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
@@ -55,7 +55,10 @@ dependencies {
     implementation("com.facebook.shimmer:shimmer:0.5.0")
     implementation("com.google.firebase:firebase-storage:21.0.0")
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google:google:5")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("com.google.android.material:material:1.13.0-alpha03")
+
 }

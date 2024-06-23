@@ -5,13 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.activity.OnBackPressedCallback;
@@ -25,6 +29,8 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.ui.myProfile.MyProfileFragment;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
@@ -34,15 +40,18 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.zip.Inflater;
 
 public class DetailActivity extends AppCompatActivity {
     //    RecipeModel detailRecipe;
@@ -92,7 +101,33 @@ public class DetailActivity extends AppCompatActivity {
         userName = findViewById(R.id.recipe_detail_userName);
         moreBtn = findViewById(R.id.recipe_detail_moreBtn);
 
-        moreBtn.setOnClickListener(View::showContextMenu);
+        bookmarkBtn.setOnClickListener(view -> {
+            saveRecipe();
+        });
+
+
+        moreBtn.setOnClickListener(v->{
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+            View bottomSheetLayout = LayoutInflater.from(this).inflate(R.layout.fragment_recipe_detail_bottomsheet, null);
+            bottomSheetDialog.setContentView(bottomSheetLayout);
+
+            ViewGroup parent = (ViewGroup) bottomSheetLayout.getParent();
+            parent.setBackgroundResource(android.R.color.transparent);
+            bottomSheetDialog.show();
+
+            Button editBtn = bottomSheetLayout.findViewById(R.id.recipe_detail_editBtn);
+            Button deleteBtn = bottomSheetLayout.findViewById(R.id.recipe_detail_deleteBtn);
+
+            editBtn.setOnClickListener(view -> {
+                bottomSheetDialog.dismiss();
+            });
+
+            deleteBtn.setOnClickListener(view -> {
+//                deleteRecipe();
+                bottomSheetDialog.dismiss();
+
+            });
+        });
 
         backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
@@ -112,22 +147,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         }).attach();
         viewPager.setCurrentItem(0);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        getMenuInflater().inflate(R.menu.recipe_detail_menu, menu);
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==R.id.recipe_detail_editBtn) {
-            return true;
-        } else if (item.getItemId()==R.id.recipe_detail_deleteBtn) {
-            return true;
-        }
-        return true;
     }
 
     private void deleteRecipe(){
@@ -352,16 +371,82 @@ public class DetailActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void setLike_toggle() {
+    private  void setLike_toggle(){
         final DatabaseHelper db = new DatabaseHelper(this);
-        final String userID = db.getUid();
         final String recipeID = db.getRid();
-        Log.d("Like", userID);
         Log.d("Like", recipeID);
 
         like_toggle.setOnClickListener(v -> {
-//                    likeRecipe(userID, recipeID);
+            likeRecipe(myUserId, recipeID);
         });
+    }
+
+    private void likeRecipe(String userID, String recipeID) {
+        Thread addRecipeThread = new Thread(() -> {
+            HttpURLConnection connection = null;
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_like_reicpe.php");
+
+                String recipeParam = "Uid=" + URLEncoder.encode(userID, "UTF-8") +
+                        "&Rid=" + URLEncoder.encode(recipeID, "UTF-8");
+
+                connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+
+                DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+
+                outputStream.writeBytes(recipeParam);
+                outputStream.flush();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+                InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    Log.d("Like", "HTTP OK");
+                    while ((line = bufferedReader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    bufferedReader.close();
+
+                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                    Log.d("Like", jsonResponseString);
+                    runOnUiThread(() -> {
+                        try {
+                            JSONObject jsonObject = new JSONObject(jsonResponseString);
+                            String status = jsonObject.getString("status");
+                            String message = jsonObject.getString("message");
+                            Log.d("Like", jsonObject.toString());
+                            if (status.equals("success")) {
+                                Toast.makeText(this, "Like", Toast.LENGTH_LONG).show();
+                                getOnBackPressedDispatcher().onBackPressed();
+                            } else {
+                                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("Like", "JSON Error: " + e.getMessage());
+                        }
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(this, "HTTP Error: " + responseCode, Toast.LENGTH_LONG).show());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("Like", "Exception: " + e.toString());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        });
+        addRecipeThread.start();
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.flavoury.ui.home;
 
-import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.MyViewHolder> {
 
-    private List<RecipeModel> recipes = new ArrayList<>();
-    private Intent detail_recipe_intent;
-    private Context homeFragment;
-    private HomeViewModel homeViewModel;
+    private ArrayList<RecipeModel> recipes = new ArrayList<>();
 
-    public void setRecipeListAdapter(List<RecipeModel> recipes, Context homeFragment,HomeViewModel homeViewModel) {
+    public RecipeListAdapter(ArrayList<RecipeModel> recipes) {
         this.recipes = recipes;
-        this.homeFragment = homeFragment;
-        this.homeViewModel = homeViewModel;
     }
-
 
     @NonNull
     @Override
@@ -49,7 +49,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
 
     @Override
     public int getItemCount() {
-        if (!recipes.isEmpty()) {
+        if (recipes != null) {
             return recipes.size();
         } else {
             return 0;
@@ -57,43 +57,52 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageButton userIcon, recipeImg;
-        public Button userName;
-        public TextView recipeName, cookingTime, likes;
-        ToggleButton likeToggle;
-
+        ShapeableImageView userIcon, recipeImg;
+        TextView recipeName, userName, cookingTime, category;
+        ShimmerFrameLayout shimmerUserIcon, shimmerRecipeImg;
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         public MyViewHolder(View itemView) {
             super(itemView);
-            userIcon = itemView.findViewById(R.id.home_pop_list_userImg);
-//            userName = itemView.findViewById(R.id.home_pop_list_userName);
-            cookingTime = itemView.findViewById(R.id.home_pop_list_time);
-            likes = itemView.findViewById(R.id.home_pop_list_like);
-            recipeName = itemView.findViewById(R.id.home_pop_list_recipeName);
-            recipeImg = itemView.findViewById(R.id.home_pop_list_recipeImg);
-            likeToggle = itemView.findViewById(R.id.home_pop_likeToggle);
+            userIcon = itemView.findViewById(R.id.home_list_userIcon);
+            userName = itemView.findViewById(R.id.home_list_userName);
+            cookingTime = itemView.findViewById(R.id.home_list_mins);
+            recipeName = itemView.findViewById(R.id.home_list_recipeName);
+            recipeImg = itemView.findViewById(R.id.home_list_recipeImg);
+            category = itemView.findViewById(R.id.home_list_category);
+            shimmerRecipeImg = itemView.findViewById(R.id.home_list_shimmer_recipeImg);
+            shimmerUserIcon = itemView.findViewById(R.id.home_list_shimmer_userIcon);
         }
 
         void bindData(RecipeModel recipe) {
-//            Log.d("Recipe","RecipeName:" + recipe.getRecipeName() + ", RecipeIMG: "+recipe.getRecipeImg());
-//            if (recipe.getUserName() != null) {
-//                userName.setText(recipe.getUserName());
-//            }
-//            recipeName.setText(recipe.getRecipeName());
-////            cookingTime.setText("~" + Integer.toString(recipe.getCookingMinutes()) + " Mins");
-//            likes.setText(Integer.toString(recipe.getLikes()));
-//            recipeImg.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    detail_recipe_intent = new Intent(homeFragment, DetailActivity.class);
-//                    detail_recipe_intent.putExtra("detailRecipe", recipe);
-//
-//                    homeFragment.startActivity(detail_recipe_intent);
-//                }
-//            });
-//
-//            if (recipe.getRecipeImg()!=null) {
-//                Picasso.get().load(recipe.getRecipeImg()).centerCrop().fit().transform(new RoundCornerTransform()).into(recipeImg);
-//            }
+            userName.setText(recipe.getUsername());
+            recipeName.setText(recipe.getRName());
+            cookingTime.setText(recipe.getCookTime());
+            category.setText(recipe.getCategory());
+            setImg(recipe);
+        }
+
+        void setImg(RecipeModel recipe){
+            StorageReference recipeRef = storageRef.child("recipe").child(recipe.getImgid()+".jpg");
+            StorageReference userRef = storageRef.child("user").child(recipe.getIconid()+".jpg");
+
+
+            recipeRef.getDownloadUrl().addOnCompleteListener(task -> {
+                if (task.isComplete()){
+                    Uri uri = task.getResult();
+                    Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
+                    shimmerRecipeImg.stopShimmer();
+                    shimmerRecipeImg.setVisibility(View.GONE);
+                }
+            });
+
+            userRef.getDownloadUrl().addOnCompleteListener(task -> {
+                if (task.isComplete()){
+                    Uri uri = task.getResult();
+                    Picasso.get().load(uri).centerCrop().fit().into(userIcon);
+                    shimmerUserIcon.stopShimmer();
+                    shimmerUserIcon.setVisibility(View.GONE);
+                }
+            });
         }
     }
 }

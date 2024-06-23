@@ -76,7 +76,7 @@
             android:id="@+id/home_follow_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_search_bar" />
@@ -105,7 +105,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_shimmer_follow_post">
+            app:layout_constraintTop_toBottomOf="@+id/home_follow_list">
 
             <TextView
                 android:id="@+id/home_pop_title"
@@ -162,10 +162,10 @@
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_popList"
-            android:layout_width="wrap_content"
+            android:id="@+id/home_pop_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:paddingLeft="20dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_pop_list_box" />
@@ -180,7 +180,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_pop_list_shimmer_box">
+            app:layout_constraintTop_toBottomOf="@+id/home_pop_list">
 
             <TextView
                 android:id="@+id/home_fitness_title"
@@ -192,7 +192,7 @@
                 android:textColor="@color/mainText_color"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_popList" />
+                app:layout_constraintTop_toBottomOf="@+id/home_pop_list" />
 
             <Button
                 android:id="@+id/home_view_fitness_btn"
@@ -206,9 +206,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.881"
                 app:layout_constraintStart_toEndOf="@+id/home_fitness_title"
-                app:layout_constraintTop_toBottomOf="@+id/home_popList" />
+                app:layout_constraintTop_toBottomOf="@+id/home_pop_list" />
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_fitness_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_fitness_list_box"/>
 
 
         <HorizontalScrollView
@@ -217,7 +227,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
             android:scrollbars="none"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_fitness_list_box">
@@ -238,49 +248,12 @@
 
                     <include layout="@layout/shimmer_home_recipe" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/home_fitnessList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:paddingBottom="80dp" />
-
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
         </HorizontalScrollView>
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:id="@+id/home_fitnessBox"-->
-        <!--            android:layout_marginHorizontal="20dp"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/home_exploreList"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent" >-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Fitness"-->
-        <!--                android:textColor="24dp"-->
-        <!--                android:textColorHint="@color/mainText_color"-->
-        <!--                android:fontFamily="@font/inter_semibold" />-->
-
-        <!--            <Button-->
-        <!--                android:id="@+id/home_view_fitness_btn"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginTop="5dp"-->
-        <!--                android:background="@android:color/transparent"-->
-        <!--                android:fontFamily="@font/inter_medium"-->
-        <!--                android:text="@string/view_more"-->
-        <!--                android:textColor="@color/Secondary_color"-->
-        <!--                android:textSize="12dp" />-->
-        <!--        </LinearLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

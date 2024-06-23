@@ -1,39 +1,32 @@
 package com.example.flavoury.ui.home;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 
 import com.example.flavoury.R;
-import com.example.flavoury.UserModel;
-import com.example.flavoury.UserSharePref;
+import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentHomeBinding;
-import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
-import com.example.flavoury.ui.search.SearchHistoryAdapter;
+import com.example.flavoury.ui.FireBaseToDB;
 import com.example.flavoury.ui.search.SearchRecipeActivity;
 import com.example.flavoury.ui.search.SearchUserActivity;
+import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.divider.MaterialDivider;
 
@@ -45,7 +38,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
@@ -56,16 +48,17 @@ public class HomeFragment extends Fragment {
     Button popMore, fitMore, recipeBtn, userBtn;
     MaterialDivider recipeDiv, userDiv;
     EditText searchEditText;
-    Set<String> recipeHistorySet, userHistorySet;
     ArrayList<String> recipeHistoryList, userHistoryList;
     ShimmerFrameLayout popListShimmer, fitListShimmer, followPost;
-
-    private SharedPreferences sharePref;
-    private String searchType = "recipe";
-    private boolean isRecipeDivVisible = true;
-
+    ViewPager2 followViewPager;
     RecyclerView popRecyclerView, fitRecyclerView, historyRecyclerView;
     RecipeListAdapter popularAdapter, fitnessAdapter;
+    HomeFragmentAdapter homeFragmentAdapter;
+    private String searchType = "recipe";
+    private boolean isRecipeDivVisible = true;
+    String Uid;
+    ArrayList<RecipeModel> followingPostList, popularPostList, fitnessPostList;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -73,6 +66,8 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
+        DatabaseHelper db = new DatabaseHelper(getContext());
+        Uid = db.getUid();
 
         searchBar = root.findViewById(R.id.home_search_bar);
         addRecipeBtn = root.findViewById(R.id.homeAddBtn);
@@ -86,7 +81,14 @@ public class HomeFragment extends Fragment {
         followPost = root.findViewById(R.id.home_shimmer_follow_post);
         followPost.startShimmer();
 
+        followViewPager = root.findViewById(R.id.home_follow_list);
 
+        popRecyclerView = root.findViewById(R.id.home_pop_list);
+        fitRecyclerView = root.findViewById(R.id.home_fitness_list);
+
+        getFollowPost();
+        getPopularPost();
+        getFitnessPost();
 
         //search dialog pop up
         searchView(root);
@@ -95,7 +97,7 @@ public class HomeFragment extends Fragment {
 //        getAllHistory();
 
         addRecipeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
+            Intent intent = new Intent(getActivity(), FireBaseToDB.class);
             startActivity(intent);
         });
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
@@ -175,11 +177,132 @@ public class HomeFragment extends Fragment {
     }
 
 
+    private void getFollowPost(){
+        new Thread(()->{
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_following_user_recipe.php?RNo=10&Uid="+Uid);
 
-    private void historyRecyclerView(ArrayList<String> arrayList) {
-        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(arrayList);
-        historyRecyclerView.setAdapter(searchHistoryAdapter);
-        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null){
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                JSONArray jsonArray = new JSONArray(jsonResponseString);
+                followingPostList = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    RecipeModel recipe = new RecipeModel();
+                    recipe.setRecipeInList(jsonObject);
+                    followingPostList.add(recipe);
+                }
+
+                connection.disconnect();
+            }catch (Exception e){
+                Log.d("HomeFragmentGET", "Get Post Error" + e.toString());
+            }finally {
+                getActivity().runOnUiThread(()->{
+                    homeFragmentAdapter = new HomeFragmentAdapter(getActivity().getSupportFragmentManager(), getLifecycle());
+                    for (int i = 0; i < followingPostList.size(); i++){
+                        FollowingFragment followingFragment = new FollowingFragment(followingPostList.get(i));
+                        homeFragmentAdapter.addFragment(followingFragment);
+                    }
+                    followViewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+                    followViewPager.setAdapter(homeFragmentAdapter);
+                    followPost.stopShimmer();
+                    followPost.setVisibility(View.GONE);
+                });
+            }
+        }).start();
+    }
+
+    private void getPopularPost(){
+        new Thread(()->{
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_popular_recipe.php?RNo=10");
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null){
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                Log.d("HomeFragmentGET", jsonResponseString);
+                JSONArray jsonArray = new JSONArray(jsonResponseString);
+                popularPostList = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    RecipeModel recipe = new RecipeModel();
+                    recipe.setRecipeInList(jsonObject);
+                    popularPostList.add(recipe);
+                }
+
+                connection.disconnect();
+            }catch (Exception e){
+                Log.d("HomeFragmentGET", "Get Post Error" + e.toString());
+            }finally {
+                getActivity().runOnUiThread(()->{
+                    popularAdapter = new RecipeListAdapter(popularPostList);
+                    popRecyclerView.setAdapter(popularAdapter);
+                    popRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                    popListShimmer.stopShimmer();
+                    popListShimmer.setVisibility(View.GONE);
+                });
+            }
+        }).start();
+    }
+
+    private void getFitnessPost(){
+        new Thread(()->{
+            try {
+                URL url = new URL("http://10.0.2.2/Flavoury/app_popular_recipe.php?RNo=10");
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null){
+                    response.append(line);
+                }
+                reader.close();
+
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                JSONArray jsonArray = new JSONArray(jsonResponseString);
+                fitnessPostList = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    RecipeModel recipe = new RecipeModel();
+                    recipe.setRecipeInList(jsonObject);
+                    fitnessPostList.add(recipe);
+                }
+
+                connection.disconnect();
+            }catch (Exception e){
+                Log.d("HomeFragmentGET", "Get Post Error" + e.toString());
+            }finally {
+                getActivity().runOnUiThread(()->{
+                    fitnessAdapter = new RecipeListAdapter(fitnessPostList);
+                    fitRecyclerView.setAdapter(popularAdapter);
+                    fitRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                    fitListShimmer.stopShimmer();
+                    fitListShimmer.setVisibility(View.GONE);
+                });
+            }
+        }).start();
     }
 
     @Override

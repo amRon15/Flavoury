@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/baseline_brightness_1_16" />
+                        android:src="@drawable/baseline_brightness_1_8" />
 
 
                     <TextView
