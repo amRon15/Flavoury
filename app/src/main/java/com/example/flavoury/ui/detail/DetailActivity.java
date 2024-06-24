@@ -26,6 +26,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.myProfile.MyProfileFragment;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,6 +48,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -119,6 +121,8 @@ public class DetailActivity extends AppCompatActivity {
             Button deleteBtn = bottomSheetLayout.findViewById(R.id.recipe_detail_deleteBtn);
 
             editBtn.setOnClickListener(view -> {
+                Intent intent = new Intent(this, AddRecipeActivity.class);
+                intent.putExtra("Recipe", (Serializable) recipe);
                 bottomSheetDialog.dismiss();
             });
 

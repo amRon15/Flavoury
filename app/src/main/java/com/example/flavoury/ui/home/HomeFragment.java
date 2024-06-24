@@ -24,6 +24,7 @@ import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 import com.example.flavoury.ui.FireBaseToDB;
+import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.search.SearchRecipeActivity;
 import com.example.flavoury.ui.search.SearchUserActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
@@ -97,7 +98,7 @@ public class HomeFragment extends Fragment {
 //        getAllHistory();
 
         addRecipeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), FireBaseToDB.class);
+            Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
             startActivity(intent);
         });
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
@@ -239,7 +240,6 @@ public class HomeFragment extends Fragment {
                 reader.close();
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                Log.d("HomeFragmentGET", jsonResponseString);
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
                 popularPostList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++){
@@ -267,11 +267,10 @@ public class HomeFragment extends Fragment {
     private void getFitnessPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_popular_recipe.php?RNo=10");
+                URL url = new URL("http://10.0.2.2/Flavoury/app_fitness_recipe.php?RNo=10");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
-
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
@@ -281,6 +280,7 @@ public class HomeFragment extends Fragment {
                 reader.close();
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                Log.d("HomeFragmentGET", jsonResponseString);
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
                 fitnessPostList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++){
@@ -292,11 +292,11 @@ public class HomeFragment extends Fragment {
 
                 connection.disconnect();
             }catch (Exception e){
-                Log.d("HomeFragmentGET", "Get Post Error" + e.toString());
+                Log.d("HomeFragmentGET", "Get Post Error: " + e.toString());
             }finally {
                 getActivity().runOnUiThread(()->{
                     fitnessAdapter = new RecipeListAdapter(fitnessPostList);
-                    fitRecyclerView.setAdapter(popularAdapter);
+                    fitRecyclerView.setAdapter(fitnessAdapter);
                     fitRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                     fitListShimmer.stopShimmer();
                     fitListShimmer.setVisibility(View.GONE);

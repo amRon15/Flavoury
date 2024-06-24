@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.home;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.printservice.CustomPrinterIconCallback;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.ui.detail.DetailActivity;
+import com.example.flavoury.ui.profile.ProfileActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +28,8 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.io.Serializable;
 
 public class FollowingFragment extends Fragment {
     RecipeModel recipe;
@@ -56,8 +61,35 @@ public class FollowingFragment extends Fragment {
         userName.setText(recipe.getUsername());
         description.setText(recipe.getDescription());
 
+        userIcon.setOnClickListener(v->{
+            intentToProfile();
+        });
+
+        userName.setOnClickListener(v->{
+            intentToProfile();
+        });
+
+        recipeImg.setOnClickListener(v->{
+            intentToRecipe();
+        });
+
+        recipeName.setOnClickListener(v->{
+            intentToRecipe();
+        });
 
         setImg();
+    }
+
+    private void intentToRecipe(){
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("Recipe", (Serializable) recipe);
+        startActivity(intent);
+    }
+
+    private void intentToProfile(){
+        Intent intent = new Intent(getContext(), ProfileActivity.class);
+        intent.putExtra("otherUid", recipe.getUid());
+        startActivity(intent);
     }
 
     private void setImg(){

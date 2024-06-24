@@ -83,13 +83,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
         android:fontFamily="@font/inter"
         android:gravity="center"
         android:text="60 Mins"
         android:textColor="@color/secondaryText_color"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_list_dot"
         app:layout_constraintTop_toBottomOf="@+id/home_list_recipeName" />
 
     <ImageView
@@ -101,14 +102,13 @@
         android:layout_marginTop="5dp"
         android:src="@drawable/baseline_brightness_1_8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/home_list_mins"
+        app:layout_constraintStart_toEndOf="@+id/home_list_category"
         app:layout_constraintTop_toBottomOf="@+id/home_list_recipeName" />
 
     <TextView
         android:id="@+id/home_list_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_weight="1"
         android:fontFamily="@font/inter"
@@ -117,7 +117,7 @@
         android:textColor="@color/secondaryText_color"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/home_list_dot"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_list_recipeName" />
 
 

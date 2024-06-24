@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.home;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.ui.detail.DetailActivity;
+import com.example.flavoury.ui.profile.ProfileActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.MyViewHolder> {
@@ -79,6 +83,35 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             cookingTime.setText(recipe.getCookTime());
             category.setText(recipe.getCategory());
             setImg(recipe);
+
+            userIcon.setOnClickListener(v->{
+                intentToProfile(recipe.getUid());
+            });
+
+            userName.setOnClickListener(v->{
+                intentToProfile(recipe.getUid());
+            });
+
+            recipeImg.setOnClickListener(v->{
+                intentToRecipe(recipe);
+            });
+
+            recipeName.setOnClickListener(v->{
+                intentToRecipe(recipe);
+            });
+
+        }
+
+        void intentToProfile(String otherUid){
+            Intent intent = new Intent(itemView.getContext(), ProfileActivity.class);
+            intent.putExtra("otherUid", otherUid);
+            itemView.getContext().startActivity(intent);
+        }
+
+        void intentToRecipe(RecipeModel recipe){
+            Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+            intent.putExtra("Recipe", (Serializable) recipe);
+            itemView.getContext().startActivity(intent);
         }
 
         void setImg(RecipeModel recipe){

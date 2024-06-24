@@ -62,8 +62,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     AddRecipeStepAdapter addRecipeStepAdapter;
     AddRecipeIngredientAdapter addRecipeIngredientAdapter;
     ArrayList<Ingredient> ingredients = new ArrayList<>();
-    String[] categoryList;
     ArrayList<String> steps = new ArrayList<>();
+    String[] categoryList;
     String uId, recipeName, description, imgId, cookingMinutes , result;
     Uri imgUri;
     OnBackPressedCallback onBackPressedCallback;
@@ -151,13 +151,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         setView();
     }
 
-    private void handleRecyclerView() {
-    }
-
     private void setView( ) {
         final DatabaseHelper db = new DatabaseHelper(this);
         final String userID = db.getUid();
-        Log.d("User", userID);
         editRecipeName = findViewById(R.id.add_recipe_recipeName);
         editDescription = findViewById(R.id.add_recipe_description);
 

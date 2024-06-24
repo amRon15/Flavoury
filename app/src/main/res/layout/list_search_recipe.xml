@@ -51,6 +51,15 @@
                 android:textColor="@color/secondaryText_color"
                 android:textSize="14dp" />
 
+
+            <ImageView
+                android:id="@+id/home_list_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/baseline_brightness_1_8" />
+
             <TextView
                 android:id="@+id/search_recipe_cookingTime"
                 android:layout_width="wrap_content"
@@ -58,9 +67,8 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/inter"
                 android:gravity="center_vertical"
-                android:text=" >120 mins"
+                android:text=">120 mins"
                 android:textColor="@color/secondaryText_color"
-                android:drawableStart="@drawable/baseline_access_time_24"
                 android:textSize="14dp" />
         </LinearLayout>
 
@@ -74,8 +82,9 @@
                 android:id="@+id/search_recipe_userIcon"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@drawable/circle_user_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:src="@drawable/baseline_person_24_grey"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/circle_user_icon" />
 
