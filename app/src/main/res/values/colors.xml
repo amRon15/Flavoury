@@ -25,4 +25,5 @@
     <color name="cardWhite">#F3F3F3</color>
     <color name="shimmer_color">#979797</color>
     <color name="searchBar">#FAFAFA</color>
+    <color name="searchBarGrey">#FEFEFE</color>
 </resources>

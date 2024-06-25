@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentLikesBinding;
 
@@ -21,12 +22,18 @@ public class LikesFragment extends Fragment {
     RecyclerView likesRecyclerView;
     LikesPostAdapter likesPostAdapter;
     LikesViewModel likesViewModel;
+    String ipAddress;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
+        //layout: fragment_likes.xml
         binding = FragmentLikesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        //10.0.2.2
+        ipAddress = getResources().getString(R.string.ipAddress);
+
+        //recycler view adapter: LikesPostAdapter
 
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
             @Override

@@ -103,11 +103,11 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             StorageReference userRef = FirebaseStorage.getInstance().getReference().child("user").child(iconId+".jpg");
 
             recipeRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                Picasso.get().load(uri).fit().into(recipeImg);
+                Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
             });
 
             userRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                Picasso.get().load(uri).fit().into(userIcon);
+                Picasso.get().load(uri).centerCrop().fit().into(userIcon);
             });
 
         }

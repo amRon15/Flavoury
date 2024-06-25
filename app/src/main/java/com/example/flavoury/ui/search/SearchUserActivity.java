@@ -35,11 +35,14 @@ public class SearchUserActivity extends AppCompatActivity {
     TextView searchResult;
     String searchText, Uid;
     DatabaseHelper db = new DatabaseHelper(this);
+    String ipAddress;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         getSupportActionBar().hide();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         Uid = db.getUid();
 
@@ -69,7 +72,7 @@ public class SearchUserActivity extends AppCompatActivity {
     private void searchUser() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_search_user.php?UName=" + searchText + "&Uid=" + Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_search_user.php?UName=" + searchText + "&Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

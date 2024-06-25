@@ -57,7 +57,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:background="@color/fui_transparent"
+            android:background="@drawable/rounded_rec_dialog_search_box"
             android:drawableEnd="@drawable/baseline_search_24"
             android:drawableTint="@color/secondaryText_color"
             android:fontFamily="@font/inter"
@@ -89,7 +89,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_search_bar">
+            app:layout_constraintTop_toTopOf="@+id/home_follow_list">
 
             <include layout="@layout/shimmer_follow_post" />
 
@@ -165,8 +165,8 @@
             android:id="@+id/home_pop_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_pop_list_box" />
 
@@ -214,8 +214,8 @@
             android:id="@+id/home_fitness_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
             android:paddingBottom="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_fitness_list_box"/>

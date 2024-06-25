@@ -73,12 +73,14 @@ public class DetailActivity extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
     RecipeModel recipe;
     final String[] tab_title = {"Description", "Ingredient", "Step"};
-
+    String ipAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         getSupportActionBar().hide();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         db.onCreate(db.getWritableDatabase());
         myUserId = db.getUid();
@@ -157,7 +159,7 @@ public class DetailActivity extends AppCompatActivity {
         new Thread(()->{
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_delete_recipe.php");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_delete_recipe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
                         "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
@@ -213,7 +215,7 @@ public class DetailActivity extends AppCompatActivity {
         new Thread(()->{
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_save_recipe.php");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_save_recipe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
                         "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
@@ -287,7 +289,7 @@ public class DetailActivity extends AppCompatActivity {
     private void getUser(String Uid) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/profile.php?Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -339,7 +341,7 @@ public class DetailActivity extends AppCompatActivity {
     private void getStepAndIngredient() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_ingredient_step.php?Rid=" + recipe.getRid());
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_ingredient_step.php?Rid=" + recipe.getRid());
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -389,7 +391,7 @@ public class DetailActivity extends AppCompatActivity {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_like_reicpe.php");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_like_reicpe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(userID, "UTF-8") +
                         "&Rid=" + URLEncoder.encode(recipeID, "UTF-8");

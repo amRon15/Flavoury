@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/list_profile_post_img"
+        app:shapeAppearanceOverlay="@style/roundImageView"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="RecipeName"
+        android:textSize="14dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:id="@+id/list_profile_post_recipeName"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/mainText_color"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_profile_post_img" />
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_profile_post_info_box"
+        app:layout_constraintTop_toBottomOf="@+id/list_profile_post_recipeName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_profile_post_category"
+        android:text="Category"
+        android:textSize="12dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/secondaryText_color" />
+
+    <ImageView
+        android:id="@+id/list_profile_post_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="center"
+        android:src="@drawable/baseline_brightness_1_8" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_profile_post_cookTime"
+        android:text="30 mins"
+        android:textSize="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/secondaryText_color" />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

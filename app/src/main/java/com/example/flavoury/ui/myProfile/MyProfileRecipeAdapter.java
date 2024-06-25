@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +41,7 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_post, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_profile_post, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -61,10 +62,13 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ShapeableImageView recipeImg;
-        DetailActivity detailActivity = new DetailActivity();
+        TextView recipeName, category, cookTime;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeImg = itemView.findViewById(R.id.list_post_img);
+            recipeImg = itemView.findViewById(R.id.list_profile_post_img);
+            recipeName = itemView.findViewById(R.id.list_profile_post_recipeName);
+            category = itemView.findViewById(R.id.list_profile_post_category);
+            cookTime = itemView.findViewById(R.id.list_profile_post_cookTime);
         }
 
         void bindData(RecipeModel recipeModel){
@@ -72,11 +76,11 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
             recipeImg.setOnClickListener(v->{
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra("Recipe", (Serializable) recipeModel);
-                String Uid = recipeModel.getUid();
                 itemView.getContext().startActivity(intent);
-                Log.d("MyProfileGetRecipe", "Recipe Img: " + recipeModel.getImgid());
-
             });
+            recipeName.setText(recipeModel.getRName());
+            category.setText(recipeModel.getCategory());
+            cookTime.setText(recipeModel.getCookTime());
         }
 
         void setRecipeImg(String imgId) {
@@ -85,11 +89,6 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
                 @Override
                 public void onSuccess(Uri uri) {
                     Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("MyProfileGetRecipe", "Recipe Img: " + e.toString());
                 }
             });
         }

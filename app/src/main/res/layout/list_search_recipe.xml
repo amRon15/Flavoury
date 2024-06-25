@@ -81,7 +81,7 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/search_recipe_userIcon"
                 android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@drawable/circle_user_icon"
+                app:shapeAppearanceOverlay="@style/circleImageView"
                 android:src="@drawable/baseline_person_24_grey"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

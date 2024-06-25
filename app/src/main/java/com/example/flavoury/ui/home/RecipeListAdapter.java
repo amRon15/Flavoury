@@ -20,6 +20,7 @@ import com.example.flavoury.ui.detail.DetailActivity;
 import com.example.flavoury.ui.profile.ProfileActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -119,18 +120,18 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.My
             StorageReference userRef = storageRef.child("user").child(recipe.getIconid()+".jpg");
 
 
-            recipeRef.getDownloadUrl().addOnCompleteListener(task -> {
-                if (task.isComplete()){
-                    Uri uri = task.getResult();
+            recipeRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
                     Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
                     shimmerRecipeImg.stopShimmer();
                     shimmerRecipeImg.setVisibility(View.GONE);
                 }
             });
 
-            userRef.getDownloadUrl().addOnCompleteListener(task -> {
-                if (task.isComplete()){
-                    Uri uri = task.getResult();
+            userRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
                     Picasso.get().load(uri).centerCrop().fit().into(userIcon);
                     shimmerUserIcon.stopShimmer();
                     shimmerUserIcon.setVisibility(View.GONE);

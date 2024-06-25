@@ -56,13 +56,14 @@ public class MyProfileFragment extends Fragment {
     MyProfileRecipeAdapter myProfileRecipeAdapter;
     RecyclerView recipeRecyclerView;
     UserModel userInfo = new UserModel();
-
+    String ipAddress;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         Uid = databaseHelper.getUid();
@@ -105,17 +106,13 @@ public class MyProfileFragment extends Fragment {
         };
         getActivity().getOnBackPressedDispatcher().addCallback(getActivity(), onBackPressedCallback);
 
-        myProfileRecipeAdapter = new MyProfileRecipeAdapter(recipeModelArrayList);
-        recipeRecyclerView.setAdapter(myProfileRecipeAdapter);
-        recipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-
         return root;
     }
 
     private void getUserInfo() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/profile.php?Uid=" + Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -155,7 +152,7 @@ public class MyProfileFragment extends Fragment {
     private void getRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_user_recipe.php?Uid=" + Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_user_recipe.php?Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -180,6 +177,12 @@ public class MyProfileFragment extends Fragment {
                 connection.disconnect();
             } catch (Exception e) {
                 Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());
+            }finally {
+                getActivity().runOnUiThread(()->{
+                    myProfileRecipeAdapter = new MyProfileRecipeAdapter(recipeModelArrayList);
+                    recipeRecyclerView.setAdapter(myProfileRecipeAdapter);
+                    recipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                });
             }
         }).start();
     }
@@ -187,7 +190,7 @@ public class MyProfileFragment extends Fragment {
     private void getUserNum(){
         new Thread(()->{
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_profile_info.php?Uid="+Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_profile_info.php?Uid="+Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

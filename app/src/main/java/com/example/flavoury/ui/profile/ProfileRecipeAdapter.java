@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,7 @@ public class ProfileRecipeAdapter extends RecyclerView.Adapter<ProfileRecipeAdap
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_post,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_profile_post,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -48,12 +49,19 @@ public class ProfileRecipeAdapter extends RecyclerView.Adapter<ProfileRecipeAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ShapeableImageView recipeImg;
+        TextView recipeName, category, cookTime;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeImg = itemView.findViewById(R.id.list_post_img);
+            recipeImg = itemView.findViewById(R.id.list_profile_post_img);
+            recipeName = itemView.findViewById(R.id.list_profile_post_recipeName);
+            category = itemView.findViewById(R.id.list_profile_post_category);
+            cookTime = itemView.findViewById(R.id.list_profile_post_cookTime);
         }
         void bindData(RecipeModel recipe){
             setRecipeImg(recipe.getImgid());
+            recipeName.setText(recipe.getRName());
+            category.setText(recipe.getCategory());
+            cookTime.setText(recipe.getCookTime());
         }
 
         void setRecipeImg(String imgId){

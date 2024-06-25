@@ -53,11 +53,14 @@ public class RegistrationActivity extends AppCompatActivity {
     final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("user");
     UploadTask uploadTask;
+    String ipAddress;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
         getSupportActionBar().hide();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
@@ -126,7 +129,7 @@ public class RegistrationActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/signup.php");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/signup.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 

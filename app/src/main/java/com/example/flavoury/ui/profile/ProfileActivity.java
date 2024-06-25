@@ -56,12 +56,15 @@ public class ProfileActivity extends AppCompatActivity {
     DatabaseHelper db = new DatabaseHelper(this);
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     UserModel userInfo = new UserModel();
+    String ipAddress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         db.onCreate(db.getWritableDatabase());
         uId = db.getUid();
@@ -99,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getUserInfo() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/profile.php?Uid=" + otherUid);
+                URL url = new URL("http://" + ipAddress + "/Flavoury/profile.php?Uid=" + otherUid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -146,7 +149,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getUserNum() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_profile_info.php?Uid=" + otherUid);
+                URL url = new URL("http://"+ ipAddress +"/Flavoury/app_profile_info.php?Uid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -179,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_user_recipe.php?Uid=" + otherUid);
+                URL url = new URL("http://" + ipAddress + "/Flavoury/app_user_recipe.php?Uid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -205,7 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
                 runOnUiThread(()->{
                     profileRecipeAdapter = new ProfileRecipeAdapter(recipeModelArrayList);
                     recipeRecyclerView.setAdapter(profileRecipeAdapter);
-                    recipeRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+                    recipeRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
                 });
                 connection.disconnect();
             } catch (Exception e) {
@@ -217,7 +220,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void isUserFollowed() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_is_user_followed.php?Uid=" + uId + "&Followid=" + otherUid);
+                URL url = new URL("http://" + ipAddress + "/Flavoury/app_is_user_followed.php?Uid=" + uId + "&Followid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -259,9 +262,9 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 URL url;
                 if (isUserFollowed) {
-                    url = new URL("http://10.0.2.2/Flavoury/app_follow_user.php");
+                    url = new URL("http://"+ipAddress+"/Flavoury/app_follow_user.php");
                 } else {
-                    url = new URL("http://10.0.2.2/Flavoury/app_delete_follow.php");
+                    url = new URL("http://"+ipAddress+"/Flavoury/app_delete_follow.php");
                 }
                 connection = (HttpURLConnection) url.openConnection();
 

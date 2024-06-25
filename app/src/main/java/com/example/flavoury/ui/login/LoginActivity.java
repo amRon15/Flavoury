@@ -37,12 +37,14 @@ public class LoginActivity extends AppCompatActivity {
     final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
     OnBackPressedCallback onBackPressedCallback;
     Toolbar toolbar;
+    String ipAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().hide();
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         databaseHelper.onCreate(databaseHelper.getWritableDatabase());
 
@@ -86,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/login.php");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/login.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 

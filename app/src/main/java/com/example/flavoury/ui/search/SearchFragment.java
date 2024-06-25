@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class SearchFragment extends Fragment {
     private String searchType = "recipe";
     Button searchBoxBtn;
     ImageButton cancelBtn, searchBtn;
+    TextView clearSearchBtn;
     RecyclerView historyRecyclerView, recipeRecyclerView;
     MaterialDivider recipeDiv, userDiv;
     Button recipeBtn, userBtn;
@@ -81,7 +83,7 @@ public class SearchFragment extends Fragment {
         userBtn = searchDialog.findViewById(R.id.search_dialog_user);
         searchBtn = searchDialog.findViewById(R.id.search_dialog_btn);
         searchEditText = searchDialog.findViewById(R.id.search_dialog_edit);
-
+        clearSearchBtn = searchDialog.findViewById(R.id.search_dialog_clear_btn);
 
         searchBoxBtn.setOnClickListener(v -> searchDialog.show());
         cancelBtn.setOnClickListener(v -> searchDialog.dismiss());

@@ -96,26 +96,20 @@ public class FollowingFragment extends Fragment {
         StorageReference recipeRef = storageRef.child("recipe").child(recipe.getImgid()+".jpg");
         StorageReference userRef = storageRef.child("user").child(recipe.getIconid()+".jpg");
 
-        recipeRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+        recipeRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isComplete()) {
-                    Uri uri = task.getResult();
-                    Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
-                    shimmerRecipeImg.stopShimmer();
-                    shimmerRecipeImg.setVisibility(View.GONE);
-                }
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
+                shimmerRecipeImg.stopShimmer();
+                shimmerRecipeImg.setVisibility(View.GONE);
             }
         });
-        userRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+        userRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isComplete()) {
-                    Uri uri = task.getResult();
-                    Picasso.get().load(uri).centerCrop().fit().into(userIcon);
-                    shimmerUserIcon.stopShimmer();
-                    shimmerUserIcon.setVisibility(View.GONE);
-                }
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).centerCrop().fit().into(userIcon);
+                shimmerUserIcon.stopShimmer();
+                shimmerUserIcon.setVisibility(View.GONE);
             }
         });
     }

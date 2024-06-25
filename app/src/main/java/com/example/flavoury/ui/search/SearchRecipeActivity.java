@@ -32,11 +32,14 @@ public class SearchRecipeActivity extends AppCompatActivity {
     ArrayList<RecipeModel> recipeModelArrayList;
     RecyclerView recipeRecyclerView;
     DatabaseHelper db = new DatabaseHelper(this);
+    String ipAddress;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_recipe);
         getSupportActionBar().hide();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         Uid = db.getUid();
 
@@ -61,7 +64,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
     private void searchRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_search_recipe.php?RName=" + searchText + "&Uid=" + Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_search_recipe.php?RName=" + searchText + "&Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

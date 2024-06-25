@@ -71,12 +71,16 @@ public class AddRecipeActivity extends AppCompatActivity {
     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("recipe");
     UploadTask uploadTask;
     DatabaseHelper db;
+    String ipAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         getSupportActionBar().hide();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
+
         db = new DatabaseHelper(this);
         db.onCreate(db.getWritableDatabase());
 
@@ -216,7 +220,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_create_recipe.php");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_create_recipe.php");
 
                 //param
                 String recipeParam = "Uid=" + URLEncoder.encode(uId, "UTF-8") +

@@ -26,6 +26,7 @@
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
     <string name="category_prompt">Select a category</string>
+    <string name="ipAddress">10.0.2.2</string>
     <string-array name="category">
         <item>Select a category</item>
         <item>Dessert</item>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     Button popMore, fitMore, recipeBtn, userBtn;
     MaterialDivider recipeDiv, userDiv;
     EditText searchEditText;
+    TextView clearSearchBtn;
     ArrayList<String> recipeHistoryList, userHistoryList;
     ShimmerFrameLayout popListShimmer, fitListShimmer, followPost;
     ViewPager2 followViewPager;
@@ -59,12 +61,15 @@ public class HomeFragment extends Fragment {
     private boolean isRecipeDivVisible = true;
     String Uid;
     ArrayList<RecipeModel> followingPostList, popularPostList, fitnessPostList;
+    String ipAddress;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        ipAddress = getResources().getString(R.string.ipAddress);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         DatabaseHelper db = new DatabaseHelper(getContext());
@@ -129,6 +134,7 @@ public class HomeFragment extends Fragment {
         searchEditText = searchDialog.findViewById(R.id.search_dialog_edit);
         searchBtn = searchDialog.findViewById(R.id.search_dialog_btn);
         historyRecyclerView = searchDialog.findViewById(R.id.search_recipeRecyclerView);
+        clearSearchBtn = searchDialog.findViewById(R.id.search_dialog_clear_btn);
 
         //both change search type
         recipeBtn.setOnClickListener(v -> {
@@ -175,13 +181,15 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
     }
 
 
     private void getFollowPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_following_user_recipe.php?RNo=10&Uid="+Uid);
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_following_user_recipe.php?RNo=10&Uid="+Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -226,7 +234,7 @@ public class HomeFragment extends Fragment {
     private void getPopularPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_popular_recipe.php?RNo=10");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_popular_recipe.php?RNo=10");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -267,7 +275,7 @@ public class HomeFragment extends Fragment {
     private void getFitnessPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://10.0.2.2/Flavoury/app_fitness_recipe.php?RNo=10");
+                URL url = new URL("http://"+ipAddress+"/Flavoury/app_fitness_recipe.php?RNo=10");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
