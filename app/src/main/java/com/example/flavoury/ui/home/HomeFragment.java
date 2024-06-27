@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment {
     private void getFollowPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_following_user_recipe.php?RNo=10&Uid="+Uid);
+                URL url = new URL(ipAddress+"app_following_user_recipe.php?RNo=10&Uid="+Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -204,6 +204,7 @@ public class HomeFragment extends Fragment {
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
+                Log.d("HomeFragmentGET", jsonResponseString);
                 followingPostList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -234,7 +235,7 @@ public class HomeFragment extends Fragment {
     private void getPopularPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_popular_recipe.php?RNo=10");
+                URL url = new URL(ipAddress+"app_popular_recipe.php?RNo=10");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -275,7 +276,7 @@ public class HomeFragment extends Fragment {
     private void getFitnessPost(){
         new Thread(()->{
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_fitness_recipe.php?RNo=10");
+                URL url = new URL(ipAddress+"app_fitness_recipe.php?RNo=10");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -288,7 +289,6 @@ public class HomeFragment extends Fragment {
                 reader.close();
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                Log.d("HomeFragmentGET", jsonResponseString);
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
                 fitnessPostList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++){

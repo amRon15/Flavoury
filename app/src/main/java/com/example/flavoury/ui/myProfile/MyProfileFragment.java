@@ -112,7 +112,7 @@ public class MyProfileFragment extends Fragment {
     private void getUserInfo() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/profile.php?Uid=" + Uid);
+                URL url = new URL(ipAddress+"profile.php?Uid=" + Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -142,6 +142,7 @@ public class MyProfileFragment extends Fragment {
                 connection.disconnect();
             } catch (IOException | JSONException e) {
                     e.printStackTrace();
+                    Log.d("MyProfileGetRecipe", e.toString());
                     getActivity().runOnUiThread(() -> {
                         userName.setText("Undefined");
                     });
@@ -152,7 +153,7 @@ public class MyProfileFragment extends Fragment {
     private void getRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_user_recipe.php?Uid=" + Uid);
+                URL url = new URL(ipAddress+"app_user_recipe.php?Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -190,7 +191,7 @@ public class MyProfileFragment extends Fragment {
     private void getUserNum(){
         new Thread(()->{
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_profile_info.php?Uid="+Uid);
+                URL url = new URL(ipAddress+"app_profile_info.php?Uid="+Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

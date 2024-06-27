@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:id="@+id/list_profile_post_img"
         app:shapeAppearanceOverlay="@style/roundImageView"
         android:scaleType="centerCrop"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="RecipeName"
         android:textSize="14dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/list_profile_post_img" />
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:id="@+id/list_profile_post_info_box"
         app:layout_constraintTop_toBottomOf="@+id/list_profile_post_recipeName"

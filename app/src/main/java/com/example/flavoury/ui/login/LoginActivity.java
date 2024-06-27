@@ -77,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
         logBtn.setOnClickListener(view -> {
             String username = ((EditText) findViewById(R.id.login_username)).getText().toString();
             String password = ((EditText) findViewById(R.id.login_password)).getText().toString();
-            performLogIn(username, password);
+            if (username.trim() != null && password.trim() != null) {
+                performLogIn(username, password);
+            }
         });
 
 
@@ -88,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/login.php");
+                URL url = new URL(ipAddress+"login.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -144,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.d("LoginActivityLogin", e.toString());
                 runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             } finally {
                 if (connection != null) {

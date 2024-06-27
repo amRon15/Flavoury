@@ -129,7 +129,7 @@ public class RegistrationActivity extends AppCompatActivity {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/signup.php");
+                URL url = new URL(ipAddress+"signup.php");
 
                 connection = (HttpURLConnection) url.openConnection();
 

@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/list_search_user_icon"
         app:shapeAppearanceOverlay="@style/circleImageView"
         android:src="@drawable/baseline_person_24_grey"
@@ -19,9 +21,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/list_search_user_name"
-        android:lines="2"
         android:layout_gravity="center"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:textSize="16dp"
         android:layout_marginHorizontal="10dp"
         android:text="Username"
@@ -31,9 +32,9 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ToggleButton
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.75"
+        android:layout_weight="0.25"
         android:id="@+id/list_search_user_followBtn"
         android:checked="false"
         android:textOn="Follow"

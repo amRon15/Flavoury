@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
@@ -72,7 +73,7 @@ public class SearchUserActivity extends AppCompatActivity {
     private void searchUser() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_search_user.php?UName=" + searchText + "&Uid=" + Uid);
+                URL url = new URL(ipAddress+"app_search_user.php?UName=" + searchText + "&Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -99,7 +100,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 runOnUiThread(()->{
                     searchUserAdapter = new SearchUserAdapter(userModelArrayList, Uid);
                     userRecyclerView.setAdapter(searchUserAdapter);
-                    userRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+                    userRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 });
                 connection.disconnect();
             } catch (Exception e) {

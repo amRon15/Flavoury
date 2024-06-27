@@ -1,195 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/search_search_bar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingHorizontal="20dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_rec_dialog_search_box"
+            android:drawableEnd="@drawable/baseline_search_24"
+            android:drawableTint="@color/secondaryText_color"
             android:fontFamily="@font/inter"
+            android:gravity="center_vertical"
             android:hint="Search"
+            android:paddingHorizontal="20dp"
             android:textColor="@color/mainText_color"
             android:textColorHint="@color/secondaryText_color"
             android:textSize="16dp"
-            android:drawableEnd="@drawable/baseline_search_24"
-            android:drawableTint="@color/secondaryText_color"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/search_search_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp">
-    
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search_shimmer">
-
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_recipeRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="20dp"
+            android:paddingBottom="120dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_search_bar" />
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-                    <include
-                        layout="@layout/shimmer_search_recipe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                         />
-                    <include
-                        layout="@layout/shimmer_search_recipe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"/>
-                    <include
-                        layout="@layout/shimmer_search_recipe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"/>
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"/>
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"/>
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"/>
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"/>
-                <include
-                    layout="@layout/shimmer_search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+    </LinearLayout>
 
-        </LinearLayout>
+</androidx.core.widget.NestedScrollView>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-    </ScrollView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_recipeRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="120dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_search_bar"/>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>

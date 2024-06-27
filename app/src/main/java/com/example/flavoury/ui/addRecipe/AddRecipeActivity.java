@@ -220,7 +220,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_create_recipe.php");
+                URL url = new URL(ipAddress+"app_create_recipe.php");
 
                 //param
                 String recipeParam = "Uid=" + URLEncoder.encode(uId, "UTF-8") +

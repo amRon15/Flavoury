@@ -64,7 +64,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
     private void searchRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_search_recipe.php?RName=" + searchText + "&Uid=" + Uid);
+                URL url = new URL(ipAddress+"app_search_recipe.php?RName=" + searchText + "&Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

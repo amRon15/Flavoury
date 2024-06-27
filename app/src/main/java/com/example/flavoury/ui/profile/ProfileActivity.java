@@ -102,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getUserInfo() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://" + ipAddress + "/Flavoury/profile.php?Uid=" + otherUid);
+                URL url = new URL(ipAddress + "profile.php?Uid=" + otherUid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -149,7 +149,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getUserNum() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ ipAddress +"/Flavoury/app_profile_info.php?Uid=" + otherUid);
+                URL url = new URL(ipAddress +"app_profile_info.php?Uid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -182,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://" + ipAddress + "/Flavoury/app_user_recipe.php?Uid=" + otherUid);
+                URL url = new URL(ipAddress + "app_user_recipe.php?Uid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -220,7 +220,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void isUserFollowed() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://" + ipAddress + "/Flavoury/app_is_user_followed.php?Uid=" + uId + "&Followid=" + otherUid);
+                URL url = new URL(ipAddress + "app_is_user_followed.php?Uid=" + uId + "&Followid=" + otherUid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -234,16 +234,10 @@ public class ProfileActivity extends AppCompatActivity {
                 reader.close();
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                Log.d("ProfileFetchData", jsonResponseString);
-                JSONObject jsonObject = null;
-                if (!jsonResponseString.isEmpty()) {
-                    jsonObject = new JSONObject(jsonResponseString);
-                }
-
-                if (jsonObject.getString("status") == "success") {
-                    isUserFollowed = false;
-                } else {
+                if (jsonResponseString.equals("null")){
                     isUserFollowed = true;
+                }else {
+                    isUserFollowed = false;
                 }
 
                 runOnUiThread(() -> {
@@ -262,9 +256,9 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 URL url;
                 if (isUserFollowed) {
-                    url = new URL("http://"+ipAddress+"/Flavoury/app_follow_user.php");
+                    url = new URL(ipAddress+"app_follow_user.php");
                 } else {
-                    url = new URL("http://"+ipAddress+"/Flavoury/app_delete_follow.php");
+                    url = new URL(ipAddress+"app_delete_follow.php");
                 }
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -287,14 +281,12 @@ public class ProfileActivity extends AppCompatActivity {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    Log.d("ProfileFetchData", "HTTP OK");
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
                     reader.close();
 
                     String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                    Log.d("ProfileFetchData", jsonResponseString);
                     runOnUiThread(() -> {
                         try {
                             JSONObject jsonResponse = new JSONObject(jsonResponseString);

@@ -1,14 +1,11 @@
 package com.example.flavoury.ui.detail;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,8 +28,6 @@ import com.example.flavoury.ui.myProfile.MyProfileFragment;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -53,17 +48,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.zip.Inflater;
 
 public class DetailActivity extends AppCompatActivity {
     //    RecipeModel detailRecipe;
     RecyclerView detailStepRecyclerView, detail_ingredients_recyclerview;
     DetailStepAdapter detailStepAdapter;
     DetailIngredientsAdapter detailIngredientsAdapter;
-    ImageButton backBtn, bookmarkBtn, moreBtn;
-    ToggleButton like_toggle;
+    ImageButton backBtn, moreBtn;
+    ToggleButton like_toggle, bookmarkBtn;
     ShapeableImageView userIcon;
     ImageView recipeImg;
+    Button deleteConfirm, deleteCancel;
     DatabaseHelper db = new DatabaseHelper(this);
     TextView userName;
     String myUserId;
@@ -72,8 +67,10 @@ public class DetailActivity extends AppCompatActivity {
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
     RecipeModel recipe;
+    Dialog deleteDialog;
     final String[] tab_title = {"Description", "Ingredient", "Step"};
     String ipAddress;
+    boolean isUserBookmark;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +102,30 @@ public class DetailActivity extends AppCompatActivity {
         userName = findViewById(R.id.recipe_detail_userName);
         moreBtn = findViewById(R.id.recipe_detail_moreBtn);
 
+        deleteDialog = new Dialog(this);
+        deleteDialog.setContentView(R.layout.dialog_box_delete_recipe);
+        deleteDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        deleteDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background_inset));
+        deleteDialog.setCancelable(true);
+        deleteCancel = deleteDialog.findViewById(R.id.delete_dialog_cancel);
+        deleteConfirm = deleteDialog.findViewById(R.id.delete_dialog_confirm);
+
+        isBookmark();
+
+        deleteConfirm.setOnClickListener(v->{
+            deleteRecipe();
+        });
+
+        deleteCancel.setOnClickListener(v->{
+            deleteDialog.dismiss();
+        });
+
         bookmarkBtn.setOnClickListener(view -> {
-            saveRecipe();
+            if (bookmarkBtn.isChecked()){
+                cancelBookmark();
+            } else {
+                bookmarkRecipe();
+            }
         });
 
 
@@ -155,11 +174,34 @@ public class DetailActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0);
     }
 
+    private void setView(RecipeModel recipe) {
+        TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
+        TextView cookingTime = findViewById(R.id.recipe_detail_cookingMins);
+        TextView likeNum = findViewById(R.id.recipe_detail_likeNum);
+        TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
+        TextView category = findViewById(R.id.recipe_detail_category);
+        ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
+
+        recipeName.setText(recipe.getRName());
+        cookingTime.setText(recipe.getCookTime());
+        likeNum.setText(String.valueOf(recipe.getLikes()));
+        category.setText(recipe.getCategory());
+
+        if (recipe.getUid().equals(myUserId)) {
+            registerForContextMenu(moreBtn);
+            moreBtn.setVisibility(View.VISIBLE);
+            bookmarkBtn.setVisibility(View.GONE);
+        }
+
+        setRecipeImg(recipe.getImgid());
+
+    }
+
     private void deleteRecipe(){
         new Thread(()->{
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_delete_recipe.php");
+                URL url = new URL(ipAddress+"app_delete_recipe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
                         "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
@@ -205,17 +247,42 @@ public class DetailActivity extends AppCompatActivity {
             } finally {
                 if (connection != null){
                     connection.disconnect();
+                    deleteDialog.dismiss();
                 }
             }
 
         }).start();
     }
 
-    private void saveRecipe(){
+    private void isBookmark(){
+        try {
+            URL url = new URL(ipAddress+"app_is_user_bookmark.php?Uid="+myUserId+"&Rid="+recipe.getRid());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null){
+                response.append(line);
+            }
+            reader.close();
+            String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+            isUserBookmark = jsonResponseString.equals("null");
+        } catch (Exception e){
+            Log.d("DetailActivityFetch", e.toString());
+        } finally {
+            runOnUiThread(()->{
+                bookmarkBtn.setChecked(isUserBookmark);
+            });
+        }
+    }
+
+    private void bookmarkRecipe(){
         new Thread(()->{
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_save_recipe.php");
+                URL url = new URL(ipAddress+"app_bookmark_recipe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
                         "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
@@ -259,37 +326,64 @@ public class DetailActivity extends AppCompatActivity {
                     connection.disconnect();
                 }
             }
-
         }).start();
     }
 
-    private void setView(RecipeModel recipe) {
-        TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
-        TextView cookingTime = findViewById(R.id.recipe_detail_cookingMins);
-        TextView likeNum = findViewById(R.id.recipe_detail_likeNum);
-        TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
-        TextView category = findViewById(R.id.recipe_detail_category);
-        ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
+    private void cancelBookmark(){
+        new Thread(()->{
+            HttpURLConnection connection = null;
+            try {
+                URL url = new URL(ipAddress+"app_delete_bookmark.php");
 
-        recipeName.setText(recipe.getRName());
-        cookingTime.setText(recipe.getCookTime());
-        likeNum.setText(String.valueOf(recipe.getLikes()));
-        category.setText(recipe.getCategory());
+                String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
+                        "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
 
-        if (recipe.getUid().equals(myUserId)) {
-            registerForContextMenu(moreBtn);
-            moreBtn.setVisibility(View.VISIBLE);
-            bookmarkBtn.setVisibility(View.GONE);
-        }
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
 
-        setRecipeImg(recipe.getImgid());
+                OutputStream outputStream = connection.getOutputStream();
 
+                outputStream.write(recipeParam.getBytes(StandardCharsets.UTF_8));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK){
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line=reader.readLine()) != null){
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+
+                    JSONObject jsonObject = new JSONObject(jsonResponseString);
+
+                    String status = jsonObject.getString("status");
+                    String message = jsonObject.getString("message");
+
+                    Log.d("DetailActivityFetch", status + ", " + message);
+
+                }
+
+            } catch (Exception e){
+                Log.d("DetailActivityFetch", "Error: " + e.toString());
+            } finally {
+                if (connection != null){
+                    connection.disconnect();
+                }
+            }
+        }).start();
     }
 
     private void getUser(String Uid) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/profile.php?Uid=" + Uid);
+                URL url = new URL(ipAddress+"profile.php?Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -341,7 +435,7 @@ public class DetailActivity extends AppCompatActivity {
     private void getStepAndIngredient() {
         new Thread(() -> {
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_ingredient_step.php?Rid=" + recipe.getRid());
+                URL url = new URL(ipAddress+"app_ingredient_step.php?Rid=" + recipe.getRid());
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -391,7 +485,7 @@ public class DetailActivity extends AppCompatActivity {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://"+ipAddress+"/Flavoury/app_like_reicpe.php");
+                URL url = new URL(ipAddress+"app_like_reicpe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(userID, "UTF-8") +
                         "&Rid=" + URLEncoder.encode(recipeID, "UTF-8");
