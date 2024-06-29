@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/bookmark_list_userIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/circle_user_icon"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bookmark_list_recipeImg"
+        app:layout_constraintStart_toStartOf="@+id/bookmark_list_recipeImg"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_person_24_grey" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/bookmark_list_shimmer_userIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/circle_user_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bookmark_list_recipeImg"
+        app:layout_constraintStart_toStartOf="@+id/bookmark_list_recipeImg"
+        android:src="@drawable/baseline_person_24_grey" />
+
+    <TextView
+        android:id="@+id/bookmark_list_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:fontFamily="@font/inter"
+        android:text="User"
+        android:textColor="@color/mainText_color"
+        android:textSize="12dp"
+        app:layout_constraintStart_toEndOf="@+id/bookmark_list_userIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bookmark_list_recipeImg"/>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/bookmark_list_recipeImg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_rec_recipe_img"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookmark_list_userIcon"
+        app:shapeAppearanceOverlay="@style/roundImageView" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/bookmark_list_shimmer_recipeImg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_rec_recipe_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookmark_list_userIcon"
+        app:shimmer_auto_start="true" />
+
+    <TextView
+        android:id="@+id/bookmark_list_recipeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_medium"
+        android:lines="1"
+        android:text="Salad"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@+id/bookmark_list_recipeImg"
+        app:layout_constraintTop_toBottomOf="@+id/bookmark_list_recipeImg" />
+
+    <TextView
+        android:id="@+id/bookmark_list_mins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:text="60 Mins"
+        android:textColor="@color/secondaryText_color"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookmark_list_dot"
+        app:layout_constraintTop_toBottomOf="@+id/bookmark_list_recipeName" />
+
+    <ImageView
+        android:id="@+id/bookmark_list_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/baseline_brightness_1_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookmark_list_category"
+        app:layout_constraintTop_toBottomOf="@+id/bookmark_list_recipeName" />
+
+    <TextView
+        android:id="@+id/bookmark_list_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:text="Fitness"
+        android:textColor="@color/secondaryText_color"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bookmark_list_recipeImg"
+        app:layout_constraintTop_toBottomOf="@+id/bookmark_list_recipeName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

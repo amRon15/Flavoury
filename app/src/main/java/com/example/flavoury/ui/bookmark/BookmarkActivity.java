@@ -41,7 +41,7 @@ public class BookmarkActivity extends AppCompatActivity {
 
         bookmarkRecyclerView = findViewById(R.id.bookmarks_list);
 
-
+        getBookmark();
         onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
