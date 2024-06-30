@@ -2,28 +2,39 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/search_history_btn"
-        android:drawableEnd="@drawable/baseline_north_west_24"
         android:text="Pancake"
-        android:textSize="20dp"
+        android:textSize="14dp"
         android:paddingVertical="10dp"
         android:paddingHorizontal="10dp"
-        android:textColor="@color/mainText_color"
-        android:drawablePadding="10dp"
+        android:textColor="@color/secondaryText_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_history_delete"
+        android:src="@drawable/baseline_clear_24"
+        android:backgroundTint="@color/fui_transparent"
+        app:tint="@color/secondaryText_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        app:layout_constraintTop_toBottomOf="@+id/search_history_btn" />
+        app:dividerColor="@color/lightGrey"
+        android:id="@+id/search_history_div"
+        app:layout_constraintTop_toBottomOf="@+id/search_history_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

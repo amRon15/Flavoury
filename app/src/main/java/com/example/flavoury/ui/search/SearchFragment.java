@@ -18,8 +18,10 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
@@ -47,11 +49,14 @@ public class SearchFragment extends Fragment {
     String Uid, ipAddress;
     Button searchBoxBtn;
     ImageButton cancelBtn, searchBtn;
-    TextView clearSearchBtn;
+    TextView clearSearchBtn, nullHistory;
+    ArrayList<String> recipeHistoryList, userHistoryList;
+    SearchHistoryAdapter historyAdapter;
     RecyclerView historyRecyclerView, recipeRecyclerView, shimmerRecyclerView;
     MaterialDivider recipeDiv, userDiv;
     Button recipeBtn, userBtn;
     Dialog searchDialog;
+    NestedScrollView nestedScrollView;
     EditText searchEditText;
     ArrayList<RecipeModel> randomRecipe = new ArrayList<>();
     ExploreRecipeAdapter exploreRecipeAdapter;
@@ -73,15 +78,16 @@ public class SearchFragment extends Fragment {
         searchBoxBtn = root.findViewById(R.id.search_search_bar);
         recipeRecyclerView = root.findViewById(R.id.search_recipeRecyclerView);
 
-//        recipeRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (recyclerView.canScrollVertically(1)){
-//                    getRandomRecipe();
-//                }
-//            }
-//        });
+        nestedScrollView = root.findViewById(R.id.search_nestScroll);
+        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (scrollY == v.getHeight()){
+                    Log.d("ScrollToBottom", "At the bottom");
+                }
+            }
+        });
 
         getRandomRecipe();
 
@@ -116,6 +122,8 @@ public class SearchFragment extends Fragment {
         searchBtn = searchDialog.findViewById(R.id.search_dialog_btn);
         searchEditText = searchDialog.findViewById(R.id.search_dialog_edit);
         clearSearchBtn = searchDialog.findViewById(R.id.search_dialog_clear_btn);
+        nullHistory = searchDialog.findViewById(R.id.search_dialog_history_null);
+        historyRecyclerView = searchDialog.findViewById(R.id.search_dialog_history);
 
         searchBoxBtn.setOnClickListener(v -> searchDialog.show());
         cancelBtn.setOnClickListener(v -> searchDialog.dismiss());
@@ -123,6 +131,14 @@ public class SearchFragment extends Fragment {
 
         recipeBtn.setOnClickListener(v -> {
             searchType = "recipe";
+            if (recipeHistoryList != null) {
+                historyAdapter = new SearchHistoryAdapter(recipeHistoryList, "recipe");
+                historyRecyclerView.setAdapter(historyAdapter);
+                historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                nullHistory.setVisibility(View.GONE);
+            } else {
+                nullHistory.setVisibility(View.VISIBLE);
+            }
             isRecipeDivVisible = true;
             recipeDiv.setVisibility(isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
             userDiv.setVisibility(!isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
@@ -133,6 +149,14 @@ public class SearchFragment extends Fragment {
 
         userBtn.setOnClickListener(v -> {
             searchType = "user";
+            if (userHistoryList != null){
+                historyAdapter = new SearchHistoryAdapter(userHistoryList, "user");
+                historyRecyclerView.setAdapter(historyAdapter);
+                historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                nullHistory.setVisibility(View.GONE);
+            } else {
+                nullHistory.setVisibility(View.VISIBLE);
+            }
             isRecipeDivVisible = false;
             recipeDiv.setVisibility(isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
             userDiv.setVisibility(!isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);

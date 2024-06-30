@@ -28,6 +28,7 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.databinding.FragmentHomeBinding;
 import com.example.flavoury.ui.FireBaseToDB;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
+import com.example.flavoury.ui.search.SearchHistoryAdapter;
 import com.example.flavoury.ui.search.SearchRecipeActivity;
 import com.example.flavoury.ui.search.SearchUserActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
@@ -43,6 +44,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
@@ -51,11 +53,12 @@ public class HomeFragment extends Fragment {
     Button followMore, popMore, fitMore, recipeBtn, userBtn, searchBar;
     MaterialDivider recipeDiv, userDiv;
     EditText searchEditText;
-    TextView clearSearchBtn;
+    TextView clearSearchBtn, nullHistory;
     ArrayList<String> recipeHistoryList, userHistoryList;
     ShimmerFrameLayout popListShimmer, fitListShimmer, followPost;
     ViewPager2 followViewPager;
     RecyclerView popRecyclerView, fitRecyclerView, historyRecyclerView;
+    SearchHistoryAdapter historyAdapter;
     RecipeListAdapter popularAdapter, fitnessAdapter;
     HomeFragmentAdapter homeFragmentAdapter;
     private String searchType = "recipe";
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment {
     String Uid;
     ArrayList<RecipeModel> followingPostList, popularPostList, fitnessPostList;
     String ipAddress;
+    DatabaseHelper db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -72,8 +76,7 @@ public class HomeFragment extends Fragment {
 
         ipAddress = getResources().getString(R.string.ipAddress);
 
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        DatabaseHelper db = new DatabaseHelper(getContext());
+        db = new DatabaseHelper(getContext());
         Uid = db.getUid();
 
         searchBar = root.findViewById(R.id.home_search_bar);
@@ -108,6 +111,10 @@ public class HomeFragment extends Fragment {
             intent.putExtra("ViewMore", "Fitness");
             startActivity(intent);
         });
+
+        recipeHistoryList = db.getRecipeHistory();
+        userHistoryList = db.getUserHistory();
+
 
         getFollowPost();
         getPopularPost();
@@ -150,11 +157,28 @@ public class HomeFragment extends Fragment {
         userBtn = searchDialog.findViewById(R.id.search_dialog_user);
         searchEditText = searchDialog.findViewById(R.id.search_dialog_edit);
         searchBtn = searchDialog.findViewById(R.id.search_dialog_btn);
-        historyRecyclerView = searchDialog.findViewById(R.id.search_recipeRecyclerView);
         clearSearchBtn = searchDialog.findViewById(R.id.search_dialog_clear_btn);
+        nullHistory = searchDialog.findViewById(R.id.search_dialog_history_null);
+        historyRecyclerView = searchDialog.findViewById(R.id.search_dialog_history);
+
+
+        if (recipeHistoryList != null) {
+            historyAdapter = new SearchHistoryAdapter(recipeHistoryList, "recipe");
+            historyRecyclerView.setAdapter(historyAdapter);
+            historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            nullHistory.setVisibility(View.GONE);
+        }
 
         //both change search type
         recipeBtn.setOnClickListener(v -> {
+            if (recipeHistoryList != null) {
+                historyAdapter = new SearchHistoryAdapter(recipeHistoryList, "recipe");
+                historyRecyclerView.setAdapter(historyAdapter);
+                historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                nullHistory.setVisibility(View.GONE);
+            } else {
+                nullHistory.setVisibility(View.VISIBLE);
+            }
             searchType = "recipe";
             isRecipeDivVisible = true;
             recipeDiv.setVisibility(isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
@@ -164,10 +188,19 @@ public class HomeFragment extends Fragment {
             searchEditText.setHint("Search Recipe");
 
             //history recyclerView
-//            historyRecyclerView(recipeHistoryList);
+
         });
 
         userBtn.setOnClickListener(v -> {
+            if (userHistoryList != null){
+                historyAdapter = new SearchHistoryAdapter(userHistoryList, "user");
+                historyRecyclerView.setAdapter(historyAdapter);
+                historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                nullHistory.setVisibility(View.GONE);
+            } else {
+                nullHistory.setVisibility(View.VISIBLE);
+            }
+
             searchType = "user";
             isRecipeDivVisible = false;
             recipeDiv.setVisibility(isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
@@ -191,17 +224,19 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),
                         searchType.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
                 intent.putExtra("searchText", String.valueOf(searchEditText.getText()));
+                //save history when press search btn
+                switch (searchType){
+                    case "recipe":
+                        db.saveRecipeHistory(String.valueOf(searchEditText.getText()));
+                    case "user":
+                        db.saveUserHistory(String.valueOf(searchEditText.getText()));
+                }
                 searchDialog.cancel();
                 searchEditText.setText("");
-                //save history when press search btn
-
                 startActivity(intent);
             }
         });
-
-
     }
-
 
     private void getFollowPost(){
         new Thread(()->{

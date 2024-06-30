@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
@@ -54,6 +55,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ShapeableImageView recipeImg, userIcon;
         TextView recipeName, recipeCookingTime, recipeCategory, userName;
+        CardView cardView;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeImg = itemView.findViewById(R.id.search_recipe_img);
@@ -62,6 +64,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             recipeCategory = itemView.findViewById(R.id.search_recipe_category);
             userName = itemView.findViewById(R.id.search_recipe_userName);
             userIcon = itemView.findViewById(R.id.search_recipe_userIcon);
+            cardView = itemView.findViewById(R.id.search_recipe_card);
         }
         void bindData(RecipeModel recipeModel){
             recipeName.setText(recipeModel.getRName());
@@ -79,6 +82,10 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
                 intent(true, recipeModel);
             });
 
+            cardView.setOnClickListener(v->{
+                intent(true, recipeModel);
+            });
+
             userIcon.setOnClickListener(v -> {
                 intent(false, recipeModel);
             });
@@ -86,6 +93,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             userName.setOnClickListener(v -> {
                 intent(false, recipeModel);
             });
+
         }
 
         void intent(boolean isRecipe, RecipeModel recipe){

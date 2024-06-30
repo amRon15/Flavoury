@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.example.flavoury.ui.login.LoginActivity;
 
+import java.util.ArrayList;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -31,6 +33,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.getCount() == 0) {
             String createTableQuery = "CREATE TABLE Local (Uid TEXT primary key)";
             db.execSQL(createTableQuery);
+            String userHistory = "CREATE TABLE UserHistory (UName TEXT, Date DATETIME default CURRENT_TIMESTAMP, PRIMARY KEY(UName, Date))";
+            String recipeHistory = "CREATE TABLE RecipeHistory (RName TEXT, Date DATETIME default CURRENT_TIMESTAMP, PRIMARY KEY(RName, Date))";
+            db.execSQL(userHistory);
+            db.execSQL(recipeHistory);
         }
         cursor.close();
     }
@@ -38,6 +44,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public void saveUserHistory(String text){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("UName", text);
+
+        db.insert("UserHistory", null, values);
+        db.close();
+    }
+
+    public void saveRecipeHistory(String text){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("RName", text);
+
+        db.insert("RecipeHistory", null, values);
+        db.close();
+    }
+
+    public ArrayList<String> getUserHistory(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM UserHistory ORDER BY Date", null);
+
+        ArrayList<String> usernameList = new ArrayList<>();
+        while (cursor.moveToNext()){
+            int index = cursor.getColumnIndex("UName");
+            if (index != -1){
+                String username = cursor.getString(index);
+                usernameList.add(username);
+            }
+        }
+        cursor.close();
+        return usernameList;
+    }
+
+    public ArrayList<String> getRecipeHistory(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM RecipeHistory ORDER BY Date", null);
+
+        ArrayList<String> usernameList = new ArrayList<>();
+        while (cursor.moveToNext()){
+            int index = cursor.getColumnIndex("RName");
+            if (index != -1){
+                String username = cursor.getString(index);
+                usernameList.add(username);
+            }
+        }
+        cursor.close();
+        return usernameList;
+    }
+
+
+    public void deleteRecipeHistory(String text){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("RecipeHistory", "RName = ? ", new String[]{text});
+    }
+
+    public void deleteUserHistory(String text){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("UserHistory", "UName = ? ",new String[]{text});
     }
 
     public void deleteUid() {
