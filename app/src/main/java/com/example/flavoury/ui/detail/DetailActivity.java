@@ -71,6 +71,7 @@ public class DetailActivity extends AppCompatActivity {
     final String[] tab_title = {"Description", "Ingredient", "Step"};
     String ipAddress;
     boolean isUserBookmark;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +103,7 @@ public class DetailActivity extends AppCompatActivity {
         userName = findViewById(R.id.recipe_detail_userName);
         moreBtn = findViewById(R.id.recipe_detail_moreBtn);
 
+
         deleteDialog = new Dialog(this);
         deleteDialog.setContentView(R.layout.dialog_box_delete_recipe);
         deleteDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -112,24 +114,24 @@ public class DetailActivity extends AppCompatActivity {
 
         isBookmark();
 
-        deleteConfirm.setOnClickListener(v->{
+        deleteConfirm.setOnClickListener(v -> {
             deleteRecipe();
         });
 
-        deleteCancel.setOnClickListener(v->{
+        deleteCancel.setOnClickListener(v -> {
             deleteDialog.dismiss();
         });
 
         bookmarkBtn.setOnClickListener(view -> {
-            if (bookmarkBtn.isChecked()){
-                cancelBookmark();
-            } else {
+            if (bookmarkBtn.isChecked()) {
                 bookmarkRecipe();
+            } else {
+                cancelBookmark();
             }
         });
 
 
-        moreBtn.setOnClickListener(v->{
+        moreBtn.setOnClickListener(v -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
             View bottomSheetLayout = LayoutInflater.from(this).inflate(R.layout.fragment_recipe_detail_bottomsheet, null);
             bottomSheetDialog.setContentView(bottomSheetLayout);
@@ -197,11 +199,11 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void deleteRecipe(){
-        new Thread(()->{
+    private void deleteRecipe() {
+        new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL(ipAddress+"app_delete_recipe.php");
+                URL url = new URL(ipAddress + "app_delete_recipe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
                         "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
@@ -218,11 +220,11 @@ public class DetailActivity extends AppCompatActivity {
 
                 int responseCode = connection.getResponseCode();
 
-                if (responseCode == HttpURLConnection.HTTP_OK){
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    while ((line=reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
                     reader.close();
@@ -233,8 +235,8 @@ public class DetailActivity extends AppCompatActivity {
                     String status = jsonObject.getString("status");
                     String message = jsonObject.getString("message");
 
-                    runOnUiThread(()->{
-                        if (status == "success"){
+                    runOnUiThread(() -> {
+                        if (status == "success") {
                             Intent intent = new Intent(this, MyProfileFragment.class);
                             startActivity(intent);
                             finish();
@@ -242,10 +244,10 @@ public class DetailActivity extends AppCompatActivity {
                     });
                 }
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.d("DetailActivityFetch", "Error: " + e.toString());
             } finally {
-                if (connection != null){
+                if (connection != null) {
                     connection.disconnect();
                     deleteDialog.dismiss();
                 }
@@ -254,56 +256,61 @@ public class DetailActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void isBookmark(){
-        try {
-            URL url = new URL(ipAddress+"app_is_user_bookmark.php?Uid="+myUserId+"&Rid="+recipe.getRid());
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+    private void isBookmark() {
+        new Thread(() -> {
+            try {
+                URL url = new URL(ipAddress + "app_is_user_bookmark.php?Uid=" + myUserId + "&Rid=" + recipe.getRid());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null){
-                response.append(line);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                Log.d("DetailActivityFetch", jsonResponseString);
+
+                isUserBookmark = !jsonResponseString.equals("null");
+            } catch (Exception e) {
+                Log.d("DetailActivityFetch", e.toString());
+            } finally {
+                runOnUiThread(() -> {
+                    bookmarkBtn.setChecked(isUserBookmark);
+                });
             }
-            reader.close();
-            String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-            isUserBookmark = jsonResponseString.equals("null");
-        } catch (Exception e){
-            Log.d("DetailActivityFetch", e.toString());
-        } finally {
-            runOnUiThread(()->{
-                bookmarkBtn.setChecked(isUserBookmark);
-            });
-        }
+        }).start();
     }
 
-    private void bookmarkRecipe(){
-        new Thread(()->{
+    private void bookmarkRecipe() {
+        new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL(ipAddress+"app_bookmark_recipe.php");
+                URL url = new URL(ipAddress + "app_bookmark_recipe.php");
 
-                String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
-                        "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
+                String recipeParam = "Uid=" + URLEncoder.encode(myUserId, "UTF-8") +
+                        "&Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
 
                 connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
 
                 OutputStream outputStream = connection.getOutputStream();
 
-                outputStream.write(recipeParam.getBytes(StandardCharsets.UTF_8));
+                outputStream.write(recipeParam.getBytes());
                 outputStream.flush();
                 outputStream.close();
 
                 int responseCode = connection.getResponseCode();
 
-                if (responseCode == HttpURLConnection.HTTP_OK){
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    while ((line=reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
                     reader.close();
@@ -319,26 +326,27 @@ public class DetailActivity extends AppCompatActivity {
 
                 }
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.d("DetailActivityFetch", "Error: " + e.toString());
             } finally {
-                if (connection != null){
+                if (connection != null) {
                     connection.disconnect();
                 }
             }
         }).start();
     }
 
-    private void cancelBookmark(){
-        new Thread(()->{
+    private void cancelBookmark() {
+        new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL(ipAddress+"app_delete_bookmark.php");
+                URL url = new URL(ipAddress + "app_delete_bookmark.php");
 
-                String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
-                        "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
+                String recipeParam = "Uid=" + URLEncoder.encode(myUserId, "UTF-8") +
+                        "&Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
 
                 connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
 
@@ -350,16 +358,17 @@ public class DetailActivity extends AppCompatActivity {
 
                 int responseCode = connection.getResponseCode();
 
-                if (responseCode == HttpURLConnection.HTTP_OK){
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder response = new StringBuilder();
                     String line;
-                    while ((line=reader.readLine()) != null){
+                    while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
                     reader.close();
 
                     String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+
 
                     JSONObject jsonObject = new JSONObject(jsonResponseString);
 
@@ -370,10 +379,10 @@ public class DetailActivity extends AppCompatActivity {
 
                 }
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.d("DetailActivityFetch", "Error: " + e.toString());
             } finally {
-                if (connection != null){
+                if (connection != null) {
                     connection.disconnect();
                 }
             }
@@ -383,7 +392,7 @@ public class DetailActivity extends AppCompatActivity {
     private void getUser(String Uid) {
         new Thread(() -> {
             try {
-                URL url = new URL(ipAddress+"profile.php?Uid=" + Uid);
+                URL url = new URL(ipAddress + "profile.php?Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -435,7 +444,7 @@ public class DetailActivity extends AppCompatActivity {
     private void getStepAndIngredient() {
         new Thread(() -> {
             try {
-                URL url = new URL(ipAddress+"app_ingredient_step.php?Rid=" + recipe.getRid());
+                URL url = new URL(ipAddress + "app_ingredient_step.php?Rid=" + recipe.getRid());
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -471,7 +480,7 @@ public class DetailActivity extends AppCompatActivity {
         }).start();
     }
 
-    private  void setLike_toggle(){
+    private void setLike_toggle() {
         final DatabaseHelper db = new DatabaseHelper(this);
         final String recipeID = db.getRid();
         Log.d("Like", recipeID);
@@ -485,7 +494,7 @@ public class DetailActivity extends AppCompatActivity {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL(ipAddress+"app_like_reicpe.php");
+                URL url = new URL(ipAddress + "app_like_reicpe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(userID, "UTF-8") +
                         "&Rid=" + URLEncoder.encode(recipeID, "UTF-8");

@@ -24,6 +24,7 @@
         android:layout_height="30dp"
         android:background="@drawable/circle_user_icon"
         app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_auto_start="true"
         app:layout_constraintBottom_toTopOf="@+id/bookmark_list_recipeImg"
         app:layout_constraintStart_toStartOf="@+id/bookmark_list_recipeImg"
         android:src="@drawable/baseline_person_24_grey" />
@@ -44,8 +45,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/bookmark_list_recipeImg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/rounded_rec_recipe_img"
         android:scaleType="centerCrop"
@@ -56,8 +57,8 @@
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/bookmark_list_shimmer_recipeImg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_rec_recipe_img"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +68,7 @@
 
     <TextView
         android:id="@+id/bookmark_list_recipeName"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ellipsize="end"

@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="100dp">
+        android:paddingBottom="50dp">
 
         <LinearLayout
             android:id="@+id/home_toolbar"
@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/home_follow_list">
@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +118,7 @@
                 android:textSize="18dp" />
 
             <Button
-                android:id="@+id/home_view_pop_btn"
+                android:id="@+id/home_pop_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -195,7 +195,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/home_pop_list" />
 
             <Button
-                android:id="@+id/home_view_fitness_btn"
+                android:id="@+id/home_fitness_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

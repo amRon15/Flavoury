@@ -34,7 +34,7 @@ import java.io.Serializable;
 public class FollowingFragment extends Fragment {
     RecipeModel recipe;
     ShapeableImageView userIcon, recipeImg;
-    TextView description, userName, recipeName;
+    TextView description, userName, recipeName, category, cookTime;
     ShimmerFrameLayout shimmerUserIcon, shimmerRecipeImg;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     public FollowingFragment(RecipeModel recipe){
@@ -54,12 +54,16 @@ public class FollowingFragment extends Fragment {
         recipeImg = view.findViewById(R.id.follow_post_recipeImg);
         recipeName = view.findViewById(R.id.follow_post_recipeName);
         description = view.findViewById(R.id.follow_post_description);
+        category = view.findViewById(R.id.follow_post_category);
+        cookTime = view.findViewById(R.id.follow_post_minutes);
         shimmerRecipeImg = view.findViewById(R.id.follow_post_shimmer_recipeImg);
         shimmerUserIcon = view.findViewById(R.id.follow_post_shimmer_userIcon);
 
         recipeName.setText(recipe.getRName());
         userName.setText(recipe.getUsername());
         description.setText(recipe.getDescription());
+        category.setText(recipe.getCategory());
+        cookTime.setText(recipe.getCookTime());
 
         userIcon.setOnClickListener(v->{
             intentToProfile();

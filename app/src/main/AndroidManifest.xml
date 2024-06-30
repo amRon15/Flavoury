@@ -39,7 +39,7 @@
         <activity android:name=".ui.search.SearchUserActivity" />
         <activity android:name=".ui.scan.ScanActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
-        <activity android:name=".ui.FireBaseToDB" />
+        <activity android:name=".ui.viewMore.ViewMoreActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

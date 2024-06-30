@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/follow_post_userIcon"
@@ -12,9 +13,9 @@
         android:background="@drawable/circle_user_icon"
         android:scaleType="centerCrop"
         android:src="@drawable/baseline_person_24_grey"
-        app:shapeAppearanceOverlay="@style/circleImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circleImageView" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/follow_post_shimmer_userIcon"
@@ -22,9 +23,9 @@
         android:layout_height="50dp"
         android:background="@drawable/circle_user_icon"
         android:backgroundTint="@color/shimmer_color"
-        app:shimmer_auto_start="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_auto_start="true" />
 
     <TextView
         android:id="@+id/follow_post_username"
@@ -36,9 +37,10 @@
         android:text="Username"
         android:textColor="@color/mainText_color"
         android:textSize="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"
         app:layout_constraintStart_toEndOf="@+id/follow_post_userIcon"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/follow_post_optionBtn"
@@ -46,18 +48,18 @@
         android:layout_height="0dp"
         android:background="@color/fui_transparent"
         android:src="@drawable/baseline_more_vert_24"
+        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/follow_post_recipeImg"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/rounded_rec_recipe_img"
         android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/follow_post_userIcon"
@@ -67,18 +69,18 @@
         android:id="@+id/follow_post_shimmer_recipeImg"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_marginTop="5dp"
         android:background="@color/shimmer_color"
-        android:layout_marginTop="10dp"
-        app:shimmer_auto_start="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/follow_post_userIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_userIcon"
+        app:shimmer_auto_start="true" />
 
     <TextView
         android:id="@+id/follow_post_recipeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/inter_medium"
         android:text="Recipe Name"
         android:textColor="@color/mainText_color"
@@ -90,14 +92,52 @@
         android:id="@+id/follow_post_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:fontFamily="@font/inter"
-        android:lines="2"
+        android:maxLines="2"
         android:text="Your recipe has been uploaded.You can see it on your profile. Click the image can to see more about the recipe.  "
         android:textColor="@color/secondaryText_color"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/follow_post_recipeName" />
+
+    <TextView
+        android:id="@+id/follow_post_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Category"
+        android:textColor="@color/secondaryText_color"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_description" />
+
+    <ImageView
+        android:id="@+id/follow_post_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+
+        android:src="@drawable/baseline_brightness_1_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/follow_post_category"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_description" />
+
+    <TextView
+        android:id="@+id/follow_post_minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Mintues"
+        android:textColor="@color/secondaryText_color"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/follow_post_dot"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_description" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

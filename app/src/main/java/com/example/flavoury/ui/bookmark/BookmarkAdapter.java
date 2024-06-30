@@ -3,6 +3,7 @@ package com.example.flavoury.ui.bookmark;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.ui.detail.DetailActivity;
 import com.example.flavoury.ui.profile.ProfileActivity;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.storage.FirebaseStorage;
@@ -38,7 +40,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        RecipeModel recipeModel = new RecipeModel();
+        RecipeModel recipeModel = recipeModelArrayList.get(position);
         holder.bindData(recipeModel);
     }
 
@@ -53,14 +55,18 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ShapeableImageView recipeImg, userIcon;
+        ShimmerFrameLayout recipeShimmer, userShimmer;
         TextView userName, recipeName, category, cookTime;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeImg = itemView.findViewById(R.id.bookmark_list_recipeImg);
             recipeName = itemView.findViewById(R.id.bookmark_list_recipeName);
+            userIcon = itemView.findViewById(R.id.bookmark_list_userIcon);
             userName = itemView.findViewById(R.id.bookmark_list_userName);
             category = itemView.findViewById(R.id.bookmark_list_category);
             cookTime = itemView.findViewById(R.id.bookmark_list_mins);
+            recipeShimmer = itemView.findViewById(R.id.bookmark_list_shimmer_recipeImg);
+            userShimmer = itemView.findViewById(R.id.bookmark_list_shimmer_userIcon);
         }
         void bindData(RecipeModel recipeModel){
             setImage(recipeModel);
@@ -88,7 +94,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyView
 
         void intentToProfile(RecipeModel recipe){
             Intent intent = new Intent(itemView.getContext(), ProfileActivity.class);
-            intent.putExtra("otherUid", recipe.getRid());
+            intent.putExtra("otherUid", recipe.getUid());
             itemView.getContext().startActivity(intent);
         }
 
@@ -99,13 +105,15 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyView
         }
 
         void setImage(RecipeModel recipeModel){
-            StorageReference userRef = FirebaseStorage.getInstance().getReference().child("user").child(recipeModel.getIconid());
-            StorageReference recipeRef = FirebaseStorage.getInstance().getReference().child("recipe").child(recipeModel.getImgid());
+            StorageReference userRef = FirebaseStorage.getInstance().getReference().child("user").child(recipeModel.getIconid()+".jpg");
+            StorageReference recipeRef = FirebaseStorage.getInstance().getReference().child("recipe").child(recipeModel.getImgid()+".jpg");
 
             userRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     Picasso.get().load(uri).centerCrop().fit().into(userIcon);
+                    userShimmer.stopShimmer();
+                    userShimmer.setVisibility(View.GONE);
                 }
             });
 
@@ -113,7 +121,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyView
                 @Override
                 public void onSuccess(Uri uri) {
                     Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
-                }
+                    recipeShimmer.stopShimmer();
+                    recipeShimmer.setVisibility(View.GONE);}
             });
         }
     }

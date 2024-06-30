@@ -65,7 +65,6 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         ridList.add("0");
-        ridList.add("1");
 
 
         db = new DatabaseHelper(getContext());
@@ -175,8 +174,8 @@ public class SearchFragment extends Fragment {
                 reader.close();
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                JSONArray recipeJSONArray = new JSONArray(jsonResponseString);
                 Log.d("SearchFragmentGET", jsonResponseString);
+                JSONArray recipeJSONArray = new JSONArray(jsonResponseString);
                 for (int i = 0; i < recipeJSONArray.length(); i++){
                     JSONObject jsonObject = recipeJSONArray.getJSONObject(i);
                     RecipeModel recipeModel = new RecipeModel();

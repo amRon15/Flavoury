@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 
@@ -29,6 +31,7 @@ import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.search.SearchRecipeActivity;
 import com.example.flavoury.ui.search.SearchUserActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
+import com.example.flavoury.ui.viewMore.ViewMoreActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.divider.MaterialDivider;
 
@@ -43,11 +46,9 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
-    HomeViewModel homeViewModel;
-    Button searchBar;
     ImageButton addRecipeBtn, cancelSearchBtn, searchBtn;
     Dialog searchDialog;
-    Button popMore, fitMore, recipeBtn, userBtn;
+    Button followMore, popMore, fitMore, recipeBtn, userBtn, searchBar;
     MaterialDivider recipeDiv, userDiv;
     EditText searchEditText;
     TextView clearSearchBtn;
@@ -91,6 +92,22 @@ public class HomeFragment extends Fragment {
 
         popRecyclerView = root.findViewById(R.id.home_pop_list);
         fitRecyclerView = root.findViewById(R.id.home_fitness_list);
+
+        popMore = root.findViewById(R.id.home_pop_btn);
+        fitMore = root.findViewById(R.id.home_fitness_btn);
+
+        //Nav to view more
+        popMore.setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), ViewMoreActivity.class);
+            intent.putExtra("ViewMore", "Popular");
+            startActivity(intent);
+        });
+
+        fitMore.setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), ViewMoreActivity.class);
+            intent.putExtra("ViewMore", "Fitness");
+            startActivity(intent);
+        });
 
         getFollowPost();
         getPopularPost();
@@ -225,6 +242,12 @@ public class HomeFragment extends Fragment {
                     }
                     followViewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
                     followViewPager.setAdapter(homeFragmentAdapter);
+                    followViewPager.setClipToPadding(false);
+                    followViewPager.setClipChildren(false);
+                    followViewPager.setOffscreenPageLimit(3);
+                    followViewPager.setPadding(40 ,0,40,0);
+
+
                     followPost.stopShimmer();
                     followPost.setVisibility(View.GONE);
                 });
@@ -235,7 +258,7 @@ public class HomeFragment extends Fragment {
     private void getPopularPost(){
         new Thread(()->{
             try {
-                URL url = new URL(ipAddress+"app_popular_recipe.php?RNo=10");
+                URL url = new URL(ipAddress+"app_popular_recipe.php?RNo=10&Uid="+Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -276,7 +299,7 @@ public class HomeFragment extends Fragment {
     private void getFitnessPost(){
         new Thread(()->{
             try {
-                URL url = new URL(ipAddress+"app_fitness_recipe.php?RNo=10");
+                URL url = new URL(ipAddress+"app_fitness_recipe.php?RNo=10&Uid="+Uid);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");

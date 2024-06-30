@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+
         if (databaseHelper.getUid() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

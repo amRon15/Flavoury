@@ -12,7 +12,7 @@
         android:paddingHorizontal="25dp"
         android:fontFamily="@font/inter_light"
         android:text="Your recipe has been uploaded, you can see it on your profile."
-        android:textColor="@color/secondaryText_color"
+        android:textColor="@color/mainText_color"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
