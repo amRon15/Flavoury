@@ -58,6 +58,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
 
         void bindData(String recipeStep) {
             this.stepNum.setText(String.valueOf(getAdapterPosition() + 1));
+            this.step.setText(recipeStep);
             this.step.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

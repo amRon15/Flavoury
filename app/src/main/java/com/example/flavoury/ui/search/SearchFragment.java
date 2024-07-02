@@ -78,13 +78,14 @@ public class SearchFragment extends Fragment {
         searchBoxBtn = root.findViewById(R.id.search_search_bar);
         recipeRecyclerView = root.findViewById(R.id.search_recipeRecyclerView);
 
-        nestedScrollView = root.findViewById(R.id.search_nestScroll);
-        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        recipeRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-                if (scrollY == v.getHeight()){
-                    Log.d("ScrollToBottom", "At the bottom");
+                if (!recyclerView.canScrollVertically(1)){
+                    //scroll to bottom
+//                    getRandomRecipe();
                 }
             }
         });
@@ -144,7 +145,7 @@ public class SearchFragment extends Fragment {
             userDiv.setVisibility(!isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
             recipeBtn.setTextColor(getResources().getColor(R.color.primary_color));
             userBtn.setTextColor(getResources().getColor(R.color.secondaryText_color));
-            searchEditText.setHint("Search Recipe");
+            searchEditText.setHint("Search Recipe / Ingredient");
         });
 
         userBtn.setOnClickListener(v -> {

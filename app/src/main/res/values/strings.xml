@@ -28,7 +28,6 @@
     <string name="category_prompt">Select a category</string>
     <string name="ipAddress">http://10.0.2.2/Flavoury/</string>
     <string-array name="category">
-        <item>Select a category</item>
         <item>Dessert</item>
         <item>Chinese</item>
         <item>European</item>
@@ -46,7 +45,6 @@
     <string name="liked" />
     <string name="minutes_prompt">Select minutes</string>
     <string-array name="minutes">
-        <item>Select minutes</item>
         <item>5 mins</item>
         <item>10 mins</item>
         <item>15 mins</item>
@@ -64,7 +62,6 @@
     </string-array>
     <string name="serving_prompt">Select serving size</string>
     <string-array name="serving_size">
-        <item>Select serving size</item>
         <item>1 Serving</item>
         <item>2 Serving</item>
         <item>3 Serving</item>

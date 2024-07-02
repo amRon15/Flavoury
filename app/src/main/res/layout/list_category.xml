@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/list_category_btn"
+    android:text="Category"
+    android:background="@drawable/toggle_category"
+    android:padding="10dp"
+    android:textAllCaps="false"
+    android:layout_marginHorizontal="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

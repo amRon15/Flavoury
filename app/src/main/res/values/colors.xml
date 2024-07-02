@@ -24,7 +24,7 @@
     <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
     <color name="lightGrey">#F5F5F5</color>
     <color name="cardWhite">#F3F3F3</color>
-    <color name="shimmer_color">#979797</color>
+    <color name="shimmer_color">#F5F5F5</color>
     <color name="searchBar">#FAFAFA</color>
     <color name="searchBarGrey">#FEFEFE</color>
 </resources>

@@ -47,7 +47,7 @@ public class SettingActivity extends AppCompatActivity {
         logoutDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         logoutDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background_inset));
         logoutDialog.setCancelable(true);
-        logoutCancel = logoutDialog.findViewById(R.id.delete_dialog_cancel);
+        logoutCancel = logoutDialog.findViewById(R.id.logout_dialog_cancel);
         logoutConfirm = logoutDialog.findViewById(R.id.logout_dialog_confirm);
 
         logoutBtn.setOnClickListener(view -> logoutDialog.show());

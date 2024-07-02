@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapter.MyViewHolder> {
@@ -55,7 +57,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ShapeableImageView recipeImg, userIcon;
         TextView recipeName, recipeCookingTime, recipeCategory, userName;
-        CardView cardView;
+        LinearLayout cardView;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeImg = itemView.findViewById(R.id.search_recipe_img);
@@ -99,7 +101,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
         void intent(boolean isRecipe, RecipeModel recipe){
             Intent intent = new Intent(itemView.getContext(), isRecipe ? DetailActivity.class : ProfileActivity.class);
             if (isRecipe){
-                intent.putExtra("Recipe", recipe);
+                intent.putExtra("Recipe", (Serializable) recipe);
             }else {
                 intent.putExtra("otherUid", recipe.getUid());
             }

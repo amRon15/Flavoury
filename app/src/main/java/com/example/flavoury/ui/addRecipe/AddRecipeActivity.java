@@ -1,77 +1,40 @@
 package com.example.flavoury.ui.addRecipe;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flavoury.Ingredient;
-import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class AddRecipeActivity extends AppCompatActivity {
-    RecyclerView ingredientRecyclerView, stepRecyclerView;
-    ImageButton addIngredient, addStep;
     ShapeableImageView recipeImg;
-    TextView addRecipe, cancelRecipe;
+    Button nextBtn;
+    ImageButton cancelRecipe;
     EditText editRecipeName, editDescription;
     Spinner durationSpinner, servingSpinner, categorySpinner;
-    AddRecipeStepAdapter addRecipeStepAdapter;
-    AddRecipeIngredientAdapter addRecipeIngredientAdapter;
-    ArrayList<Ingredient> ingredients = new ArrayList<>();
-    ArrayList<String> steps = new ArrayList<>();
     String[] categoryList;
-    String uId, recipeName, description, imgId, cookingMinutes , result;
-    Uri imgUri;
+    String uId, ipAddress;
     OnBackPressedCallback onBackPressedCallback;
     RecipeModel recipe;
-    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("recipe");
-    UploadTask uploadTask;
     DatabaseHelper db;
-    String ipAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +48,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         db.onCreate(db.getWritableDatabase());
 
         uId = db.getUid();
-
-        ingredients.add(new Ingredient());
-        steps.add("");
 
         categoryList = getResources().getStringArray(R.array.category);
 
@@ -130,8 +90,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             if(uri != null){
                 recipeImg.setImageURI(uri);
                 recipeImg.setElevation(100);
-                imgUri = uri;
-                imgId = UUID.randomUUID().toString();
+                recipe.setImgUri(uri);
+                recipe.setImgid(UUID.randomUUID().toString());
             }else {
                 Log.d("PhotoPicker","no media selected");
             }
@@ -142,175 +102,43 @@ public class AddRecipeActivity extends AppCompatActivity {
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build()));
 
-        addRecipeIngredientAdapter = new AddRecipeIngredientAdapter(ingredients);
-        ingredientRecyclerView = findViewById(R.id.add_recipe_ingredient_recyclerView);
-        ingredientRecyclerView.setAdapter(addRecipeIngredientAdapter);
-        ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        addRecipeStepAdapter = new AddRecipeStepAdapter(steps);
-        stepRecyclerView = findViewById(R.id.add_recipe_step_recyclerView);
-        stepRecyclerView.setAdapter(addRecipeStepAdapter);
-        stepRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         setView();
     }
 
-    private void setView( ) {
+    private void setView() {
         final DatabaseHelper db = new DatabaseHelper(this);
         final String userID = db.getUid();
         editRecipeName = findViewById(R.id.add_recipe_recipeName);
         editDescription = findViewById(R.id.add_recipe_description);
-
-        addIngredient = findViewById(R.id.add_recipe_add_ingredient);
-        addStep = findViewById(R.id.add_recipe_add_step);
-        addRecipe = findViewById(R.id.add_recipe_saveBtn);
-
-        addIngredient.setOnClickListener(view -> {
-            ingredients.add(new Ingredient());
-            addRecipeIngredientAdapter.ingredients = ingredients;
-            Log.d("AddAdapter", "Data: " + ingredients.get(ingredients.size()-1).getIngredient());
-            addRecipeIngredientAdapter.notifyItemInserted(ingredients.size()-1);
-            scaleAnim(view);
-        });
-        addStep.setOnClickListener(view -> {
-            steps.add("");
-            addRecipeStepAdapter.steps = steps;
-            addRecipeStepAdapter.notifyItemInserted(steps.size() - 1);
-            scaleAnim(view);
-        });
+        nextBtn = findViewById(R.id.add_recipe_nextBtn);
 
         editRecipeName.setImeActionLabel("setRecipeName", KeyEvent.KEYCODE_ENTER);
         editDescription.setImeActionLabel("setDescription", KeyEvent.KEYCODE_ENTER);
 
-        addRecipe.setOnClickListener(v -> {
-            recipeName = String.valueOf(editRecipeName.getText());
-            description = String.valueOf(editDescription.getText());
-            cookingMinutes = (String) durationSpinner.getSelectedItem();
+        nextBtn.setOnClickListener(v -> {
+            String recipeName = String.valueOf(editRecipeName.getText());
+            String description = String.valueOf(editDescription.getText());
+            String cookTime = (String) durationSpinner.getSelectedItem();
             String category = (String) categorySpinner.getSelectedItem();
             String serving = (String) servingSpinner.getSelectedItem();
 
 
-            JSONArray jsonIngredient = new JSONArray();
-            try {
-            for (int i=0;i<ingredients.size();i++){
-                Ingredient ingredient = ingredients.get(i);
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("ingredient", ingredient.getIngredient());
-                jsonObject.put("portion", ingredient.getPortion());
-                jsonIngredient.put(jsonObject);
-            }
-            }catch (Exception e){
-                Log.d("AddRecipeActivitySend", "Ingredient loop error: "+e.getMessage());
-            }
+            if (!recipeName.isEmpty() && !description.isEmpty() && !cookTime.isEmpty() && !category.isEmpty() && !serving.isEmpty() && !recipe.getImgid().isEmpty()) {
+                recipe.setRName(recipeName);
+                recipe.setUid(userID);
+                recipe.setDescription(description);
+                recipe.setCookTime(cookTime);
+                recipe.setCategory(category);
+                recipe.setServing(serving);
+                recipe.setLikes(0);
 
-            JSONArray jsonStep = new JSONArray();
-            for(int i=0; i< steps.size();i++){
-                String step = steps.get(i);
-                jsonStep.put(step);
+                Intent intent = new Intent(v.getContext(), AddStepIngredientActivity.class);
+                intent.putExtra("Recipe", recipe);
+                startActivity(intent);
             }
-
-            recipe = new RecipeModel(userID, recipeName, category, cookingMinutes, description, 0, serving, imgId, ingredients, steps);
-//            Log.d("AddRecipeActivitySend", userID + recipeName+ category+ cookingMinutes+ description+ serving+ imgId+ encodeIngredients.get(0).getIngredient()+ encodeStep.get(0));
-            sendRecipe(recipe, jsonIngredient, jsonStep);
         });
 
     }
-
-    private void sendRecipe(RecipeModel recipe, JSONArray jsonIngredient, JSONArray jsonStep){
-        Thread addRecipeThread = new Thread(() -> {
-            HttpURLConnection connection = null;
-            try {
-                URL url = new URL(ipAddress+"app_create_recipe.php");
-
-                //param
-                String recipeParam = "Uid=" + URLEncoder.encode(uId, "UTF-8") +
-                        "&RName=" + URLEncoder.encode(recipe.getRName(), "UTF-8") +
-                        "&Category=" + URLEncoder.encode(recipe.getCategory(), "UTF-8") +
-                        "&CookTime=" + URLEncoder.encode(recipe.getCookTime(), "UTF-8") +
-                        "&Description=" + URLEncoder.encode(recipe.getDescription(), "UTF-8") +
-                        "&Serving=" + URLEncoder.encode(recipe.getServing(), "UTF-8") +
-                        "&Imgid=" + URLEncoder.encode(recipe.getImgid(), "UTF-8") +
-                        "&Step=" + jsonStep +
-                        "&Ingredient=" + jsonIngredient;
-
-                connection = (HttpURLConnection) url.openConnection();
-
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-
-                DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-
-                outputStream.writeBytes(recipeParam);
-                outputStream.flush();
-                outputStream.close();
-
-                int responseCode = connection.getResponseCode();
-                InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
-
-                if (responseCode == HttpURLConnection.HTTP_OK){
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null){
-                        response.append(line);
-                    }
-                    bufferedReader.close();
-
-                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                    Log.d("AddRecipeActivitySend", jsonResponseString);
-                    runOnUiThread(() -> {
-                        try{
-                            JSONObject jsonObject = new JSONObject(jsonResponseString);
-                            String status = jsonObject.getString("status");
-                            String message = jsonObject.getString("message");
-                            if (status.equals("success")){
-                                saveRecipeImgToStorage();
-                                Toast.makeText(this, "Upload recipe successful", Toast.LENGTH_LONG).show();
-                                getOnBackPressedDispatcher().onBackPressed();
-                            }else {
-                                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-                            }
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            Log.d("AddRecipeActivitySend", "JSON Error: "+e.getMessage());
-                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-                    runOnUiThread(() -> Toast.makeText(this, "HTTP Error: "+ responseCode, Toast.LENGTH_LONG).show());
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-                Log.d("AddRecipeActivitySend", "Exception: " + e.toString());
-
-            } finally {
-                if (connection != null){
-                    connection.disconnect();
-                }
-            }
-        });
-        addRecipeThread.start();
-    }
-
-    private void saveRecipeImgToStorage(){
-        StorageReference imgRef = storageRef.child(imgId+".jpg");
-        uploadTask = imgRef.putFile(imgUri);
-        Log.d("FirebaseStorage", imgRef.getPath());
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Log.d("FirebaseStorage", taskSnapshot.getMetadata()+"");
-                Toast.makeText(getApplicationContext(), "Upload image successful", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed to upload image", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     private void scaleAnim(View view) {
         view.animate().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(new Runnable() {
             @Override

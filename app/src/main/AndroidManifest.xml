@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -40,6 +41,9 @@
         <activity android:name=".ui.scan.ScanActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.viewMore.ViewMoreActivity" />
+        <activity android:name=".ui.addRecipe.UpdateRecipeActivity"/>
+        <activity android:name=".ui.addRecipe.UpdateStepIngActivity" />
+        <activity android:name=".ui.addRecipe.AddStepIngredientActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

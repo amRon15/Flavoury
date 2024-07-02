@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyViewHolder> {
@@ -100,7 +101,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.MyView
 
         void intentToDetail(RecipeModel recipe){
             Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-            intent.putExtra("Recipe", recipe);
+            intent.putExtra("Recipe", (Serializable) recipe);
             itemView.getContext().startActivity(intent);
         }
 

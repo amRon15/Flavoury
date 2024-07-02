@@ -80,6 +80,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
                 Intent intent = new Intent(itemView.getContext(),
                         type.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
                 intent.putExtra("searchText", text);
+                itemView.getContext().startActivity(intent);
             });
         }
 

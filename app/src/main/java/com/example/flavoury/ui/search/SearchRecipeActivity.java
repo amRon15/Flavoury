@@ -3,11 +3,14 @@ package com.example.flavoury.ui.search;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ImageButton;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,12 +28,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SearchRecipeActivity extends AppCompatActivity {
     ImageButton backBtn;
-    String searchText, Uid;
+    String searchText, Uid, category;
     ArrayList<RecipeModel> recipeModelArrayList;
-    RecyclerView recipeRecyclerView;
+    String[] categoryList;
+    RecyclerView recipeRecyclerView, categoryRecyclerView;
+    CategoryAdapter categoryAdapter;
     DatabaseHelper db = new DatabaseHelper(this);
     String ipAddress;
     @Override
@@ -41,12 +47,44 @@ public class SearchRecipeActivity extends AppCompatActivity {
 
         ipAddress = getResources().getString(R.string.ipAddress);
 
+        category = "";
+
         Uid = db.getUid();
 
         searchText = getIntent().getStringExtra("searchText");
         searchRecipe();
 
+        categoryList = getResources().getStringArray(R.array.category);
+
         recipeRecyclerView = findViewById(R.id.search_recipe_list);
+        categoryRecyclerView = findViewById(R.id.search_recipe_category_list);
+        categoryAdapter = new CategoryAdapter(categoryList, category);
+
+        categoryRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                ArrayList<RecipeModel> filterList = new ArrayList<>();
+                for (RecipeModel recipe : recipeModelArrayList){
+                    if (recipe.getCategory().equals(categoryAdapter.categoryType)){
+                        filterList.add(recipe);
+                    }
+                }
+                SearchRecipeAdapter searchRecipeAdapter = new SearchRecipeAdapter(filterList);
+                recipeRecyclerView.setAdapter(searchRecipeAdapter);
+                recipeRecyclerView.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL, false));
+                recipeRecyclerView.addItemDecoration(new DividerItemDecoration(rv.getContext(), 1));
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
         backBtn = findViewById(R.id.search_recipe_backBtn);
 
@@ -95,6 +133,10 @@ public class SearchRecipeActivity extends AppCompatActivity {
                     SearchRecipeAdapter searchRecipeAdapter = new SearchRecipeAdapter(recipeModelArrayList);
                     recipeRecyclerView.setAdapter(searchRecipeAdapter);
                     recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                    recipeRecyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
+                    categoryRecyclerView.setAdapter(categoryAdapter);
+                    categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+
                 });
 
                 connection.disconnect();
