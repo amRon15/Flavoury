@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.profile;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.ui.detail.DetailActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ProfileRecipeAdapter extends RecyclerView.Adapter<ProfileRecipeAdapter.MyViewHolder> {
@@ -62,7 +65,16 @@ public class ProfileRecipeAdapter extends RecyclerView.Adapter<ProfileRecipeAdap
             recipeName.setText(recipe.getRName());
             category.setText(recipe.getCategory());
             cookTime.setText(recipe.getCookTime());
+
+            recipeImg.setOnClickListener(v->{
+                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                intent.putExtra("Recipe", (Serializable) recipe);
+                itemView.getContext().startActivity(intent);
+            });
+
         }
+
+
 
         void setRecipeImg(String imgId){
             StorageReference recipeRef = FirebaseStorage.getInstance().getReference().child("recipe").child(imgId+".jpg");

@@ -1,5 +1,6 @@
 package com.example.flavoury;
 
+import android.net.Uri;
 import android.util.Log;
 
 import org.jetbrains.annotations.Nullable;
@@ -16,6 +17,7 @@ public class RecipeModel implements Serializable {
 
     String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid, Username, Iconid;
     int Likes;
+    Uri imgUri;
     ArrayList<Ingredient> ingredients;
     ArrayList<String> steps;
 
@@ -193,5 +195,13 @@ public class RecipeModel implements Serializable {
 
     public void setLikes(int likes) {
         Likes = likes;
+    }
+
+    public Uri getImgUri() {
+        return imgUri;
+    }
+
+    public void setImgUri(Uri imgUri) {
+        this.imgUri = imgUri;
     }
 }

@@ -3,44 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/add_recipe_toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="20dp"
-            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <ImageButton
                 android:id="@+id/add_recipe_cancelBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/inter"
-                android:text="Cancel"
-                android:textColor="@color/mainText_color"
-                android:textSize="20dp" />
+                android:background="@drawable/baseline_arrow_back_ios_new_24" />
 
             <TextView
-                android:id="@+id/add_recipe_saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/inter"
-                android:gravity="end"
-                android:text="Save"
-                android:textColor="@color/Secondary_color"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="center"
+                android:text="Upload your recipe"
+                android:textColor="@color/mainText_color"
                 android:textSize="20dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_icon"
+                android:backgroundTint="@color/fui_transparent"
+                android:enabled="false" />
 
         </LinearLayout>
 
@@ -56,12 +59,12 @@
             app:layout_constraintTop_toBottomOf="@+id/add_recipe_toolBar">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/roundImageView"
                 android:id="@+id/add_recipe_recipeImg"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@drawable/frame_recipe_card" />
+                android:background="@drawable/frame_recipe_card"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundImageView" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -120,6 +123,7 @@
             android:imeActionLabel="setRecipeName"
             android:imeOptions="actionDone"
             android:maxLength="30"
+            android:maxLines="1"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
             android:textColor="@color/mainText_color"
@@ -168,44 +172,6 @@
             app:layout_constraintTop_toBottomOf="@id/add_recipe_description_title" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_recipe_categoryBox"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_recipe_description">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_recipe_categoryName"
-                android:text="Category"
-                android:textSize="16dp"
-                android:textColor="@color/mainText_color"
-                android:drawableTint="@color/mainText_color"
-                android:fontFamily="@font/inter_medium"
-                android:drawableStart="@drawable/baseline_category_24"
-                android:drawablePadding="10dp" />
-
-            <Spinner
-                android:id="@+id/add_recipe_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:prompt="@string/category_prompt"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/frame_recipe_card"
-                android:fontFamily="@font/inter"
-                android:padding="10dp"
-                android:spinnerMode="dropdown"
-                android:textColor="@color/mainText_color" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/add_recipe_detailBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -213,13 +179,53 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_recipe_categoryBox">
+            app:layout_constraintTop_toBottomOf="@+id/add_recipe_description">
+
+            <LinearLayout
+                android:id="@+id/add_recipe_categoryBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_recipe_description">
+
+
+                <TextView
+                    android:id="@+id/add_recipe_categoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_food_bank_24"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/mainText_color"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="center_vertical"
+                    android:text="Category"
+                    android:textColor="@color/mainText_color"
+                    android:textSize="14dp" />
+
+                <Spinner
+                    android:id="@+id/add_recipe_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    style="@style/SpinnerTheme"
+                    android:background="@drawable/dropdown_bg"
+                    android:fontFamily="@font/inter"
+                    android:padding="10dp"
+                    android:scrollbars="none"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/mainText_color" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -230,19 +236,20 @@
                     android:drawablePadding="5dp"
                     android:drawableTint="@color/mainText_color"
                     android:fontFamily="@font/inter_medium"
+                    android:gravity="center_vertical"
                     android:text="Minutes"
                     android:textColor="@color/mainText_color"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
 
                 <Spinner
                     android:id="@+id/add_recipe_recipeTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/frame_recipe_card"
+                    android:background="@drawable/dropdown_bg"
                     android:fontFamily="@font/inter"
-                    android:prompt="@string/minutes_prompt"
                     android:padding="10dp"
+                    android:scrollbars="none"
                     android:spinnerMode="dropdown"
                     android:textColor="@color/mainText_color" />
 
@@ -262,110 +269,47 @@
                     android:drawablePadding="5dp"
                     android:drawableTint="@color/mainText_color"
                     android:fontFamily="@font/inter_medium"
+                    android:gravity="center_vertical"
                     android:text="Serving Size"
                     android:textColor="@color/mainText_color"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
 
                 <Spinner
                     android:id="@+id/add_recipe_recipePortion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:prompt="@string/serving_prompt"
-                    android:background="@drawable/frame_recipe_card"
+                    android:background="@drawable/dropdown_bg"
                     android:fontFamily="@font/inter"
                     android:padding="10dp"
                     android:spinnerMode="dropdown"
+                    android:scrollbars="none"
                     android:textColor="@color/mainText_color" />
             </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/add_recipe_ingredient_title"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/add_recipe_nextBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_recipe_detailBox">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/baseline_food_bank_24"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/mainText_color"
-                android:fontFamily="@font/inter_medium"
-                android:text="Ingredient"
-                android:textColor="@color/mainText_color"
-                android:textSize="16dp" />
-
-            <ImageButton
-                android:id="@+id/add_recipe_add_ingredient"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:background="@android:color/transparent"
-                android:src="@drawable/baseline_add_24"
-                app:tint="@color/primary_color" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_recipe_ingredient_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="5dp"
+            android:text="Next Step"
+            android:background="@drawable/rounded_rec_follow"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:fontFamily="@font/inter_medium"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+            android:drawableTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/add_recipe_detailBox"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_recipe_ingredient_title" />
-
-        <LinearLayout
-            android:id="@+id/add_recipe_step_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_recipe_ingredient_recyclerView">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/baseline_assignment_24"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/mainText_color"
-                android:fontFamily="@font/inter_medium"
-                android:text="Step"
-                android:textColor="@color/mainText_color"
-                android:textSize="16dp" />
-
-            <ImageButton
-                android:id="@+id/add_recipe_add_step"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:src="@drawable/baseline_add_24"
-                app:tint="@color/primary_color" />
-        </LinearLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_recipe_step_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="5dp"
-            android:paddingBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_recipe_step_title" />
+            android:layout_margin="20dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

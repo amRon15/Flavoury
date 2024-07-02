@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.Ingredient;
-import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
 import java.util.ArrayList;

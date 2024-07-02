@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment {
             userDiv.setVisibility(!isRecipeDivVisible ? View.VISIBLE : View.INVISIBLE);
             recipeBtn.setTextColor(getResources().getColor(R.color.primary_color));
             userBtn.setTextColor(getResources().getColor(R.color.secondaryText_color));
-            searchEditText.setHint("Search Recipe");
+            searchEditText.setHint("Search Recipe / Ingredient");
 
             //history recyclerView
 

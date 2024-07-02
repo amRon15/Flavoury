@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.Ingredient;
-import com.example.flavoury.Ingredients;
 import com.example.flavoury.R;
 
 import java.util.ArrayList;
@@ -39,7 +38,11 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
 
     @Override
     public int getItemCount() {
-        return ingredients.size();
+        if (ingredients == null){
+            return 0;
+        } else {
+            return ingredients.size();
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -54,6 +57,8 @@ public class AddRecipeIngredientAdapter extends RecyclerView.Adapter<AddRecipeIn
         }
 
         void bindData(Ingredient ingredient) {
+            editIngredient.setText(ingredient.getIngredient());
+            editPortion.setText(ingredient.getPortion());
             editIngredient.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

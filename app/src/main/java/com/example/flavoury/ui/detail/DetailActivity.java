@@ -21,9 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
+import com.example.flavoury.ui.addRecipe.UpdateRecipeActivity;
 import com.example.flavoury.ui.myProfile.MyProfileFragment;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +40,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -50,12 +53,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class DetailActivity extends AppCompatActivity {
-    //    RecipeModel detailRecipe;
+    private final static String apiKey = "dkvkAngJ.4CRlETLTm0kAH2kVshhufooTkUandXDI";
     RecyclerView detailStepRecyclerView, detail_ingredients_recyclerview;
     DetailStepAdapter detailStepAdapter;
     DetailIngredientsAdapter detailIngredientsAdapter;
     ImageButton backBtn, moreBtn;
-    ToggleButton like_toggle, bookmarkBtn;
+    ToggleButton likeBtn, bookmarkBtn;
     ShapeableImageView userIcon;
     ImageView recipeImg;
     Button deleteConfirm, deleteCancel;
@@ -66,11 +69,12 @@ public class DetailActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter;
-    RecipeModel recipe;
+    RecipeModel recipe, recipeModel;
     Dialog deleteDialog;
     final String[] tab_title = {"Description", "Ingredient", "Step"};
     String ipAddress;
     boolean isUserBookmark;
+    boolean isUserLiked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,20 @@ public class DetailActivity extends AppCompatActivity {
         Intent recipeIntent = getIntent();
         recipe = (RecipeModel) recipeIntent.getSerializableExtra("Recipe");
 
+        recipeModel = new RecipeModel();
+        recipeModel.setRid(recipe.getRid());
+        recipeModel.setUid(recipe.getUid());
+        recipeModel.setRName(recipe.getRName());
+        recipeModel.setCategory(recipe.getCategory());
+        recipeModel.setCookTime(recipe.getCookTime());
+        recipeModel.setDescription(recipe.getDescription());
+        recipeModel.setLikes(recipe.getLikes());
+        recipeModel.setIngredients(recipe.getIngredients());
+        recipeModel.setServing(recipe.getServing());
+        recipeModel.setSteps(recipe.getSteps());
+        recipeModel.setImgid(recipe.getImgid());
+
+
         backBtn = findViewById(R.id.recipe_detail_backBtn);
         bookmarkBtn = findViewById(R.id.recipe_detail_bookmarkBtn);
         userIcon = findViewById(R.id.recipe_detail_userIcon);
@@ -102,6 +120,7 @@ public class DetailActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.recipe_detail_viewPager);
         userName = findViewById(R.id.recipe_detail_userName);
         moreBtn = findViewById(R.id.recipe_detail_moreBtn);
+        likeBtn = findViewById(R.id.recipe_detail_likeToggle);
 
 
         deleteDialog = new Dialog(this);
@@ -112,6 +131,7 @@ public class DetailActivity extends AppCompatActivity {
         deleteCancel = deleteDialog.findViewById(R.id.delete_dialog_cancel);
         deleteConfirm = deleteDialog.findViewById(R.id.delete_dialog_confirm);
 
+        LikedCc();
         isBookmark();
 
         deleteConfirm.setOnClickListener(v -> {
@@ -130,6 +150,15 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        likeBtn.setOnClickListener(view -> {
+            if (likeBtn.isChecked()) {
+                likeRecipe();
+            } else {
+                cancellike();
+            }
+        });
+
+
 
         moreBtn.setOnClickListener(v -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
@@ -144,15 +173,15 @@ public class DetailActivity extends AppCompatActivity {
             Button deleteBtn = bottomSheetLayout.findViewById(R.id.recipe_detail_deleteBtn);
 
             editBtn.setOnClickListener(view -> {
-                Intent intent = new Intent(this, AddRecipeActivity.class);
+                Intent intent = new Intent(v.getContext(), UpdateRecipeActivity.class);
                 intent.putExtra("Recipe", (Serializable) recipe);
                 bottomSheetDialog.dismiss();
+                startActivity(intent);
             });
 
             deleteBtn.setOnClickListener(view -> {
-//                deleteRecipe();
+                deleteDialog.show();
                 bottomSheetDialog.dismiss();
-
             });
         });
 
@@ -176,18 +205,26 @@ public class DetailActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0);
     }
 
+
     private void setView(RecipeModel recipe) {
         TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
         TextView cookingTime = findViewById(R.id.recipe_detail_cookingMins);
         TextView likeNum = findViewById(R.id.recipe_detail_likeNum);
+        TextView serving = findViewById(R.id.recipe_detail_serving);
         TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
         TextView category = findViewById(R.id.recipe_detail_category);
         ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
+
+        if (recipe.getUid().equals(myUserId)){
+            recipeLikeToggle.setChecked(true);
+            recipeLikeToggle.setEnabled(false);
+        }
 
         recipeName.setText(recipe.getRName());
         cookingTime.setText(recipe.getCookTime());
         likeNum.setText(String.valueOf(recipe.getLikes()));
         category.setText(recipe.getCategory());
+        serving.setText(recipe.getServing());
 
         if (recipe.getUid().equals(myUserId)) {
             registerForContextMenu(moreBtn);
@@ -199,6 +236,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+
     private void deleteRecipe() {
         new Thread(() -> {
             HttpURLConnection connection = null;
@@ -206,7 +244,7 @@ public class DetailActivity extends AppCompatActivity {
                 URL url = new URL(ipAddress + "app_delete_recipe.php");
 
                 String recipeParam = "Uid=" + URLEncoder.encode(recipe.getUid(), "UTF-8") +
-                        "Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
+                        "&Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
 
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
@@ -231,13 +269,19 @@ public class DetailActivity extends AppCompatActivity {
 
                     String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                     JSONObject jsonObject = new JSONObject(jsonResponseString);
+                    Log.d("DetailActivityFetch", "Error: " + jsonResponseString);
+
 
                     String status = jsonObject.getString("status");
                     String message = jsonObject.getString("message");
 
+                    if (status.equals("success")){
+                        storageRef.child("recipe").child(recipe.getImgid()+".jpg").delete();
+                    }
+
                     runOnUiThread(() -> {
-                        if (status == "success") {
-                            Intent intent = new Intent(this, MyProfileFragment.class);
+                        if (status.equals("success")) {
+                            Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -429,6 +473,7 @@ public class DetailActivity extends AppCompatActivity {
                 Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
             }
         });
+
     }
 
     private void setUserIcon(String uId) {
@@ -463,6 +508,7 @@ public class DetailActivity extends AppCompatActivity {
                 JSONArray ingredientJson = jsonObject.getJSONArray("ingredient");
 
                 recipe.StepAndIngredient(stepJson, ingredientJson);
+                recipeModel.StepAndIngredient(stepJson, ingredientJson);
 
                 runOnUiThread(() -> {
 
@@ -480,24 +526,14 @@ public class DetailActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void setLike_toggle() {
-        final DatabaseHelper db = new DatabaseHelper(this);
-        final String recipeID = db.getRid();
-        Log.d("Like", recipeID);
-
-        like_toggle.setOnClickListener(v -> {
-            likeRecipe(myUserId, recipeID);
-        });
-    }
-
-    private void likeRecipe(String userID, String recipeID) {
+    private void likeRecipe() {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL(ipAddress + "app_like_reicpe.php");
+                URL url = new URL(ipAddress + "app_like_recipe.php");
 
-                String recipeParam = "Uid=" + URLEncoder.encode(userID, "UTF-8") +
-                        "&Rid=" + URLEncoder.encode(recipeID, "UTF-8");
+                String recipeParam = "Uid=" + URLEncoder.encode(myUserId, "UTF-8") +
+                        "&Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
 
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -533,8 +569,7 @@ public class DetailActivity extends AppCompatActivity {
                             String message = jsonObject.getString("message");
                             Log.d("Like", jsonObject.toString());
                             if (status.equals("success")) {
-                                Toast.makeText(this, "Like", Toast.LENGTH_LONG).show();
-                                getOnBackPressedDispatcher().onBackPressed();
+                                Toast.makeText(this, "Liked!", Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                             }
@@ -558,5 +593,99 @@ public class DetailActivity extends AppCompatActivity {
         addRecipeThread.start();
     }
 
+    private void cancellike() {
+        Thread addRecipeThread = new Thread(() -> {
+            HttpURLConnection connection = null;
+            try {
+                URL url = new URL(ipAddress + "app_cancel_like_recipe.php");
+
+                String recipeParam = "Uid=" + URLEncoder.encode(myUserId, "UTF-8") +
+                        "&Rid=" + URLEncoder.encode(recipe.getRid(), "UTF-8");
+
+                connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+
+                DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+
+                outputStream.writeBytes(recipeParam);
+                outputStream.flush();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+                InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    Log.d("CancelLike", "HTTP OK");
+                    while ((line = bufferedReader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    bufferedReader.close();
+
+                    String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                    Log.d("CancelLike", jsonResponseString);
+                    runOnUiThread(() -> {
+                        try {
+                            JSONObject jsonObject = new JSONObject(jsonResponseString);
+                            String status = jsonObject.getString("status");
+                            String message = jsonObject.getString("message");
+                            Log.d("CancelLike", jsonObject.toString());
+                            if (status.equals("success")) {
+                                Toast.makeText(this, "unliked", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("CancelLike", "JSON Error: " + e.getMessage());
+                        }
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(this, "HTTP Error: " + responseCode, Toast.LENGTH_LONG).show());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("CancelLike", "Exception: " + e.toString());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        });
+        addRecipeThread.start();
+    }
+
+    private void LikedCc(){
+        new Thread(() -> {
+            try {
+                URL url = new URL(ipAddress + "app_liked_cc.php?Uid=" + myUserId + "&Rid=" + recipe.getRid());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
+                Log.d("LikeChecking", jsonResponseString);
+
+                isUserLiked = !jsonResponseString.equals("null");
+            } catch (Exception e) {
+                Log.d("LikeChecking", e.toString());
+            } finally {
+                runOnUiThread(() -> {
+                    likeBtn.setChecked(isUserLiked);
+                });
+            }
+        }).start();
+    }
 
 }

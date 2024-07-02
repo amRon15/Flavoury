@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ExploreRecipeAdapter extends RecyclerView.Adapter<ExploreRecipeAdapter.MyViewHolder> {
@@ -64,7 +65,7 @@ public class ExploreRecipeAdapter extends RecyclerView.Adapter<ExploreRecipeAdap
             setRecipeImg(recipe);
             recipeImg.setOnClickListener(v->{
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                intent.putExtra("Recipe", recipe);
+                intent.putExtra("Recipe", (Serializable) recipe);
                 itemView.getContext().startActivity(intent);
             });
         }

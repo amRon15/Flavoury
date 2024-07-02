@@ -1,6 +1,8 @@
 package com.example.flavoury;
 
-public class Ingredient{
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     public Ingredient(){}
 
     public Ingredient(String ingredient, String portion){
