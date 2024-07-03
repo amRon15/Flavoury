@@ -13,9 +13,9 @@
             android:id="@+id/add_recipe_toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:background="@drawable/toolbar_bg"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +26,7 @@
                 android:id="@+id/add_recipe_cancelBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:background="@drawable/baseline_arrow_back_ios_new_24" />
 
             <TextView
@@ -35,7 +36,7 @@
                 android:fontFamily="@font/inter_medium"
                 android:gravity="center"
                 android:text="Upload your recipe"
-                android:textColor="@color/mainText_color"
+                android:textColor="@color/white"
                 android:textSize="20dp" />
 
             <ImageButton
@@ -197,11 +198,10 @@
                     android:id="@+id/add_recipe_categoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_food_bank_24"
-                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/baseline_food_bank_24"
                     android:drawableTint="@color/mainText_color"
                     android:fontFamily="@font/inter_medium"
-                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:text="Category"
                     android:textColor="@color/mainText_color"
                     android:textSize="14dp" />
@@ -211,7 +211,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    style="@style/SpinnerTheme"
                     android:background="@drawable/dropdown_bg"
                     android:fontFamily="@font/inter"
                     android:padding="10dp"
@@ -232,11 +231,10 @@
                     android:id="@+id/add_recipe_recipeTime_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_access_time_24"
-                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/baseline_access_time_24"
                     android:drawableTint="@color/mainText_color"
                     android:fontFamily="@font/inter_medium"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="Minutes"
                     android:textColor="@color/mainText_color"
                     android:textSize="14dp" />
@@ -265,11 +263,10 @@
                     android:id="@+id/add_recipe_recipePortion_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_scale_24"
-                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/baseline_local_dining_24"
                     android:drawableTint="@color/mainText_color"
                     android:fontFamily="@font/inter_medium"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="Serving Size"
                     android:textColor="@color/mainText_color"
                     android:textSize="14dp" />

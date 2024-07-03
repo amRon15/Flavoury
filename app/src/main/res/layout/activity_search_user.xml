@@ -9,8 +9,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/search_user_toolbar"
         android:orientation="horizontal"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/toolbar_bg"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/search_user_backBtn"
+            android:backgroundTint="@color/white"
             android:background="@drawable/baseline_arrow_back_ios_new_24" />
 
         <TextView
@@ -29,13 +31,14 @@
             android:textSize="20dp"
             android:text="Users"
             android:gravity="center"
-            android:fontFamily="@font/inter_semi_bold"
-            android:textColor="@color/mainText_color"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/white"
             android:layout_weight="1" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:background="@drawable/baseline_filter_list_24" />
 
     </LinearLayout>
@@ -47,8 +50,9 @@
         android:id="@+id/search_user_result"
         android:layout_marginTop="10dp"
         android:textSize="16dp"
-        android:text="Search: "
-        android:textColor="@color/mainText_color"
+        android:text="No seach result"
+        android:visibility="gone"
+        android:textColor="@color/secondaryText_color"
         app:layout_constraintTop_toBottomOf="@+id/search_user_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginHorizontal="20dp"/>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -10,8 +11,9 @@
         android:orientation="horizontal"
         android:id="@+id/search_recipe_toolbar"
         android:gravity="center_vertical"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/toolbar_bg"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -20,6 +22,7 @@
             android:id="@+id/search_recipe_backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:background="@drawable/baseline_arrow_back_ios_new_24" />
 
         <TextView
@@ -29,13 +32,14 @@
             android:text="Recipes"
             android:textSize="20dp"
             android:gravity="center"
-            android:fontFamily="@font/inter_semi_bold"
-            android:textColor="@color/mainText_color"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/white"
             android:layout_weight="1" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:background="@drawable/baseline_filter_list_24" />
 
     </LinearLayout>
@@ -44,14 +48,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_recipe_category_list"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/search_recipe_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:id="@+id/search_recipe_result"
+        android:layout_marginTop="10dp"
+        android:textSize="16dp"
+        android:text="No seach result"
+        android:visibility="gone"
+        android:textColor="@color/secondaryText_color"
+        app:layout_constraintTop_toBottomOf="@+id/search_recipe_category_list"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="20dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:id="@+id/search_recipe_list"
         android:layout_marginTop="10dp"
@@ -59,4 +79,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

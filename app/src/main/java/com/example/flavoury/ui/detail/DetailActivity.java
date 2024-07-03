@@ -1,9 +1,13 @@
 package com.example.flavoury.ui.detail;
 
+import static java.lang.Thread.sleep;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +28,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
-import com.example.flavoury.ui.addRecipe.AddRecipeActivity;
 import com.example.flavoury.ui.addRecipe.UpdateRecipeActivity;
-import com.example.flavoury.ui.myProfile.MyProfileFragment;
+import com.example.flavoury.ui.profile.ProfileActivity;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -40,30 +43,41 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class DetailActivity extends AppCompatActivity {
     private final static String apiKey = "dkvkAngJ.4CRlETLTm0kAH2kVshhufooTkUandXDI";
-    RecyclerView detailStepRecyclerView, detail_ingredients_recyclerview;
-    DetailStepAdapter detailStepAdapter;
-    DetailIngredientsAdapter detailIngredientsAdapter;
     ImageButton backBtn, moreBtn;
     ToggleButton likeBtn, bookmarkBtn;
     ShapeableImageView userIcon;
     ImageView recipeImg;
     Button deleteConfirm, deleteCancel;
     DatabaseHelper db = new DatabaseHelper(this);
-    TextView userName;
+    TextView userName, recipeCals;
     String myUserId;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     TabLayout tabLayout;
@@ -73,8 +87,10 @@ public class DetailActivity extends AppCompatActivity {
     Dialog deleteDialog;
     final String[] tab_title = {"Description", "Ingredient", "Step"};
     String ipAddress;
-    boolean isUserBookmark;
-    boolean isUserLiked;
+    boolean isUserBookmark, isUserLiked, isLoading;
+    int dotCount = 0;
+    Handler animationHandler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +158,12 @@ public class DetailActivity extends AppCompatActivity {
             deleteDialog.dismiss();
         });
 
+        userIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra("otherUid", recipe.getUid());
+            startActivity(intent);
+        });
+
         bookmarkBtn.setOnClickListener(view -> {
             if (bookmarkBtn.isChecked()) {
                 bookmarkRecipe();
@@ -154,10 +176,9 @@ public class DetailActivity extends AppCompatActivity {
             if (likeBtn.isChecked()) {
                 likeRecipe();
             } else {
-                cancellike();
+                cancelLike();
             }
         });
-
 
 
         moreBtn.setOnClickListener(v -> {
@@ -203,6 +224,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         }).attach();
         viewPager.setCurrentItem(0);
+
     }
 
 
@@ -211,11 +233,11 @@ public class DetailActivity extends AppCompatActivity {
         TextView cookingTime = findViewById(R.id.recipe_detail_cookingMins);
         TextView likeNum = findViewById(R.id.recipe_detail_likeNum);
         TextView serving = findViewById(R.id.recipe_detail_serving);
-        TextView recipeCals = findViewById(R.id.recipe_detail_calsNum);
+        recipeCals = findViewById(R.id.recipe_detail_calsNum);
         TextView category = findViewById(R.id.recipe_detail_category);
         ToggleButton recipeLikeToggle = findViewById(R.id.recipe_detail_likeToggle);
 
-        if (recipe.getUid().equals(myUserId)){
+        if (recipe.getUid().equals(myUserId)) {
             recipeLikeToggle.setChecked(true);
             recipeLikeToggle.setEnabled(false);
         }
@@ -275,8 +297,8 @@ public class DetailActivity extends AppCompatActivity {
                     String status = jsonObject.getString("status");
                     String message = jsonObject.getString("message");
 
-                    if (status.equals("success")){
-                        storageRef.child("recipe").child(recipe.getImgid()+".jpg").delete();
+                    if (status.equals("success")) {
+                        storageRef.child("recipe").child(recipe.getImgid() + ".jpg").delete();
                     }
 
                     runOnUiThread(() -> {
@@ -471,9 +493,9 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).centerCrop().fit().into(recipeImg);
+                downloadAndSendImage(uri.toString());
             }
         });
-
     }
 
     private void setUserIcon(String uId) {
@@ -593,7 +615,7 @@ public class DetailActivity extends AppCompatActivity {
         addRecipeThread.start();
     }
 
-    private void cancellike() {
+    private void cancelLike() {
         Thread addRecipeThread = new Thread(() -> {
             HttpURLConnection connection = null;
             try {
@@ -660,7 +682,7 @@ public class DetailActivity extends AppCompatActivity {
         addRecipeThread.start();
     }
 
-    private void LikedCc(){
+    private void LikedCc() {
         new Thread(() -> {
             try {
                 URL url = new URL(ipAddress + "app_liked_cc.php?Uid=" + myUserId + "&Rid=" + recipe.getRid());
@@ -687,5 +709,126 @@ public class DetailActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
+    private void downloadAndSendImage(String imageUrl) {
+        new AsyncTask<String, Void, byte[]>() {
+            @Override
+            protected byte[] doInBackground(String... params) {
+                try {
+                    URL url = new URL(params[0]);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+                    int bufferSize = 1024;
+                    byte[] buffer = new byte[bufferSize];
+                    int len;
+                    while ((len = input.read(buffer)) != -1) {
+                        byteBuffer.write(buffer, 0, len);
+                    }
+                    return byteBuffer.toByteArray();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(byte[] imageData) {
+                if (imageData != null) {
+                    sendImage(imageData);
+                } else {
+                    Log.d("FoodVisor", "Async Failed");
+                }
+            }
+        }.execute(imageUrl);
+    }
+
+
+    private void sendImage(byte[] image) {
+        runOnUiThread(this::startLoadingAnimation);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", "image.jpg",
+                        RequestBody.create(MediaType.parse("image/jpeg"), image))
+                .build();
+
+        Request request = new Request.Builder()
+                .url("https://vision.foodvisor.io/api/1.0/en/analysis/")
+                .addHeader("Authorization", "Api-Key " + apiKey)
+                .post(requestBody)
+                .build();
+
+        new OkHttpClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                stopLoadingAnimation();
+                Log.d("FoodVisor", e.toString());
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String jsonResponseString = response.body().string();
+                Log.d("FoodVisor", jsonResponseString);
+                double totalCal = 0;
+                try {
+                    JSONObject jsonObject = new JSONObject(jsonResponseString);
+                    JSONArray items = jsonObject.getJSONArray("items");
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject item = items.getJSONObject(i);
+                        JSONArray foods = item.getJSONArray("food");
+
+                        for (int j = 0; j < foods.length(); j++) {
+                            JSONObject food = foods.getJSONObject(j);
+                            double confidence = food.getDouble("confidence");
+                            if (confidence > 0.75) {
+                                JSONObject foodInfo = food.getJSONObject("food_info");
+                                double serving = foodInfo.getDouble("g_per_serving");
+                                JSONObject nutrition = foodInfo.getJSONObject("nutrition");
+                                double cal = nutrition.getDouble("calories_100g");
+
+                                double calCals = (cal / 100) * serving;
+                                totalCal += calCals;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("FoodVisor", e.toString());
+                } finally {
+                    int finalTotalCal = (int) totalCal;
+                    runOnUiThread(() -> {
+                        stopLoadingAnimation();
+                        recipeCals.setText(finalTotalCal + " cals");
+                    });
+                }
+            }
+        });
+    }
+
+    private void startLoadingAnimation() {
+        isLoading = true;
+        animationHandler.post(runnable);
+    }
+
+    private void stopLoadingAnimation() {
+        isLoading = false;
+        animationHandler.removeCallbacks(runnable);
+        recipeCals.setText("0 cals");
+    }
+
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isLoading) {
+                dotCount = (dotCount + 1) % 4; // Cycle through 0 to 3
+                String dots = new String(new char[dotCount]).replace("\0", ".");
+                recipeCals.setText(String.valueOf(dots));
+                animationHandler.postDelayed(this, 500);
+            }
+        }
+    };
 
 }

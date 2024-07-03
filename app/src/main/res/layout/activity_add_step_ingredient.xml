@@ -12,11 +12,11 @@
             android:id="@+id/add_step_toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
+            android:background="@drawable/toolbar_bg"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -25,6 +25,7 @@
                 android:id="@+id/add_step_cancelBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:background="@drawable/baseline_arrow_back_ios_new_24" />
 
             <TextView
@@ -34,7 +35,7 @@
                 android:fontFamily="@font/inter_medium"
                 android:gravity="center"
                 android:text="Ingredient &amp; Step"
-                android:textColor="@color/mainText_color"
+                android:textColor="@color/white"
                 android:textSize="20dp" />
 
             <ImageButton
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableStart="@drawable/baseline_food_bank_24"
+            android:drawableStart="@drawable/baseline_bakery_dining_24"
             android:drawablePadding="5dp"
             android:drawableTint="@color/mainText_color"
             android:fontFamily="@font/inter_medium"

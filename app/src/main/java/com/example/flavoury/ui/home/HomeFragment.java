@@ -149,7 +149,6 @@ public class HomeFragment extends Fragment {
         searchDialog.setCancelable(true);
         searchDialog.setCanceledOnTouchOutside(true);
 
-
         cancelSearchBtn = searchDialog.findViewById(R.id.search_dialog_cancelBtn);
         recipeDiv = searchDialog.findViewById(R.id.search_dialog_recipeDiv);
         userDiv = searchDialog.findViewById(R.id.search_dialog_userDiv);

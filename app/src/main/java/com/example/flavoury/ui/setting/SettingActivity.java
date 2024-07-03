@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.example.flavoury.R;
 import com.example.flavoury.ui.login.LoginActivity;
@@ -20,6 +22,8 @@ public class SettingActivity extends AppCompatActivity {
     ImageButton backBtn;
     Button logoutBtn,logoutCancel,logoutConfirm;
     Dialog logoutDialog;
+    TableRow editProfile;
+
     final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
@@ -38,7 +42,7 @@ public class SettingActivity extends AppCompatActivity {
         };
         getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
 
-
+        editProfile = findViewById(R.id.setting_editProfile_box);
         logoutBtn = findViewById(R.id.setting_logoutBtn);
         backBtn = findViewById(R.id.setting_backBtn);
 
@@ -63,5 +67,9 @@ public class SettingActivity extends AppCompatActivity {
 
         backBtn.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
 
+        editProfile.setOnClickListener(v->{
+            Intent intent = new Intent(this, EditProfileActivity.class);
+            startActivity(intent);
+        });
     }
 }

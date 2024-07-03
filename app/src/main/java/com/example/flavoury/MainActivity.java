@@ -45,15 +45,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_CAMERA = 100;
     private ActivityMainBinding binding;
     private NavController navController;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int CAMERA_PERMISSION_CODE = 100;
     FloatingActionButton scanBtn;
-    public static final int CAMERA_PERM_CODE = 101;
-    public static final int CAMERA_REQUEST_CODE = 102;
-    OnBackPressedCallback onBackPressedCallback;
     final private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override

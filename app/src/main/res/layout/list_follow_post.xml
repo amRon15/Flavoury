@@ -42,17 +42,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/follow_post_optionBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@color/fui_transparent"
-        android:src="@drawable/baseline_more_vert_24"
-        app:layout_constraintBottom_toTopOf="@+id/follow_post_recipeImg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/follow_post_recipeImg"
         android:layout_width="match_parent"
@@ -106,7 +95,7 @@
         android:id="@+id/follow_post_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Category"
         android:textColor="@color/secondaryText_color"
         android:textSize="14dp"
@@ -119,8 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-
+        android:layout_marginTop="10dp"
         android:src="@drawable/baseline_brightness_1_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/follow_post_category"
@@ -131,13 +119,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Mintues"
         android:textColor="@color/secondaryText_color"
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/follow_post_dot"
         app:layout_constraintTop_toBottomOf="@+id/follow_post_description" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/follow_post_description">
+
+        <ToggleButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/selector_like"
+            android:id="@+id/follow_post_likeBtn"
+            android:textOn=""
+            android:textOff="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/follow_post_likeNum"
+            android:text="123"
+            android:fontFamily="@font/inter"
+            android:textSize="14dp"
+            android:textColor="@color/secondaryText_color" />
+
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

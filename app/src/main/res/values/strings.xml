@@ -28,13 +28,13 @@
     <string name="category_prompt">Select a category</string>
     <string name="ipAddress">http://10.0.2.2/Flavoury/</string>
     <string-array name="category">
-        <item>Dessert</item>
-        <item>Chinese</item>
-        <item>European</item>
+        <item>Italian</item>
         <item>Fitness</item>
         <item>French</item>
-        <item>Italian</item>
         <item>Japanese</item>
+        <item>European</item>
+        <item>Dessert</item>
+        <item>Chinese</item>
         <item>Korean</item>
         <item>Vegan</item>
         <item>Southeast Asia</item>

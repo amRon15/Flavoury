@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -39,6 +41,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     DatabaseHelper db = new DatabaseHelper(this);
     String ipAddress;
+    TextView searchResult;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,8 @@ public class SearchRecipeActivity extends AppCompatActivity {
 
         searchText = getIntent().getStringExtra("searchText");
         searchRecipe();
+
+        searchResult = findViewById(R.id.search_recipe_result);
 
         categoryList = getResources().getStringArray(R.array.category);
 
@@ -136,7 +141,9 @@ public class SearchRecipeActivity extends AppCompatActivity {
                     recipeRecyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
                     categoryRecyclerView.setAdapter(categoryAdapter);
                     categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-
+                    if (recipeModelArrayList==null){
+                        searchResult.setVisibility(View.VISIBLE);
+                    }
                 });
 
                 connection.disconnect();

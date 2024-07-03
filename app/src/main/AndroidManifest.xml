@@ -44,6 +44,7 @@
         <activity android:name=".ui.addRecipe.UpdateRecipeActivity"/>
         <activity android:name=".ui.addRecipe.UpdateStepIngActivity" />
         <activity android:name=".ui.addRecipe.AddStepIngredientActivity"/>
+        <activity android:name=".ui.setting.EditProfileActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

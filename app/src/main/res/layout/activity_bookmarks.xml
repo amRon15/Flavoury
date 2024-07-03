@@ -11,24 +11,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/toolbar_bg"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
         android:gravity="center_vertical">
 
         <ImageButton
             android:id="@+id/bookmark_backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:background="@drawable/baseline_arrow_back_ios_new_24"
             android:layout_weight="0"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semi_bold"
+            android:fontFamily="@font/inter_medium"
             android:text="Bookmark"
             android:textSize="20dp"
-            android:textColor="@color/mainText_color"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_weight="1"/>

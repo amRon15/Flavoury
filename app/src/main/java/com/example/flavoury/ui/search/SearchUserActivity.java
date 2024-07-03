@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -54,8 +55,6 @@ public class SearchUserActivity extends AppCompatActivity {
         userRecyclerView = findViewById(R.id.search_user_list);
         searchResult = findViewById(R.id.search_user_result);
 
-        searchResult.setText("Search: " + searchText);
-
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -101,6 +100,9 @@ public class SearchUserActivity extends AppCompatActivity {
                     searchUserAdapter = new SearchUserAdapter(userModelArrayList, Uid);
                     userRecyclerView.setAdapter(searchUserAdapter);
                     userRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                    if (userModelArrayList.isEmpty()){
+                        searchResult.setVisibility(View.VISIBLE);
+                    }
                 });
                 connection.disconnect();
             } catch (Exception e) {

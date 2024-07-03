@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,6 +109,7 @@ public class ViewMoreActivity extends AppCompatActivity {
                     viewMoreAdapter = new ViewMoreAdapter(recipeModels);
                     recyclerView.setAdapter(viewMoreAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                    recyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
                 });
             }
         }).start();
@@ -145,6 +147,8 @@ public class ViewMoreActivity extends AppCompatActivity {
                     viewMoreAdapter = new ViewMoreAdapter(recipeModels);
                     recyclerView.setAdapter(viewMoreAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                    recyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
+
                 });
             }
         }).start();

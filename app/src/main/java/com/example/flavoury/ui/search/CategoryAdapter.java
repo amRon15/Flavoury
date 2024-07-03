@@ -56,9 +56,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
 
         void bindData(String category, int position) {
-            if (getAdapterPosition() == 0) {
-                categoryBtn.setVisibility(View.GONE);
-            }
             categoryBtn.setText(category);
             categoryBtn.setOnClickListener(v -> {
                 categoryType = category;

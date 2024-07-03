@@ -139,13 +139,11 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/inter_light"
-                                android:text="Category"
-                                android:textColor="@color/secondaryText_color" />
+                                android:src="@drawable/baseline_food_bank_24" />
 
                             <TextView
                                 android:id="@+id/recipe_detail_category"
@@ -156,7 +154,7 @@
                                 android:layout_gravity="center"
                                 android:text="Category"
                                 android:textColor="@color/secondaryText_color"
-                                android:textSize="16dp" />
+                                android:textSize="14dp" />
 
                         </LinearLayout>
 
@@ -171,13 +169,11 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/inter_light"
-                                android:text="Cooking Time"
-                                android:textColor="@color/secondaryText_color" />
+                                android:src="@drawable/baseline_access_time_24" />
 
                             <TextView
                                 android:id="@+id/recipe_detail_cookingMins"
@@ -188,7 +184,7 @@
                                 android:paddingTop="5dp"
                                 android:text=">120 mins"
                                 android:textColor="@color/secondaryText_color"
-                                android:textSize="16dp" />
+                                android:textSize="14dp" />
 
                         </LinearLayout>
                         <com.google.android.material.divider.MaterialDivider
@@ -203,13 +199,11 @@
                             android:layout_marginEnd="10dp"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/inter_light"
-                                android:text="Serving"
-                                android:textColor="@color/secondaryText_color" />
+                                android:src="@drawable/baseline_local_dining_24" />
 
                             <TextView
                                 android:id="@+id/recipe_detail_serving"
@@ -220,7 +214,7 @@
                                 android:paddingTop="5dp"
                                 android:text="1 serving"
                                 android:textColor="@color/secondaryText_color"
-                                android:textSize="16dp" />
+                                android:textSize="14dp" />
 
                         </LinearLayout>
                         <com.google.android.material.divider.MaterialDivider
@@ -234,26 +228,23 @@
                             android:layout_marginEnd="10dp"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/inter_light"
-                                android:text="Calories"
-                                android:textColor="@color/secondaryText_color" />
+                                android:src="@drawable/baseline_flash_on_24"
+                                app:tint="@color/Secondary_color"/>
 
                             <TextView
                                 android:id="@+id/recipe_detail_calsNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:drawableStart="@drawable/baseline_flash_on_24"
-                                android:drawableTint="@color/Secondary_color"
                                 android:fontFamily="@font/inter"
                                 android:paddingTop="5dp"
-                                android:text="160cals"
+                                android:text=""
                                 android:textColor="@color/secondaryText_color"
-                                android:textSize="16dp" />
+                                android:textSize="14dp" />
 
                         </LinearLayout>
 
