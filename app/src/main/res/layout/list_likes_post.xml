@@ -1,32 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_vertical"
     android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <ImageButton
+    <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:scaleType="centerCrop"
         android:id="@+id/likes_post_user_icon"
-        android:background="@drawable/circle_user_icon"/>
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        android:background="@drawable/baseline_person_24_grey"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:shimmer_auto_start="true"
+        android:background="@color/shimmer_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/likes_post_shimmer_icon" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="User likes your post"
-        android:textSize="18dp"
-        android:layout_weight="1"
-        android:id="@+id/likes_post_description"
-        android:layout_marginHorizontal="10dp" />
+        android:textSize="14dp"
+        android:textColor="@color/mainText_color"
+        android:fontFamily="@font/inter"
+        android:gravity="start"
+        android:id="@+id/likes_post_likes_description"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/likes_post_recipeImg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/likes_post_user_icon"/>
 
-    <ImageButton
+    <com.google.android.material.imageview.ShapeableImageView
+        app:shapeAppearanceOverlay="@style/roundImageView"
+        android:scaleType="centerCrop"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/likes_post_recipeImg"
-        android:background="@drawable/rounded_rec_recipe_img"/>
+        android:background="@color/shimmer_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:shimmer_auto_start="true"
+        android:background="@color/shimmer_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/likes_post_shimmer_img" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

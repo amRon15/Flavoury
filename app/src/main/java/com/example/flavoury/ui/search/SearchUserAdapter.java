@@ -62,13 +62,14 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ShapeableImageView userIcon;
         TextView username;
-        ToggleButton isUserFollowed;
+        ToggleButton followBtn;
+        boolean isUserFollowed;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             userIcon = itemView.findViewById(R.id.list_search_user_icon);
             username = itemView.findViewById(R.id.list_search_user_name);
-            isUserFollowed = itemView.findViewById(R.id.list_search_user_followBtn);
+            followBtn = itemView.findViewById(R.id.list_search_user_followBtn);
         }
 
         void bindData(UserModel userModel) {
@@ -82,8 +83,8 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.My
                 itemView.getContext().startActivity(intent);
             });
 
-            isUserFollowed.setOnClickListener(v -> {
-                followUser(userModel.getUid(), isUserFollowed.isChecked());
+            followBtn.setOnClickListener(v -> {
+                followUser(userModel.getUid(), followBtn.isChecked());
             });
         }
 
@@ -114,17 +115,12 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.My
                     reader.close();
 
                     String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                    Log.d("ProfileFetchData", jsonResponseString);
-                    JSONObject jsonObject = null;
-                    if (!jsonResponseString.isEmpty()) {
-                        jsonObject = new JSONObject(jsonResponseString);
-                    }
+                    Log.d("MyProfileGetRecipe", jsonResponseString + followBtn);
 
-                    if (jsonObject.getString("status") == "success") {
-                        isUserFollowed.setChecked(false);
-                    } else {
-                        isUserFollowed.setChecked(true);
-                    }
+                    isUserFollowed = !jsonResponseString.equals("null");
+
+                    followBtn.setChecked(isUserFollowed);
+
 
                 } catch (Exception e) {
                     Log.d("MyProfileGetRecipe", "Catch error :" + e.toString());

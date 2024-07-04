@@ -234,11 +234,8 @@ public class ProfileActivity extends AppCompatActivity {
                 reader.close();
 
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                if (jsonResponseString.equals("null")){
-                    isUserFollowed = true;
-                }else {
-                    isUserFollowed = false;
-                }
+                isUserFollowed = !jsonResponseString.equals("null");
+                Log.d("MyProfileGetRecipe", jsonResponseString + isUserFollowed);
 
                 runOnUiThread(() -> {
                     followBtn.setChecked(isUserFollowed);
@@ -256,9 +253,9 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 URL url;
                 if (isUserFollowed) {
-                    url = new URL(ipAddress+"app_follow_user.php");
-                } else {
                     url = new URL(ipAddress+"app_delete_follow.php");
+                } else {
+                    url = new URL(ipAddress+"app_follow_user.php");
                 }
                 connection = (HttpURLConnection) url.openConnection();
 

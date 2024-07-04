@@ -15,7 +15,7 @@ public class RecipeModel implements Serializable {
 
     public RecipeModel(){}
 
-    String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid, Username, Iconid, imgUri;
+    String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid, Username, Iconid, imgUri, LUid, LUsername, LIconid;
     int Likes;
     ArrayList<Ingredient> ingredients;
     ArrayList<String> steps;
@@ -202,5 +202,29 @@ public class RecipeModel implements Serializable {
 
     public void setImgUri(String imgUri) {
         this.imgUri = imgUri;
+    }
+
+    public String getLUid() {
+        return LUid;
+    }
+
+    public void setLUid(String LUid) {
+        this.LUid = LUid;
+    }
+
+    public String getLUsername() {
+        return LUsername;
+    }
+
+    public void setLUsername(String LUsername) {
+        this.LUsername = LUsername;
+    }
+
+    public String getLIconid() {
+        return LIconid;
+    }
+
+    public void setLIconid(String LIconid) {
+        this.LIconid = LIconid;
     }
 }

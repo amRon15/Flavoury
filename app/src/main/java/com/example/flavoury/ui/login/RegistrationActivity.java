@@ -182,7 +182,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            runOnUiThread(() -> Toast.makeText(RegistrationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                            Log.d("Registration", e.toString());
                         }
                     });
                 } else {

@@ -52,7 +52,6 @@ public class ViewMoreActivity extends AppCompatActivity {
 
         ipAddress = getResources().getString(R.string.ipAddress);
 
-        recyclerView = findViewById(R.id.view_more_recyclerView);
         title = findViewById(R.id.view_more_title);
         backBtn = findViewById(R.id.view_more_backBtn);
         viewPager = findViewById(R.id.view_more_viewpager);
@@ -164,6 +163,6 @@ public class ViewMoreActivity extends AppCompatActivity {
         viewPager.setClipToPadding(false);
         viewPager.setClipChildren(false);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setPadding(40 ,10,40,80);
+        viewPager.setPadding(40 ,10,40,100);
     }
 }

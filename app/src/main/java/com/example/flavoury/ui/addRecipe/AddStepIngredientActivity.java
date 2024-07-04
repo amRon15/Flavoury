@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.addRecipe;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flavoury.Ingredient;
+import com.example.flavoury.MainActivity;
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -183,7 +185,9 @@ public class AddStepIngredientActivity extends AppCompatActivity {
                             if (status.equals("success")) {
                                 saveRecipeImgToStorage();
                                 Toast.makeText(this, "Upload recipe successful", Toast.LENGTH_LONG).show();
-                                getOnBackPressedDispatcher().onBackPressed();
+
+                                Intent intent = new Intent(this, MainActivity.class);
+                                startActivity(intent);
                             } else {
                                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                             }

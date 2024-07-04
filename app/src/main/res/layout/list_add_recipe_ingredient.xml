@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="16dp"
-            android:maxLength="20"
+            android:maxLength="40"
             android:longClickable="false"
             android:background="@drawable/frame_recipe_card"
             android:paddingVertical="10dp"
@@ -30,12 +30,11 @@
             android:hint="Enter Ingredient"
             android:textColorHint="@color/secondaryText_color"
             />
-
         <EditText
             android:id="@+id/add_recipe_portion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="10"
+            android:maxLength="20"
             android:textSize="16dp"
             android:imeActionLabel="setPortion"
             android:imeOptions="actionDone"

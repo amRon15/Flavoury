@@ -158,6 +158,10 @@ public class DetailActivity extends AppCompatActivity {
             deleteDialog.dismiss();
         });
 
+        if (myUserId.equals(recipe.getUid())){
+            userIcon.setEnabled(false);
+        }
+
         userIcon.setOnClickListener(v -> {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("otherUid", recipe.getUid());
@@ -705,6 +709,9 @@ public class DetailActivity extends AppCompatActivity {
             } finally {
                 runOnUiThread(() -> {
                     likeBtn.setChecked(isUserLiked);
+                    if (myUserId.equals(recipe.getUid())){
+                        likeBtn.setChecked(true);
+                    }
                 });
             }
         }).start();
