@@ -26,7 +26,7 @@
     <string name="cat_more">More</string>
     <string name="view_more">View More ></string>
     <string name="category_prompt">Select a category</string>
-    <string name="ipAddress">http://10.0.2.2/Flavoury/</string>
+    <string name="ipAddress">flavoury.000webhostapp.com/</string>
     <string-array name="category">
         <item>Italian</item>
         <item>Fitness</item>

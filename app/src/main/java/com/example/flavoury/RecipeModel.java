@@ -15,9 +15,8 @@ public class RecipeModel implements Serializable {
 
     public RecipeModel(){}
 
-    String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid, Username, Iconid;
+    String Rid, RName, Description, Uid, Serving, CookTime, Category, Imgid, Username, Iconid, imgUri;
     int Likes;
-    Uri imgUri;
     ArrayList<Ingredient> ingredients;
     ArrayList<String> steps;
 
@@ -197,11 +196,11 @@ public class RecipeModel implements Serializable {
         Likes = likes;
     }
 
-    public Uri getImgUri() {
+    public String getImgUri() {
         return imgUri;
     }
 
-    public void setImgUri(Uri imgUri) {
+    public void setImgUri(String imgUri) {
         this.imgUri = imgUri;
     }
 }

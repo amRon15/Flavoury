@@ -22,6 +22,7 @@ import com.example.flavoury.RecipeModel;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 public class AddRecipeActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     String[] categoryList;
     String uId, ipAddress;
     OnBackPressedCallback onBackPressedCallback;
-    RecipeModel recipe;
+    RecipeModel recipe = new RecipeModel();
     DatabaseHelper db;
 
     @Override
@@ -90,7 +91,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             if(uri != null){
                 recipeImg.setImageURI(uri);
                 recipeImg.setElevation(100);
-                recipe.setImgUri(uri);
+                recipe.setImgUri(uri.toString());
                 recipe.setImgid(UUID.randomUUID().toString());
             }else {
                 Log.d("PhotoPicker","no media selected");
@@ -132,8 +133,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 recipe.setServing(serving);
                 recipe.setLikes(0);
 
-                Intent intent = new Intent(v.getContext(), AddStepIngredientActivity.class);
-                intent.putExtra("Recipe", recipe);
+                Intent intent = new Intent(this, AddStepIngredientActivity.class);
+                intent.putExtra("Recipe", (Serializable) recipe);
                 startActivity(intent);
             }
         });

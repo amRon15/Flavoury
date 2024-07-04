@@ -1,5 +1,6 @@
 package com.example.flavoury.ui.addRecipe;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -210,7 +211,8 @@ public class AddStepIngredientActivity extends AppCompatActivity {
 
     private void saveRecipeImgToStorage() {
         StorageReference imgRef = storageRef.child(recipe.getImgid() + ".jpg");
-        UploadTask uploadTask = imgRef.putFile(recipe.getImgUri());
+        Uri uri = Uri.parse(recipe.getImgUri());
+        UploadTask uploadTask = imgRef.putFile(uri);
         Log.d("FirebaseStorage", imgRef.getPath());
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

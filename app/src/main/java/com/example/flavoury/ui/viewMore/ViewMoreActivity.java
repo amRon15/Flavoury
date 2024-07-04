@@ -12,9 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flavoury.R;
 import com.example.flavoury.RecipeModel;
+import com.example.flavoury.ui.home.FollowingFragment;
+import com.example.flavoury.ui.home.HomeFragmentAdapter;
 import com.example.flavoury.ui.home.RecipeListAdapter;
 import com.example.flavoury.ui.sqlite.DatabaseHelper;
 
@@ -32,7 +35,9 @@ public class ViewMoreActivity extends AppCompatActivity {
     TextView title;
     ImageView backBtn;
     String ipAddress, Uid;
-    ViewMoreAdapter viewMoreAdapter;
+    ViewMoreFragmentAdapter viewMoreFragmentAdapter;
+    ViewPager2 viewPager;
+    ViewMoreFragment viewMoreFragment;
     OnBackPressedCallback onBackPressedCallback;
     ArrayList<RecipeModel> recipeModels = new ArrayList<>();
     DatabaseHelper db;
@@ -50,6 +55,7 @@ public class ViewMoreActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.view_more_recyclerView);
         title = findViewById(R.id.view_more_title);
         backBtn = findViewById(R.id.view_more_backBtn);
+        viewPager = findViewById(R.id.view_more_viewpager);
 
         String type = getIntent().getStringExtra("ViewMore");
         switch (type){
@@ -106,10 +112,7 @@ public class ViewMoreActivity extends AppCompatActivity {
                 Log.d("HomeFragmentGET", "Get Post Error" + e.toString());
             }finally {
                 runOnUiThread(()->{
-                    viewMoreAdapter = new ViewMoreAdapter(recipeModels);
-                    recyclerView.setAdapter(viewMoreAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                    recyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
+                    setFragment(recipeModels);
                 });
             }
         }).start();
@@ -144,13 +147,23 @@ public class ViewMoreActivity extends AppCompatActivity {
                 Log.d("HomeFragmentGET", "Get Post Error: " + e.toString());
             }finally {
                 runOnUiThread(()->{
-                    viewMoreAdapter = new ViewMoreAdapter(recipeModels);
-                    recyclerView.setAdapter(viewMoreAdapter);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                    recyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
-
+                    setFragment(recipeModels);
                 });
             }
         }).start();
+    }
+
+    private void setFragment(ArrayList<RecipeModel> recipeModelArrayList){
+        viewMoreFragmentAdapter = new ViewMoreFragmentAdapter(this.getSupportFragmentManager(), getLifecycle());
+        for (int i = 0; i < recipeModelArrayList.size(); i++){
+            ViewMoreFragment viewMoreFragment = new ViewMoreFragment(recipeModelArrayList.get(i));
+            viewMoreFragmentAdapter.addFragment(viewMoreFragment);
+        }
+        viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
+        viewPager.setAdapter(viewMoreFragmentAdapter);
+        viewPager.setClipToPadding(false);
+        viewPager.setClipChildren(false);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setPadding(40 ,10,40,80);
     }
 }
