@@ -294,8 +294,8 @@ public class DetailActivity extends AppCompatActivity {
                     reader.close();
 
                     String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
-                    JSONObject jsonObject = new JSONObject(jsonResponseString);
                     Log.d("DetailActivityFetch", "Error: " + jsonResponseString);
+                    JSONObject jsonObject = new JSONObject(jsonResponseString);
 
 
                     String status = jsonObject.getString("status");
@@ -307,9 +307,10 @@ public class DetailActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         if (status.equals("success")) {
-                            Intent intent = new Intent(this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+//                            Intent intent = new Intent(this, MainActivity.class);
+//                            startActivity(intent);
+//                            finish();
+                            getOnBackPressedDispatcher().onBackPressed();
                         }
                     });
                 }

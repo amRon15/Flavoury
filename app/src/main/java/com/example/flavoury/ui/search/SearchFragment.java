@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ public class SearchFragment extends Fragment {
     MaterialDivider recipeDiv, userDiv;
     Button recipeBtn, userBtn;
     Dialog searchDialog;
+    ProgressBar progressBar;
     NestedScrollView nestedScrollView;
     EditText searchEditText;
     ArrayList<RecipeModel> randomRecipe = new ArrayList<>();
@@ -63,6 +65,7 @@ public class SearchFragment extends Fragment {
     boolean isRecipeDivVisible = true;
     DatabaseHelper db;
     ArrayList<String> ridList = new ArrayList<>();
+    boolean firstFetch = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -77,18 +80,20 @@ public class SearchFragment extends Fragment {
 
         searchBoxBtn = root.findViewById(R.id.search_search_bar);
         recipeRecyclerView = root.findViewById(R.id.search_recipeRecyclerView);
+        progressBar = root.findViewById(R.id.search_progressbar);
 
         recipeRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
+                progressBar.setVisibility(View.VISIBLE);
                 if (!recyclerView.canScrollVertically(1)){
                     //scroll to bottom
-//                    getRandomRecipe();
+                    getRandomRecipe();
                 }
             }
         });
+
 
         getRandomRecipe();
 
@@ -216,10 +221,15 @@ public class SearchFragment extends Fragment {
                 getActivity().runOnUiThread(()->{
 //                    shimmerFrameLayout.stopShimmer();
 //                    shimmerFrameLayout.setVisibility(View.GONE);
-                    exploreRecipeAdapter = new ExploreRecipeAdapter(randomRecipe);
-                    recipeRecyclerView.setAdapter(exploreRecipeAdapter);
-                    recipeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-
+                    progressBar.setVisibility(View.GONE);
+                    if (!firstFetch) {
+                        exploreRecipeAdapter = new ExploreRecipeAdapter(randomRecipe);
+                        recipeRecyclerView.setAdapter(exploreRecipeAdapter);
+                        recipeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                        firstFetch = true;
+                    } else {
+                        exploreRecipeAdapter.notifyItemRangeChanged(0, exploreRecipeAdapter.getItemCount());
+                    }
                 });
             }
         }).start();

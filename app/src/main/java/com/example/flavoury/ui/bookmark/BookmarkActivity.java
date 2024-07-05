@@ -99,4 +99,10 @@ public class BookmarkActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getBookmark();
+    }
 }

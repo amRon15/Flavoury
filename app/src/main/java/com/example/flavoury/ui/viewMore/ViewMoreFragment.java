@@ -51,7 +51,7 @@ public class ViewMoreFragment extends Fragment {
 
     public ViewMoreFragment(RecipeModel recipe){this.recipe = recipe;}
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_follow_post, container, false);
+        return inflater.inflate(R.layout.list_view_more, container, false);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class MyProfileRecipeAdapter extends RecyclerView.Adapter<MyProfileRecipe
 
     @Override
     public int getItemCount() {
-        if (recipeModelArrayList.isEmpty()){
+        if (recipeModelArrayList==null){
             return 0;
         }else {
             return recipeModelArrayList.size();

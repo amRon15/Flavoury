@@ -32,6 +32,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
         this.recipeModelArrayList = recipeModelArrayList;
 
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

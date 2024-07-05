@@ -44,6 +44,8 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
         return steps.size();
     }
 
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView stepNum;
         EditText step;
@@ -54,27 +56,14 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
             stepNum = itemView.findViewById(R.id.add_recipe_stepNum);
             step = itemView.findViewById(R.id.add_recipe_step);
             removeBtn = itemView.findViewById(R.id.add_recipe_step_remove);
+
         }
 
         void bindData(String recipeStep) {
             this.stepNum.setText(String.valueOf(getAdapterPosition() + 1));
             this.step.setText(recipeStep);
-            this.step.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    steps.set(getAdapterPosition(),charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
 
             if (getAdapterPosition() == 0) {
                 removeBtn.setVisibility(View.INVISIBLE);

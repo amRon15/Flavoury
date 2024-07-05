@@ -42,6 +42,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
     DatabaseHelper db = new DatabaseHelper(this);
     String ipAddress;
     TextView searchResult;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,29 +66,18 @@ public class SearchRecipeActivity extends AppCompatActivity {
         categoryRecyclerView = findViewById(R.id.search_recipe_category_list);
         categoryAdapter = new CategoryAdapter(categoryList, category);
 
-        categoryRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
             @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+            public void onItemClick(int position) {
                 ArrayList<RecipeModel> filterList = new ArrayList<>();
-                for (RecipeModel recipe : recipeModelArrayList){
-                    if (recipe.getCategory().equals(categoryAdapter.categoryType)){
-                        filterList.add(recipe);
+                for (int i = 0; i < recipeModelArrayList.size(); i++) {
+                    if (recipeModelArrayList.get(i).getCategory().equals(category)){
+                        filterList.add(recipeModelArrayList.get(i));
                     }
                 }
-                SearchRecipeAdapter searchRecipeAdapter = new SearchRecipeAdapter(filterList);
+                SearchRecipeAdapter searchRecipeAdapter = new SearchRecipeAdapter(recipeModelArrayList);
                 recipeRecyclerView.setAdapter(searchRecipeAdapter);
-                recipeRecyclerView.setLayoutManager(new LinearLayoutManager(rv.getContext(), LinearLayoutManager.VERTICAL, false));
-                recipeRecyclerView.addItemDecoration(new DividerItemDecoration(rv.getContext(), 1));
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
+                Log.d("Category",category);
             }
         });
 
@@ -99,7 +89,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
                 finish();
             }
         };
-        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
     }
@@ -107,14 +97,14 @@ public class SearchRecipeActivity extends AppCompatActivity {
     private void searchRecipe() {
         new Thread(() -> {
             try {
-                URL url = new URL(ipAddress+"app_search_recipe.php?RName=" + searchText + "&Uid=" + Uid);
+                URL url = new URL(ipAddress + "app_search_recipe.php?RName=" + searchText + "&Uid=" + Uid);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
-                while ((line = reader.readLine()) != null){
+                while ((line = reader.readLine()) != null) {
                     response.append(line);
 
                 }
@@ -123,10 +113,10 @@ public class SearchRecipeActivity extends AppCompatActivity {
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 Log.d("SearchUserActivityServer", jsonResponseString);
 
-                if (!jsonResponseString.isEmpty()){
+                if (!jsonResponseString.isEmpty()) {
                     JSONArray jsonArray = new JSONArray(jsonResponseString);
                     recipeModelArrayList = new ArrayList<>();
-                    for (int i = 0; i<jsonArray.length();i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         RecipeModel recipeModel = new RecipeModel();
                         recipeModel.setRecipeInList(jsonObject);
@@ -134,14 +124,14 @@ public class SearchRecipeActivity extends AppCompatActivity {
                     }
                 }
 
-                runOnUiThread(()->{
+                runOnUiThread(() -> {
                     SearchRecipeAdapter searchRecipeAdapter = new SearchRecipeAdapter(recipeModelArrayList);
                     recipeRecyclerView.setAdapter(searchRecipeAdapter);
                     recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                     recipeRecyclerView.addItemDecoration(new DividerItemDecoration(this, 1));
                     categoryRecyclerView.setAdapter(categoryAdapter);
-                    categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-                    if (recipeModelArrayList==null){
+                    categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+                    if (recipeModelArrayList == null) {
                         searchResult.setVisibility(View.VISIBLE);
                     }
                 });
@@ -151,5 +141,9 @@ public class SearchRecipeActivity extends AppCompatActivity {
                 Log.d("SearchUserActivityServer", e.toString());
             }
         }).start();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 }

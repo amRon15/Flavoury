@@ -163,6 +163,6 @@ public class ViewMoreActivity extends AppCompatActivity {
         viewPager.setClipToPadding(false);
         viewPager.setClipChildren(false);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setPadding(40 ,10,40,100);
+        viewPager.setPadding(40 ,10,40,10);
     }
 }

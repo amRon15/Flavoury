@@ -1,6 +1,7 @@
 package com.example.flavoury.ui.search;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +19,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     String[] arrayList;
     String categoryType;
     private int selectedPosition = -1;
+    private OnItemClickListener listener;
+
 
     public CategoryAdapter(String[] arrayList, String category) {
         this.arrayList = arrayList;
@@ -46,13 +49,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
-
         Button categoryBtn;
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryBtn = itemView.findViewById(R.id.list_category_btn);
+            itemView.setOnClickListener(v->{
+                if (listener != null){
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
 
         void bindData(String category, int position) {
@@ -64,9 +77,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             });
             if (selectedPosition==position){
                 categoryBtn.setBackgroundResource(R.drawable.rounded_rec_category_select);
+                categoryBtn.setTextColor(itemView.getResources().getColor(R.color.white));
             } else {
                 categoryBtn.setBackgroundResource(R.drawable.rounded_rec_category_unselect);
+                categoryBtn.setTextColor(itemView.getResources().getColor(R.color.mainText_color));
             }
         }
+
+    }
+    public interface OnItemClickListener{
+        void onItemClick(int position);
     }
 }

@@ -52,7 +52,7 @@ public class MyProfileFragment extends Fragment {
     TextView userName, recipeNum, followerNum, followingNum;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     String Uid;
-    ArrayList<RecipeModel> recipeModelArrayList = new ArrayList<>();
+    ArrayList<RecipeModel> recipeModelArrayList;
     MyProfileRecipeAdapter myProfileRecipeAdapter;
     RecyclerView recipeRecyclerView;
     UserModel userInfo = new UserModel();
@@ -168,6 +168,7 @@ public class MyProfileFragment extends Fragment {
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 JSONArray jsonArray = new JSONArray(jsonResponseString);
                 Log.d("MyProfileGetRecipe", jsonResponseString );
+                recipeModelArrayList = new ArrayList<>();
                 if (!jsonResponseString.isEmpty()) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -235,5 +236,11 @@ public class MyProfileFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getRecipe();
     }
 }
