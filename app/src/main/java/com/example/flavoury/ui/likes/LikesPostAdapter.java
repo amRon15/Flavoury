@@ -47,7 +47,7 @@ public class LikesPostAdapter extends RecyclerView.Adapter<LikesPostAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        if (recipeModels.isEmpty()){
+        if (recipeModels==null){
             return 0;
         } else {
             return recipeModels.size();
