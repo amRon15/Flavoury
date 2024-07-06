@@ -194,6 +194,8 @@ public class FollowingFragment extends Fragment {
                             Log.d("Like", jsonObject.toString());
                             if (status.equals("success")) {
                                 Toast.makeText(getContext(), "Liked!", Toast.LENGTH_LONG).show();
+                                recipe.setLikes(recipe.getLikes()+1);
+                                likeNum.setText(String.valueOf(recipe.getLikes()));
                             } else {
                                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                             }
@@ -261,6 +263,8 @@ public class FollowingFragment extends Fragment {
                             Log.d("CancelLike", jsonObject.toString());
                             if (status.equals("success")) {
                                 Toast.makeText(getContext(), "unliked", Toast.LENGTH_LONG).show();
+                                recipe.setLikes(recipe.getLikes()-1);
+                                likeNum.setText(String.valueOf(recipe.getLikes()));
                             } else {
                                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                             }

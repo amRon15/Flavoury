@@ -242,5 +242,6 @@ public class MyProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getRecipe();
+        getUserInfo();
     }
 }

@@ -371,6 +371,14 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getFitnessPost();
+        getPopularPost();
+        getFollowPost();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }

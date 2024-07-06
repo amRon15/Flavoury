@@ -56,7 +56,11 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.My
 
     @Override
     public int getItemCount() {
-        return userModelArrayList.size();
+        if (userModelArrayList==null){
+            return 0;
+        } else {
+            return userModelArrayList.size();
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

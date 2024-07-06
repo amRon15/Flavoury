@@ -116,6 +116,12 @@ public class LikesFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getLikeList();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }

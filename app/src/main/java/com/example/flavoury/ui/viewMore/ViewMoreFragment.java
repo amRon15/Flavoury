@@ -191,7 +191,8 @@ public class ViewMoreFragment extends Fragment {
                             Log.d("Like", jsonObject.toString());
                             if (status.equals("success")) {
                                 Toast.makeText(getContext(), "Liked!", Toast.LENGTH_LONG).show();
-                                likeNum.setText(String.valueOf(recipe.getLikes()+1));
+                                recipe.setLikes(recipe.getLikes()+1);
+                                likeNum.setText(String.valueOf(recipe.getLikes()));
                             } else {
                                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                             }
@@ -259,7 +260,8 @@ public class ViewMoreFragment extends Fragment {
                             Log.d("CancelLike", jsonObject.toString());
                             if (status.equals("success")) {
                                 Toast.makeText(getContext(), "unliked", Toast.LENGTH_LONG).show();
-                                likeNum.setText(String.valueOf(recipe.getLikes()-1));
+                                recipe.setLikes(recipe.getLikes()-1);
+                                likeNum.setText(String.valueOf(recipe.getLikes()));
                             } else {
                                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                             }
@@ -311,4 +313,9 @@ public class ViewMoreFragment extends Fragment {
         }).start();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        LikedCc();
+    }
 }

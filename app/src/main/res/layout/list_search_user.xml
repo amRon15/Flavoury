@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_marginHorizontal="20dp"
+    android:paddingHorizontal="20dp"
     android:layout_marginVertical="10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -37,8 +37,8 @@
         android:layout_weight="0.25"
         android:id="@+id/list_search_user_followBtn"
         android:checked="false"
-        android:textOn="Follow"
-        android:textOff="Following"
+        android:textOn="Following"
+        android:textOff="Follow"
         android:textColor="@color/white"
         android:background="@drawable/selector_follow"
         android:fontFamily="@font/inter"

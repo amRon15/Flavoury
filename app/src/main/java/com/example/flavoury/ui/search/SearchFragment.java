@@ -76,6 +76,7 @@ public class SearchFragment extends Fragment {
 
 
         db = new DatabaseHelper(getContext());
+        db.onCreate(db.getWritableDatabase());
         Uid = db.getUid();
 
         searchBoxBtn = root.findViewById(R.id.search_search_bar);
@@ -177,6 +178,12 @@ public class SearchFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),
                         searchType.equals("recipe") ? SearchRecipeActivity.class : SearchUserActivity.class);
                 intent.putExtra("searchText", String.valueOf(searchEditText.getText()));
+                switch (searchType){
+                    case "recipe":
+                        db.saveRecipeHistory(String.valueOf(searchEditText.getText()));
+                    case "user":
+                        db.saveUserHistory(String.valueOf(searchEditText.getText()));
+                }
                 searchDialog.cancel();
                 searchEditText.setText("");
                 startActivity(intent);

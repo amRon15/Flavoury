@@ -101,8 +101,8 @@ public class BookmarkActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         getBookmark();
     }
 }

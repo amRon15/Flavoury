@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 
 public class SearchUserActivity extends AppCompatActivity {
     ImageButton backBtn;
-    ArrayList<UserModel> userModelArrayList = new ArrayList<>();
+    ArrayList<UserModel> userModelArrayList;
     RecyclerView userRecyclerView;
     SearchUserAdapter searchUserAdapter;
     TextView searchResult;
@@ -66,7 +67,6 @@ public class SearchUserActivity extends AppCompatActivity {
         backBtn.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
 
-
     }
 
     private void searchUser() {
@@ -88,6 +88,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 String jsonResponseString = response.toString().replaceAll("\\<.*?\\>", "");
                 Log.d("SearchUserActivityServer", jsonResponseString);
                 if (!jsonResponseString.isEmpty()){
+                    userModelArrayList = new ArrayList<>();
                     JSONArray jsonArray = new JSONArray(jsonResponseString);
                     for (int i = 0; i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -109,5 +110,12 @@ public class SearchUserActivity extends AppCompatActivity {
                 Log.d("SearchUserActivityServer", e.toString());
             }
         }).start();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, searchText, Toast.LENGTH_SHORT).show();
+        searchUser();
     }
 }

@@ -61,7 +61,21 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
 
         void bindData(String recipeStep) {
             this.stepNum.setText(String.valueOf(getAdapterPosition() + 1));
-            this.step.setText(recipeStep);
+            this.step.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    steps.set(getAdapterPosition(), charSequence.toString());
+                }
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
 
 
 
@@ -72,6 +86,7 @@ public class AddRecipeStepAdapter extends RecyclerView.Adapter<AddRecipeStepAdap
             removeBtn.setOnClickListener(view -> {
                 step.setText("");
                 steps.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
                 notifyItemRangeChanged(getAdapterPosition(), steps.size());
                 scaleAnim(view);
             });

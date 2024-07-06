@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity {
     ImageView recipeImg;
     Button deleteConfirm, deleteCancel;
     DatabaseHelper db = new DatabaseHelper(this);
-    TextView userName, recipeCals;
+    TextView userName, recipeCals, likeNum;
     String myUserId;
     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
     TabLayout tabLayout;
@@ -235,7 +235,7 @@ public class DetailActivity extends AppCompatActivity {
     private void setView(RecipeModel recipe) {
         TextView recipeName = findViewById(R.id.recipe_detail_recipeName);
         TextView cookingTime = findViewById(R.id.recipe_detail_cookingMins);
-        TextView likeNum = findViewById(R.id.recipe_detail_likeNum);
+        likeNum = findViewById(R.id.recipe_detail_likeNum);
         TextView serving = findViewById(R.id.recipe_detail_serving);
         recipeCals = findViewById(R.id.recipe_detail_calsNum);
         TextView category = findViewById(R.id.recipe_detail_category);
@@ -310,6 +310,7 @@ public class DetailActivity extends AppCompatActivity {
 //                            Intent intent = new Intent(this, MainActivity.class);
 //                            startActivity(intent);
 //                            finish();
+                            Toast.makeText(getApplicationContext(), "Recipe deleted", Toast.LENGTH_LONG).show();
                             getOnBackPressedDispatcher().onBackPressed();
                         }
                     });
@@ -597,6 +598,8 @@ public class DetailActivity extends AppCompatActivity {
                             Log.d("Like", jsonObject.toString());
                             if (status.equals("success")) {
                                 Toast.makeText(this, "Liked!", Toast.LENGTH_LONG).show();
+                                recipe.setLikes(recipe.getLikes()+1);
+                                likeNum.setText(String.valueOf(recipe.getLikes()));
                             } else {
                                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                             }
@@ -664,6 +667,8 @@ public class DetailActivity extends AppCompatActivity {
                             Log.d("CancelLike", jsonObject.toString());
                             if (status.equals("success")) {
                                 Toast.makeText(this, "unliked", Toast.LENGTH_LONG).show();
+                                recipe.setLikes(recipe.getLikes()-1);
+                                likeNum.setText(String.valueOf(recipe.getLikes()));
                             } else {
                                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                             }
@@ -839,4 +844,16 @@ public class DetailActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getStepAndIngredient();
+        isBookmark();
+        LikedCc();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

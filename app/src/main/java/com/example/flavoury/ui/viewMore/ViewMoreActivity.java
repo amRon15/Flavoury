@@ -34,10 +34,9 @@ public class ViewMoreActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView title;
     ImageView backBtn;
-    String ipAddress, Uid;
+    String ipAddress, Uid, type;
     ViewMoreFragmentAdapter viewMoreFragmentAdapter;
     ViewPager2 viewPager;
-    ViewMoreFragment viewMoreFragment;
     OnBackPressedCallback onBackPressedCallback;
     ArrayList<RecipeModel> recipeModels = new ArrayList<>();
     DatabaseHelper db;
@@ -56,7 +55,7 @@ public class ViewMoreActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.view_more_backBtn);
         viewPager = findViewById(R.id.view_more_viewpager);
 
-        String type = getIntent().getStringExtra("ViewMore");
+        type = getIntent().getStringExtra("ViewMore");
         switch (type){
             case "Follow":
                 title.setText(type);
@@ -164,5 +163,15 @@ public class ViewMoreActivity extends AppCompatActivity {
         viewPager.setClipChildren(false);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPadding(40 ,10,40,10);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

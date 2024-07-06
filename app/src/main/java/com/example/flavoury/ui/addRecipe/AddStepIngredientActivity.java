@@ -100,7 +100,6 @@ public class AddStepIngredientActivity extends AppCompatActivity {
         addIngredient.setOnClickListener(view -> {
             ingredients.add(new Ingredient());
             addRecipeIngredientAdapter.ingredients = ingredients;
-            Log.d("AddAdapter", "Data: " + ingredients.get(ingredients.size() - 1).getIngredient());
             addRecipeIngredientAdapter.notifyItemInserted(ingredients.size() - 1);
             scaleAnim(view);
         });

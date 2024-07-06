@@ -170,6 +170,7 @@ public class UpdateStepIngActivity extends AppCompatActivity {
                     Log.d("AddRecipeActivitySend", jsonResponseString);
                     runOnUiThread(() -> {
                         if (status.equals("success")) {
+                            Toast.makeText(this, "Update recipe successful", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(this, MainActivity.class);
                             startActivity(intent);
                             finish();
