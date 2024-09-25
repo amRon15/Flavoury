@@ -35,8 +35,9 @@ The Recipe Sharing App is a mobile application designed for the Android platform
 ![Recipe Detail Page (Ingredients)](https://github.com/user-attachments/assets/53a9d7ae-98ab-4b8a-96f6-db33bf63eb85)
 ![Recipe Detail Page (Description)](https://github.com/user-attachments/assets/0d230bef-ab84-425e-ae3e-3344eafb5036)
 ![Recipe Detail Page(Steps)](https://github.com/user-attachments/assets/0d44526f-0eb9-4b21-af45-b94863d217b4)
-![Ingredient   Steps Page](https://github.com/user-attachments/assets/025ad48a-4761-4282-9ab8-14d254701de5)
+
 ![Create Recipe Page](https://github.com/user-attachments/assets/ba1e9af9-059c-4da3-a1be-314a1abe5c58)
+![Ingredient   Steps Page](https://github.com/user-attachments/assets/faaf3820-7a7b-4865-84db-e90efb84fd31)
 
 ## License
 
