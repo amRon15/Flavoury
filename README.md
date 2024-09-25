@@ -18,10 +18,28 @@ The Recipe Sharing App is a mobile application designed for the Android platform
 - UI Framework: Android Studio with Material Design components
 
 ## ScreenShot
-![Login Page](https://github.com/user-attachments/assets/1923089e-25ab-4227-85b8-7772e6048176)
-![Sign Up Page](https://github.com/user-attachments/assets/48ce55ba-cf16-4be6-8dc0-778d96c0acd9)
+![Sign Up Page](https://github.com/user-attachments/assets/343c2324-a5b4-4054-865c-372a7de3ce31)
+![Login Page](https://github.com/user-attachments/assets/9f3ce865-63ba-49fc-bb49-9b4a0d895000)
+
+![Home Page](https://github.com/user-attachments/assets/e1d947e5-4d41-4b85-9ce9-afb20be1faf3)
+![Search Page](https://github.com/user-attachments/assets/48e80fd5-cdf6-4bab-9934-630b5c41a37a)
+![Search Recipe Page](https://github.com/user-attachments/assets/78c63bf3-f3ce-4d03-ae41-f1412e6dde69)
+![Search User Page](https://github.com/user-attachments/assets/e19e1cc1-87a9-4fdd-9c63-3ced7395eb10)
+
+![Scan Page](https://github.com/user-attachments/assets/3976c4c9-f005-4ff3-bac5-b83e539e5c37)
+![LIke Page](https://github.com/user-attachments/assets/d1e7d213-29ef-4893-9136-b8cf35ca883c)
+![Book Mark Page](https://github.com/user-attachments/assets/7286fb4c-57c2-4965-bf30-59a9d23765b7)
+![My Profile Page_L](https://github.com/user-attachments/assets/841bbf65-87d2-4c61-99fe-34711fa37c3a)
+![User Profile Page](https://github.com/user-attachments/assets/f532b3a3-5255-460f-bfc3-68fafc360c5a)
+
+![Recipe Detail Page (Ingredients)](https://github.com/user-attachments/assets/53a9d7ae-98ab-4b8a-96f6-db33bf63eb85)
+![Recipe Detail Page (Description)](https://github.com/user-attachments/assets/0d230bef-ab84-425e-ae3e-3344eafb5036)
+![Recipe Detail Page(Steps)](https://github.com/user-attachments/assets/0d44526f-0eb9-4b21-af45-b94863d217b4)
+![Ingredient   Steps Page](https://github.com/user-attachments/assets/025ad48a-4761-4282-9ab8-14d254701de5)
+![Create Recipe Page](https://github.com/user-attachments/assets/ba1e9af9-059c-4da3-a1be-314a1abe5c58)
 
 ## License
+
 This project is licensed under the MIT License.
 
 ## Author
