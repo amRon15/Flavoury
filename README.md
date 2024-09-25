@@ -17,6 +17,10 @@ The Recipe Sharing App is a mobile application designed for the Android platform
 - User Authentication: Firebase Authentication
 - UI Framework: Android Studio with Material Design components
 
+## ScreenShot
+![Login Page](https://github.com/user-attachments/assets/1923089e-25ab-4227-85b8-7772e6048176)
+![Sign Up Page](https://github.com/user-attachments/assets/48ce55ba-cf16-4be6-8dc0-778d96c0acd9)
+
 ## License
 This project is licensed under the MIT License.
 
