@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary_color">#FF1FCC79</color>
+    <color name="light_primary">#E3FFF8</color>
+    <color name="Secondary_color">#FF6464</color>
+    <color name="mainText_color">#2E3E5C</color>
+    <color name="secondaryText_color">#9FA5C0</color>
+    <color name="outline_color">#D0DBEA</color>
+    <color name="bookmark_color">#EFCF29</color>
+    <color name="red">#FF0000</color>
+    <color name="cal_color">#FF7B7B</color>
+    <color name="disable_grey">#CCCCCC</color>
+    <color name="circle_btn">#80FFFFFF</color>
+    <color name="following_grey">#AEAEAE</color>
+    <color name="searchview_color">#FAFAFA</color>
+    <color name="DetailRecipeBack_color">#9C979797</color>
+    <color name="DetailRecipeCircle_Done_color">#7FFFD4</color>
+    <color name="lightGrey">#F5F5F5</color>
+    <color name="cardWhite">#F3F3F3</color>
+    <color name="shimmer_color">#F5F5F5</color>
+    <color name="searchBar">#FAFAFA</color>
+    <color name="searchBarGrey">#FEFEFE</color>
+</resources>

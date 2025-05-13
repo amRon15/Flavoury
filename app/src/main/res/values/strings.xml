@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">Flavoury</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_add">Create</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_likes">Likes</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_scan">Scan</string>
+    <string name="description">descr</string>
+    <string name="speed">speed</string>
+    <string name="icon_speed">Speed</string>
+    <string name="recipes_23">Recipes</string>
+    <string name="recipe_following">Following</string>
+    <string name="recipe_followers">Followers</string>
+    <string name="recipe_number">23</string>
+    <string name="following_number">362</string>
+    <string name="followers_number">1356</string>
+    <string name="cat_all">All</string>
+    <string name="cat_fitness">Fitness</string>
+    <string name="cat_western">Western</string>
+    <string name="cat_japanese">Japanese</string>
+    <string name="cat_chinese">Chinese</string>
+    <string name="cat_italian">Italian</string>
+    <string name="cat_more">More</string>
+    <string name="view_more">View More ></string>
+    <string name="category_prompt">Select a category</string>
+    <string name="ipAddress">http://10.0.2.2/Flavoury/</string>
+<!--    <string name="ipAddress">https://flavoury.000webhostapp.com/</string>-->
+    <string-array name="category">
+        <item>Italian</item>
+        <item>Fitness</item>
+        <item>French</item>
+        <item>Japanese</item>
+        <item>European</item>
+        <item>Dessert</item>
+        <item>Chinese</item>
+        <item>Korean</item>
+        <item>Vegan</item>
+        <item>Southeast Asia</item>
+        <item>Other</item>
+    </string-array>
+    <string name="back">Back</string>
+    <string name="Recipes">Recipes</string>
+    <string name="liked" />
+    <string name="minutes_prompt">Select minutes</string>
+    <string-array name="minutes">
+        <item>5 mins</item>
+        <item>10 mins</item>
+        <item>15 mins</item>
+        <item>20 mins</item>
+        <item>30 mins</item>
+        <item>40 mins</item>
+        <item>50 mins</item>
+        <item>60 mins</item>
+        <item>70 mins</item>
+        <item>80 mins</item>
+        <item>90 mins</item>
+        <item>100 mins</item>
+        <item>120 mins</item>
+        <item>> 120 mins</item>
+    </string-array>
+    <string name="serving_prompt">Select serving size</string>
+    <string-array name="serving_size">
+        <item>1 Serving</item>
+        <item>2 Serving</item>
+        <item>3 Serving</item>
+        <item>4 Serving</item>
+        <item>5 Serving</item>
+        <item>> 5 Serving</item>
+    </string-array>
+    <string name="preference_file_key">com.example.flavoury</string>
+</resources>

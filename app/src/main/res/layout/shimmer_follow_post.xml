@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmer_follow_post_userIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@color/shimmer_color"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circleImageView" />
+
+    <TextView
+        android:id="@+id/shimmer_follow_post_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/shimmer_rounded_rec"
+        android:fontFamily="@font/inter"
+        android:text="UsernameHere"
+        android:textColor="@color/shimmer_color"
+        app:layout_constraintBottom_toTopOf="@+id/shimmer_follow_post_recipeImg"
+        app:layout_constraintStart_toEndOf="@+id/shimmer_follow_post_userIcon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shimmer_follow_post_recipeImg"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shimmer_rounded_rec"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shimmer_follow_post_userIcon" />
+
+    <TextView
+        android:id="@+id/shimmer_follow_post_recipeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shimmer_rounded_rec"
+        android:fontFamily="@font/inter_medium"
+        android:text="Recipe Name"
+        android:textColor="@color/shimmer_color"
+        android:textSize="16dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shimmer_follow_post_recipeImg" />
+
+    <TextView
+        android:id="@+id/shimmer_follow_post_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shimmer_rounded_rec"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter"
+        android:lines="2"
+
+        android:text="Your recipe has been uploaded.You can see it on your profile. Click the image can to see more about the recipe.  "
+        android:textColor="@color/shimmer_color"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shimmer_follow_post_recipeName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

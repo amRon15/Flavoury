@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingVertical="10dp"
+    android:background="@drawable/rounded_rec_layout">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="5dp"
+        android:background="@drawable/rounded_rec_bottom_sheet_drag"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/baseline_mode_edit_24"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:text="Edit Recipe"
+        android:background="@color/fui_transparent"
+        android:fontFamily="@font/inter"
+        android:textSize="16dp"
+        android:id="@+id/recipe_detail_editBtn" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:dividerColor="@color/lightGrey" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:drawableStart="@drawable/baseline_delete_24"
+        android:text="Delete Recipe"
+        android:background="@color/fui_transparent"
+        android:fontFamily="@font/inter"
+        android:textSize="16dp"
+        android:id="@+id/recipe_detail_deleteBtn" />
+
+</LinearLayout>

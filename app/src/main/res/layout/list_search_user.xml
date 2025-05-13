@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="10dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/list_search_user_icon"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        android:src="@drawable/baseline_person_24_grey"
+        android:background="@drawable/circle_user_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/list_search_user_name"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:textSize="16dp"
+        android:layout_marginHorizontal="10dp"
+        android:text="Username"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toEndOf="@+id/list_search_user_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:id="@+id/list_search_user_followBtn"
+        android:checked="false"
+        android:textOn="Following"
+        android:textOff="Follow"
+        android:textColor="@color/white"
+        android:background="@drawable/selector_follow"
+        android:fontFamily="@font/inter"
+        android:layout_gravity="center"
+        android:textSize="14dp"
+        android:paddingHorizontal="20dp"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

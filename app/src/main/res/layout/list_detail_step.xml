@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp"
+    >
+
+    <TextView
+        android:id="@+id/detail_step_stepNum"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/inter"
+        android:text="1"
+        android:background="@drawable/circle_step"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="start"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/detail_step_stepDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="Your recipe has bewen uploaded."
+        android:fontFamily="@font/inter"
+        android:textColor="@color/mainText_color"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="center"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

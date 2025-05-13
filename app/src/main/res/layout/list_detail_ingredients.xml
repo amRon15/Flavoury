@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_ingredients_logo"
+        android:src="@drawable/baseline_done_24"
+        app:tint="@color/primary_color"
+        android:background="@drawable/circle_tick"
+        android:layout_gravity="start"
+        android:padding="5dp" />
+
+
+    <TextView
+        android:id="@+id/detail_ingredients_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:text="4 Eggs"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/mainText_color"
+        android:layout_gravity="center"
+        android:textSize="14dp"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

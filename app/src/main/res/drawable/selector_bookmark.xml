@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@drawable/baseline_bookmark_24">
+        <shape android:shape="oval">
+            <size android:width="40dp" android:height="40dp"/>
+            <solid android:color="@color/circle_btn" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/baseline_bookmark_border_24">
+        <shape android:shape="oval">
+            <size android:width="40dp" android:height="40dp"/>
+            <solid android:color="@color/circle_btn" />
+        </shape>
+    </item>
+</selector>

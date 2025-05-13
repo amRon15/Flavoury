@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <application
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Flavoury"
+        tools:targetApi="33">
+
+        <activity
+            android:name=".ui.detail.DetailActivity" />
+        <activity
+            android:name=".MainActivity" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:noHistory="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.login.RegistrationActivity" />
+        <activity android:name=".ui.setting.SettingActivity" />
+        <activity android:name=".ui.addRecipe.AddRecipeActivity" />
+        <activity android:name=".ui.bookmark.BookmarkActivity" />
+        <activity android:name=".ui.search.SearchRecipeActivity"/>
+        <activity android:name=".ui.search.SearchUserActivity" />
+        <activity android:name=".ui.scan.ScanActivity" />
+        <activity android:name=".ui.profile.ProfileActivity" />
+        <activity android:name=".ui.viewMore.ViewMoreActivity" />
+        <activity android:name=".ui.addRecipe.UpdateRecipeActivity"/>
+        <activity android:name=".ui.addRecipe.UpdateStepIngActivity" />
+        <activity android:name=".ui.addRecipe.AddStepIngredientActivity"/>
+        <activity android:name=".ui.setting.EditProfileActivity"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
