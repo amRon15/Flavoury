@@ -4,17 +4,17 @@
 Flavoury is a mobile application designed for food lovers to explore, share, and interact through cooking recipes. Focusing on building a social networking platform around cooking. It allows users to create personal accounts, post recipes with media, follow other users, and interact with content via likes and comments. The app aims to simplify the process of sharing homemade dishes, promote culinary inspiration, and foster a sense of community among users passionate about cooking.
 
 ## Features
--- **User Authentication**: Users can register, log in, and maintain personalized profiles.
--- **Recipe Posting**: Users can share their recipes with descriptions, photos, and ingredients.
--- **Like and Bookmark**: Engage with other users' content by liking on posts and bookmark.
--- **Explore Recipes**: Discover new dishes posted by others through a feed interface.
--- **Follow Functionality**: Users can follow others and see their posts in a dedicated feed.
--- **Food Scanning**: Scan the ingredients to see the related recipe.
+- **User Authentication**: Users can register, log in, and maintain personalized profiles.
+- **Recipe Posting**: Users can share their recipes with descriptions, photos, and ingredients.
+- **Like and Bookmark**: Engage with other users' content by liking on posts and bookmark.
+- **Explore Recipes**: Discover new dishes posted by others through a feed interface.
+- **Follow Functionality**: Users can follow others and see their posts in a dedicated feed.
+- **Food Scanning**: Scan the ingredients to see the related recipe.
 
 ## Technology
--- **Frontend**: Java, XML
--- **Backend**: XAMPP, PHP, MYSQL
--- **API**: foodvisor
+- **Frontend**: Java, XML
+- **Backend**: XAMPP, PHP, MYSQL
+- **API**: foodvisor
 
 ## Screen Capture
 ### Home & View More
