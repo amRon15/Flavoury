@@ -17,29 +17,36 @@ Flavoury is a mobile application designed for food lovers to explore, share, and
 -- **API**: foodvisor
 
 ## Screen Capture
--- Home & View More
-![Home](https://github.com/user-attachments/assets/cd0eddc6-3a1a-45d5-a7fd-3bf7db3cd2cd)
-![view more](https://github.com/user-attachments/assets/e7a7d971-4cbb-459e-a7d9-0cf19e97353d)
--- Explore
-![explore page](https://github.com/user-attachments/assets/54bf1e3c-fd45-4e16-8ff0-c0e261589e29)
--- Search
-![search recipe](https://github.com/user-attachments/assets/f14d887a-727b-483a-92a8-b0be1c6ac1c4)
-![search box](https://github.com/user-attachments/assets/9b448797-7879-4415-9163-1bdd712075a5)
-![search user](https://github.com/user-attachments/assets/f1200ca7-4b54-4a60-ad51-2d452d8c5a2b)
--- Likes
-![likes](https://github.com/user-attachments/assets/b6cf97ba-fe8f-417c-9370-601bd24d3cf3)
--- Profile
-![myprofile](https://github.com/user-attachments/assets/380f3467-81c9-4499-8ee4-4a264a437495)
-![Profile](https://github.com/user-attachments/assets/5b1bbb64-4adc-40f4-9420-206d55295fb4)
--- Bookmark
-![bookmark](https://github.com/user-attachments/assets/bb1236df-8911-4a35-9291-c7bf6d9af78a)
--- Login & SignUp
-![login](https://github.com/user-attachments/assets/fa51ac0a-4e2c-45b5-941f-eb37db18e99d)![sign up](https://github.com/user-attachments/assets/48ba7478-b9ae-43e7-8fd4-c7846ef6f957)
--- Add Recipe
-![add step](https://github.com/user-attachments/assets/ad2ef62a-8363-480e-9459-71051fc26f6c)
-![Add recipe](https://github.com/user-attachments/assets/87fbe562-9a8c-4776-bec5-3020f702d79e)
--- Recipe Detail
-![recipe detail](https://github.com/user-attachments/assets/b08cbe59-1ed0-4f3c-a29f-e58bef6090b9)
+### Home & View More
+![Home](https://github.com/user-attachments/assets/4994b67a-ef7e-46c3-813c-882b95a17d7f)
+![view more](https://github.com/user-attachments/assets/1183d14e-db66-4083-add4-cd44bbff9296)
+
+### Explore & Search
+![explore page](https://github.com/user-attachments/assets/562e864d-93df-4677-92f4-212e1786ab1d)
+![search box](https://github.com/user-attachments/assets/f1266831-9306-4865-9e7c-03d182f4bd09)
+![search recipe](https://github.com/user-attachments/assets/018d84f9-fe2f-48fd-bcda-9bc561a6a141)
+![search user](https://github.com/user-attachments/assets/0f2a4650-3466-4463-ad02-2342ef42cb73)
+
+### Likes
+![likes](https://github.com/user-attachments/assets/70f72e3e-53c9-4e4f-b471-a0a77315e0d2)
+
+### Profile
+![myprofile](https://github.com/user-attachments/assets/070260e5-37e7-4164-b3ff-e7bf7065f85c)
+![Profile](https://github.com/user-attachments/assets/20ce7901-01b1-4204-b43a-8cc4f0f5938f)
+
+### Bookmark
+![bookmark](https://github.com/user-attachments/assets/78bff59c-c2e4-44dc-a344-e652715bafb0)
+
+### Login & SignUp
+![login](https://github.com/user-attachments/assets/89f85d32-2d2f-4218-b25a-f0c98dbcd603)
+![sign up](https://github.com/user-attachments/assets/605e5947-c38b-438f-b20b-313525528b78)
+
+### Add Recipe
+![Add recipe](https://github.com/user-attachments/assets/8ba41169-2b54-4db2-94a9-da30c59a0cc0)
+![add step](https://github.com/user-attachments/assets/6c7962bb-0893-48d3-b778-07ef652ad3ce)
+
+### Recipe Detail
+![recipe detail](https://github.com/user-attachments/assets/7060f833-391a-45c7-9079-ca0dbf6f0254)
 
 ## License
 This project is licensed under the MIT License.
